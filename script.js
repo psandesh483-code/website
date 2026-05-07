@@ -223,17 +223,59 @@ function setupReveals() {
     });
   });
 
-  // about big number parallax
-  gsap.to('.about__bignum', {
-    yPercent: -30,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.about',
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: true,
-    },
-  });
+  // about big number parallax (kept for safety if reused later)
+  if (document.querySelector('.about__bignum')) {
+    gsap.to('.about__bignum', {
+      yPercent: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+  }
+
+  // editorial portrait: clip-path mask reveal + slow parallax
+  const portrait = document.querySelector('[data-portrait]');
+  if (portrait) {
+    gsap.fromTo(portrait,
+      { clipPath: 'inset(100% 0 0 0)' },
+      {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1.6,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: portrait, start: 'top 82%' },
+      }
+    );
+
+    gsap.to(portrait, {
+      yPercent: -8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+
+    // image inside drifts slightly faster — subtle dolly effect
+    const portraitImg = portrait.querySelector('img');
+    if (portraitImg) {
+      gsap.to(portraitImg, {
+        yPercent: -10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.about',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }
+  }
 
   // generic .reveal-up — staggered groups inside parent
   gsap.utils.toArray('.reveal-up').forEach((el) => {

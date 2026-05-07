@@ -439,6 +439,128 @@ body {
   user-select: none;
 }
 
+/* ─── editorial portrait (duotone) ──────────────── */
+
+.portrait {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 28rem;
+  will-change: transform, clip-path;
+}
+
+.portrait__frame {
+  position: relative;
+  background: var(--ink);
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  isolation: isolate;
+  box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.7),
+              0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.portrait__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  font-size: clamp(6rem, 18vw, 14rem);
+  color: var(--saffron);
+  letter-spacing: -0.04em;
+  z-index: 1;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.portrait__frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 2;
+  filter: grayscale(1) contrast(1.12) brightness(0.92);
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.portrait__frame img.is-missing {
+  display: none;
+}
+
+/* duotone — saffron color tint over the image */
+.portrait__tint {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--saffron);
+  mix-blend-mode: color;
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+/* gradient overlay — adds depth + cinematic lighting */
+.portrait__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 179, 128, 0.25) 0%, transparent 55%),
+    linear-gradient(180deg,
+      rgba(255, 122, 26, 0.0) 0%,
+      rgba(10, 9, 8, 0.0) 50%,
+      rgba(10, 9, 8, 0.55) 100%
+    );
+  mix-blend-mode: hard-light;
+  pointer-events: none;
+}
+
+/* corner brackets — editorial / film viewfinder */
+.portrait__corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.portrait__corner--tl {
+  top: 14px;
+  left: 14px;
+  border-top: 1px solid var(--saffron);
+  border-left: 1px solid var(--saffron);
+}
+
+.portrait__corner--br {
+  bottom: 14px;
+  right: 14px;
+  border-bottom: 1px solid var(--saffron);
+  border-right: 1px solid var(--saffron);
+}
+
+.portrait__frame:hover img {
+  transform: scale(1.04);
+}
+
+.portrait__caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--bone);
+  padding-top: 0.5rem;
+}
+
+.portrait__caption span:first-child { color: var(--cream); }
+.portrait__caption span:last-child { color: var(--dust); }
+
 .about__body {
   display: flex;
   flex-direction: column;
