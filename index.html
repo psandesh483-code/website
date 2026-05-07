@@ -1,55 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sandesh Pandey — Brand strategist & founder</title>
-  <meta name="description" content="Sandesh Pandey — brand strategist, founder, and storyteller based in Kathmandu, Nepal. Building brands, ventures, and culture-led products." />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Sandesh Pandey — brand strategist, founder, and storyteller from Kathmandu. Building brands, ventures, and culture-led products." />
+  <meta name="theme-color" content="#0a0908" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Sandesh Pandey — Brand strategist & founder" />
-  <meta property="og:description" content="Brand strategist, founder, and storyteller based in Kathmandu. Building brands, ventures, and culture-led products." />
+  <meta property="og:description" content="Brand strategist, founder, and storyteller from Kathmandu." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sandeshpandey.info.np" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Tailwind (Play CDN — fine for development; we can switch to a build later) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ink: {
-              950: '#0a0a0a',
-              900: '#0f0f0f',
-              800: '#161616',
-              700: '#1f1f1f',
-              600: '#2a2a2a',
-            },
-            bone: {
-              50: '#fafafa',
-              100: '#ededed',
-              200: '#d4d4d4',
-              300: '#a3a3a3',
-              400: '#737373',
-            },
-            accent: {
-              DEFAULT: '#a3e635',
-              dim: '#65a30d',
-            },
+            coal: '#0a0908',
+            ink: '#14110f',
+            slate: '#2a2520',
+            cream: '#f5f1ea',
+            bone: '#c8c1b4',
+            dust: '#6b6357',
+            saffron: '#ff7a1a',
+            ember: '#ffb380',
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+            display: ['"Instrument Serif"', 'serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
           },
         },
       },
@@ -58,395 +46,388 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-ink-950 text-bone-100 font-sans antialiased selection:bg-accent selection:text-ink-950">
-  <!-- Subtle grid background -->
-  <div class="grid-bg" aria-hidden="true"></div>
 
-  <!-- Nav -->
-  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink-950/70 border-b border-white/5">
-    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#top" class="font-mono text-sm tracking-tight">
-        <span class="text-accent">/</span>sandesh
+<body class="bg-coal text-cream font-sans antialiased overflow-x-hidden selection:bg-saffron selection:text-coal">
+
+  <!-- Film grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Loader / intro -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__count" data-count>00</span>
+      <span class="loader__label">loading</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo">
+        <span class="text-saffron">/</span>sandesh
       </a>
-      <ul class="hidden md:flex items-center gap-8 text-sm text-bone-300">
-        <li><a href="#about" class="hover:text-bone-50 transition">About</a></li>
-        <li><a href="#experience" class="hover:text-bone-50 transition">Experience</a></li>
-        <li><a href="#skills" class="hover:text-bone-50 transition">Skills</a></li>
-        <li><a href="#contact" class="hover:text-bone-50 transition">Contact</a></li>
-      </ul>
-      <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-sm border border-white/10 hover:border-accent hover:text-accent rounded-full px-4 py-1.5 transition">
-        Get in touch
+      <nav class="nav__links" aria-label="primary">
+        <a href="#about">About</a>
+        <a href="#experience">Work</a>
+        <a href="#skills">Craft</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="nav__cta">
+        <span>Say hello</span>
         <span aria-hidden="true">→</span>
       </a>
-      <button id="menu-toggle" class="md:hidden text-bone-200" aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
-        </svg>
-      </button>
-    </nav>
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden border-t border-white/5">
-      <ul class="px-6 py-4 space-y-3 text-sm text-bone-200">
-        <li><a href="#about" class="block py-1">About</a></li>
-        <li><a href="#experience" class="block py-1">Experience</a></li>
-        <li><a href="#skills" class="block py-1">Skills</a></li>
-        <li><a href="#contact" class="block py-1">Contact</a></li>
-      </ul>
     </div>
   </header>
 
-  <main id="top" class="relative">
-    <!-- Hero -->
-    <section class="min-h-screen flex items-center px-6 pt-24">
-      <div class="max-w-5xl mx-auto w-full">
-        <p class="reveal font-mono text-xs text-accent tracking-widest uppercase mb-6">
-          // portfolio · kathmandu, nepal
-        </p>
-        <h1 class="reveal text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] mb-6">
-          Sandesh Pandey.
-          <span class="block text-bone-400 font-light">
-            Brand strategist · Founder · Storyteller.
-          </span>
-        </h1>
-        <p class="reveal max-w-xl text-bone-300 text-base sm:text-lg leading-relaxed mb-10">
-          I work at the intersection of brand, content, and culture — currently
-          leading marketing at FinTruction, managing brand at Unchained, and
-          building Kranti and Stitch on the side.
-        </p>
-        <div class="reveal flex flex-wrap gap-3">
-          <a href="#experience" class="inline-flex items-center gap-2 bg-accent text-ink-950 font-medium rounded-full px-5 py-2.5 hover:bg-bone-50 transition">
-            What I’m building <span aria-hidden="true">→</span>
-          </a>
-          <a href="#contact" class="inline-flex items-center gap-2 border border-white/10 hover:border-white/30 rounded-full px-5 py-2.5 transition">
-            Get in touch
-          </a>
-        </div>
+  <main id="top">
 
-        <!-- Status pill -->
-        <div class="reveal mt-16 inline-flex items-center gap-2 text-xs font-mono text-bone-400">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-          </span>
-          open to collaborations & briefs
-        </div>
+    <!-- ── 01 · HERO ─────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero__meta">
+        <span class="line">// Kathmandu, Nepal</span>
+        <span class="line"><span class="dot"></span> open to briefs · 2026</span>
+      </div>
+
+      <h1 class="hero__title" aria-label="Sandesh Pandey">
+        <span class="line"><span class="reveal-line"><span>Sandesh</span></span></span>
+        <span class="line"><span class="reveal-line"><span class="italic font-display">Pandey.</span></span></span>
+      </h1>
+
+      <p class="hero__sub">
+        <span class="reveal-text">Brand strategist · Founder · Storyteller —</span>
+        <span class="reveal-text">building brands, ventures, and stories from</span>
+        <span class="reveal-text">the foothills of the Himalaya.</span>
+      </p>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-label">scroll</span>
+        <span class="hero__scroll-line"></span>
       </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="px-6 py-28 border-t border-white/5">
-      <div class="max-w-5xl mx-auto grid md:grid-cols-12 gap-10">
-        <div class="md:col-span-4">
-          <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">01 / about</p>
-          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">A bit about me.</h2>
-        </div>
-        <div class="md:col-span-8 space-y-5 text-bone-300 leading-relaxed">
-          <p>
-            I’m a Kathmandu-based brand strategist and creator. Most of my work
-            sits where brand, content, and culture meet — running marketing for
-            early-stage companies, scaling creator-led platforms, and building
-            ventures rooted in Nepal’s identity.
+    <!-- ── 02 · MANIFESTO (pinned, word-by-word reveal) ── -->
+    <section class="manifesto" id="manifesto">
+      <div class="manifesto__inner">
+        <p class="eyebrow"><span>·</span> manifesto</p>
+        <h2 class="manifesto__text" data-words>
+          I work where brand, content, and culture meet — turning slow ideas
+          into things people remember, and small ventures into stories worth
+          telling.
+        </h2>
+      </div>
+    </section>
+
+    <!-- ── 03 · ABOUT ──────────────────────────────────── -->
+    <section class="about" id="about">
+      <div class="about__grid">
+        <aside class="about__index">
+          <span class="eyebrow"><span>·</span> 01 / about</span>
+          <span class="about__bignum font-display">01</span>
+        </aside>
+
+        <div class="about__body">
+          <p class="reveal-line-block">
+            I'm a Kathmandu-based brand strategist and creator. My work sits
+            at the intersection of brand, content, and culture — running
+            marketing for early-stage companies, scaling creator-led
+            platforms, and building ventures rooted in Nepal's identity.
           </p>
-          <p>
-            Right now I’m Head of Marketing at <span class="text-bone-100">FinTruction</span>,
-            Brand Manager at <span class="text-bone-100">Unchained</span>, founder of
-            <span class="text-bone-100">Kranti</span> — a content platform on
-            current affairs and culture — and co-founder of
-            <span class="text-bone-100">Stitch</span>, a cultural fashion brand.
+          <p class="reveal-line-block">
+            Right now: Head of Marketing at <em class="font-display not-italic md:italic">FinTruction</em>,
+            Brand Manager at <em class="font-display not-italic md:italic">Unchained</em>, founder of
+            <em class="font-display not-italic md:italic">Kranti</em>, and co-founder of
+            <em class="font-display not-italic md:italic">Stitch</em>.
           </p>
-          <p>
-            Outside of work I’m a Uunchai Fellow, a researcher with Project
-            Abhaya, and a former Event Manager at the SXC Literary Club. I
-            studied Science at St. Xavier’s College, Maitighar.
+          <p class="reveal-line-block">
+            Outside work — Uunchai Fellow, researcher at Project Abhaya,
+            former Event Manager at the SXC Literary Club. I studied science
+            at St. Xavier's College, Maitighar.
           </p>
 
-          <dl class="grid grid-cols-2 gap-6 pt-6 border-t border-white/5">
+          <dl class="about__facts">
             <div>
-              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Based in</dt>
-              <dd class="text-bone-100">Kathmandu, Nepal</dd>
+              <dt>Based in</dt>
+              <dd>Kathmandu, Nepal</dd>
             </div>
             <div>
-              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Focus</dt>
-              <dd class="text-bone-100">Brand · Content · Culture</dd>
+              <dt>Focus</dt>
+              <dd>Brand · Content · Culture</dd>
             </div>
             <div>
-              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Email</dt>
-              <dd class="text-bone-100"><a class="hover:text-accent transition" href="mailto:official.sandeshpandey@gmail.com">official.sandeshpandey@gmail.com</a></dd>
+              <dt>Status</dt>
+              <dd>Open to briefs</dd>
             </div>
             <div>
-              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Status</dt>
-              <dd class="text-bone-100">Open to briefs</dd>
+              <dt>Email</dt>
+              <dd><a href="mailto:official.sandeshpandey@gmail.com">official.sandeshpandey@gmail.com</a></dd>
             </div>
           </dl>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience" class="px-6 py-28 border-t border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <div class="flex items-end justify-between mb-12">
-          <div>
-            <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">02 / experience</p>
-            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">What I’m building.</h2>
-          </div>
-          <p class="hidden sm:block text-sm text-bone-400">Current roles & ventures.</p>
-        </div>
+    <!-- ── 04 · EXPERIENCE (horizontal scroll) ────────── -->
+    <section class="exp" id="experience">
+      <div class="exp__intro">
+        <span class="eyebrow"><span>·</span> 02 / what i'm building</span>
+        <h2 class="exp__heading">
+          Four roles. <span class="font-display italic">One throughline.</span>
+        </h2>
+      </div>
 
-        <div class="grid sm:grid-cols-2 gap-5">
-          <!-- FinTruction -->
-          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
-            <div class="flex items-center justify-between mb-6">
-              <span class="font-mono text-xs text-bone-400">role · 01</span>
-              <span class="font-mono text-xs text-accent">Mar 2026 — Present</span>
+      <div class="exp__pin" data-exp-pin>
+        <div class="exp__track" data-exp-track>
+
+          <article class="exp__card">
+            <div class="exp__card-meta">
+              <span class="exp__num">01</span>
+              <span class="exp__date">Mar 2026 — Present</span>
             </div>
-            <h3 class="text-xl font-medium">Head of Marketing</h3>
-            <p class="text-sm text-bone-400 mb-4">FinTruction</p>
-            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+            <h3 class="exp__role">Head of <span class="font-display italic">Marketing</span></h3>
+            <p class="exp__company">FinTruction</p>
+            <p class="exp__desc">
               Leading marketing strategy and brand growth at an early-stage
               fintech — shaping positioning, launch motions, and the broader
               go-to-market story.
             </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Marketing</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Growth</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Fintech</span>
-            </div>
+            <ul class="exp__tags">
+              <li>Marketing</li>
+              <li>Growth</li>
+              <li>Fintech</li>
+            </ul>
           </article>
 
-          <!-- Unchained -->
-          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
-            <div class="flex items-center justify-between mb-6">
-              <span class="font-mono text-xs text-bone-400">role · 02</span>
-              <span class="font-mono text-xs text-accent">May 2025 — Present</span>
+          <article class="exp__card">
+            <div class="exp__card-meta">
+              <span class="exp__num">02</span>
+              <span class="exp__date">May 2025 — Present</span>
             </div>
-            <h3 class="text-xl font-medium">Brand Manager</h3>
-            <p class="text-sm text-bone-400 mb-4">Unchained · Remote</p>
-            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+            <h3 class="exp__role">Brand <span class="font-display italic">Manager</span></h3>
+            <p class="exp__company">Unchained · Remote</p>
+            <p class="exp__desc">
               Spearheading outbound communications and long-term client
-              relationships across international markets. Co-developing scalable
-              content systems for high-impact creators and influencers.
+              relationships across international markets. Co-developing
+              scalable content systems for high-impact creators.
             </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Brand</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Communications</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Content</span>
-            </div>
+            <ul class="exp__tags">
+              <li>Brand</li>
+              <li>Communications</li>
+              <li>Content</li>
+            </ul>
           </article>
 
-          <!-- Kranti -->
-          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
-            <div class="flex items-center justify-between mb-6">
-              <span class="font-mono text-xs text-bone-400">role · 03</span>
-              <span class="font-mono text-xs text-accent">2023 — Present</span>
+          <article class="exp__card">
+            <div class="exp__card-meta">
+              <span class="exp__num">03</span>
+              <span class="exp__date">2023 — Present</span>
             </div>
-            <h3 class="text-xl font-medium">Founder & Creator</h3>
-            <p class="text-sm text-bone-400 mb-4">Kranti</p>
-            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+            <h3 class="exp__role">Founder & <span class="font-display italic">Creator</span></h3>
+            <p class="exp__company">Kranti</p>
+            <p class="exp__desc">
               Founded a content platform that simplifies current affairs and
-              cultural topics through digital storytelling. Scaled reach with
-              research-led strategy, narrative optimization, and organic
-              distribution.
+              cultural topics through digital storytelling. Scaled reach
+              with research-led strategy and narrative optimization.
             </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Founder</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Content</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Storytelling</span>
-            </div>
+            <ul class="exp__tags">
+              <li>Founder</li>
+              <li>Content</li>
+              <li>Storytelling</li>
+            </ul>
           </article>
 
-          <!-- Stitch -->
-          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
-            <div class="flex items-center justify-between mb-6">
-              <span class="font-mono text-xs text-bone-400">role · 04</span>
-              <span class="font-mono text-xs text-accent">Jun 2025 — Present</span>
+          <article class="exp__card">
+            <div class="exp__card-meta">
+              <span class="exp__num">04</span>
+              <span class="exp__date">Jun 2025 — Present</span>
             </div>
-            <h3 class="text-xl font-medium">Co-founder</h3>
-            <p class="text-sm text-bone-400 mb-4">Stitch · Cultural Fashion</p>
-            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+            <h3 class="exp__role">Co-<span class="font-display italic">founder</span></h3>
+            <p class="exp__company">Stitch · Cultural Fashion</p>
+            <p class="exp__desc">
               Co-founded a cultural fashion brand. Leading creative direction
-              and premium bag design that blends Nepal’s regional heritage with
-              sustainable, modern fashion.
+              and premium bag design that blends Nepal's regional heritage
+              with modern, sustainable fashion.
             </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Co-founder</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Design</span>
-              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Culture</span>
-            </div>
+            <ul class="exp__tags">
+              <li>Co-founder</li>
+              <li>Design</li>
+              <li>Culture</li>
+            </ul>
           </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- Initiatives & Recognition -->
-    <section id="initiatives" class="px-6 py-28 border-t border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <div class="mb-12">
-          <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">03 / beyond work</p>
-          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Initiatives & recognition.</h2>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-10">
-          <!-- Initiatives & Fellowships -->
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-5">Initiatives & Fellowships</h3>
-            <ul class="space-y-4">
-              <li class="reveal flex items-start justify-between gap-4 border-b border-white/5 pb-4">
-                <div>
-                  <p class="text-bone-100">Researcher & Volunteer</p>
-                  <p class="text-sm text-bone-400">Project Abhaya · NGO</p>
-                </div>
-                <span class="font-mono text-xs text-accent shrink-0">Jul 2025 — Present</span>
-              </li>
-              <li class="reveal flex items-start justify-between gap-4 border-b border-white/5 pb-4">
-                <div>
-                  <p class="text-bone-100">Uunchai Fellow</p>
-                  <p class="text-sm text-bone-400">Uunchai · Summer Cohort</p>
-                </div>
-                <span class="font-mono text-xs text-accent shrink-0">Jun — Aug 2025</span>
-              </li>
-              <li class="reveal flex items-start justify-between gap-4 pb-4">
-                <div>
-                  <p class="text-bone-100">Event Manager</p>
-                  <p class="text-sm text-bone-400">SXC Literary Club</p>
-                </div>
-                <span class="font-mono text-xs text-accent shrink-0">2023 — 2025</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Achievements -->
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-5">Recognition</h3>
-            <ul class="space-y-4 text-bone-300">
-              <li class="reveal flex gap-3">
-                <span class="text-accent mt-1.5 shrink-0">▸</span>
-                <p>
-                  <span class="text-bone-100">District-Level Debate Champion</span>
-                  — won Rs. 50,000 prize
-                </p>
-              </li>
-              <li class="reveal flex gap-3">
-                <span class="text-accent mt-1.5 shrink-0">▸</span>
-                <p>
-                  <span class="text-bone-100">Multiple-time Quiz Winner</span>
-                  representing school and college
-                </p>
-              </li>
-              <li class="reveal flex gap-3">
-                <span class="text-accent mt-1.5 shrink-0">▸</span>
-                <p>
-                  Participant — <span class="text-bone-100">Creators Mela 2024</span>,
-                  <span class="text-bone-100">Nepal Youth Summit 2024</span>
-                </p>
-              </li>
-              <li class="reveal flex gap-3">
-                <span class="text-accent mt-1.5 shrink-0">▸</span>
-                <p>
-                  Volunteer — <span class="text-bone-100">National Youth Festival 2024</span>,
-                  SXC Mini Marathon
-                </p>
-              </li>
-            </ul>
+          <div class="exp__end">
+            <p class="font-display italic text-bone">to be continued.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Skills -->
-    <section id="skills" class="px-6 py-28 border-t border-white/5">
-      <div class="max-w-5xl mx-auto grid md:grid-cols-12 gap-10">
-        <div class="md:col-span-4">
-          <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">04 / skills</p>
-          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">How I work.</h2>
+    <!-- ── 05 · INITIATIVES ───────────────────────────── -->
+    <section class="init">
+      <div class="init__head">
+        <span class="eyebrow"><span>·</span> 03 / beyond work</span>
+        <h2>Initiatives & <span class="font-display italic">recognition</span>.</h2>
+      </div>
+
+      <div class="init__grid">
+        <article class="init__card reveal-up">
+          <p class="init__date">Jul 2025 — Present</p>
+          <h3>Researcher & Volunteer</h3>
+          <p class="init__where">Project Abhaya · NGO</p>
+          <p class="init__desc">
+            Research-backed publications on gender equity, youth voice, and
+            community empowerment. Donor engagement & outreach for grassroots
+            campaigns.
+          </p>
+        </article>
+
+        <article class="init__card reveal-up">
+          <p class="init__date">Jun — Aug 2025</p>
+          <h3>Uunchai <span class="font-display italic">Fellow</span></h3>
+          <p class="init__where">Uunchai · Summer Cohort</p>
+          <p class="init__desc">
+            Selected among top students for a competitive, impact-driven
+            fellowship — contributing to launch of a premium cultural
+            product rooted in Nepali tradition.
+          </p>
+        </article>
+
+        <article class="init__card reveal-up">
+          <p class="init__date">2023 — 2025</p>
+          <h3>Event Manager</h3>
+          <p class="init__where">SXC Literary Club</p>
+          <p class="init__desc">
+            Led inter-college events — Prawaha Kabi Gosthi, Debates,
+            Quiz Mania — managing 20+ team members and 500+ attendees per
+            event.
+          </p>
+        </article>
+      </div>
+
+      <ul class="init__wins">
+        <li class="reveal-up"><span class="num">₹50,000</span><span>District-Level Debate Champion</span></li>
+        <li class="reveal-up"><span class="num">5x</span><span>Quiz Winner — school & college</span></li>
+        <li class="reveal-up"><span class="num">2024</span><span>Creators Mela · Nepal Youth Summit</span></li>
+        <li class="reveal-up"><span class="num">2024</span><span>Volunteer · National Youth Festival</span></li>
+      </ul>
+    </section>
+
+    <!-- ── 06 · SKILLS ────────────────────────────────── -->
+    <section class="skills" id="skills">
+      <div class="skills__head">
+        <span class="eyebrow"><span>·</span> 04 / craft</span>
+        <h2>How I <span class="font-display italic">work</span>.</h2>
+      </div>
+
+      <div class="skills__cluster">
+        <div class="skills__group reveal-up">
+          <h4>Strategy</h4>
+          <ul>
+            <li>Brand Strategy</li>
+            <li>Marketing</li>
+            <li>Strategic Communication</li>
+            <li>Research Writing</li>
+            <li>Community Engagement</li>
+          </ul>
         </div>
-        <div class="md:col-span-8 space-y-10">
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-4">Strategy</h3>
-            <div class="flex flex-wrap gap-2">
-              <span class="skill">Brand Strategy</span>
-              <span class="skill">Marketing</span>
-              <span class="skill">Strategic Communication</span>
-              <span class="skill">Research Writing</span>
-              <span class="skill">Community Engagement</span>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-4">Operations</h3>
-            <div class="flex flex-wrap gap-2">
-              <span class="skill">Event Planning</span>
-              <span class="skill">Client Coordination</span>
-              <span class="skill">Workflow Design</span>
-              <span class="skill">Cross-functional Leadership</span>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-4">Creative</h3>
-            <div class="flex flex-wrap gap-2">
-              <span class="skill">Digital Content</span>
-              <span class="skill">Storytelling</span>
-              <span class="skill">Creative Direction</span>
-              <span class="skill">Social Media</span>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-4">Tools</h3>
-            <div class="flex flex-wrap gap-2">
-              <span class="skill">Notion</span>
-              <span class="skill">Canva</span>
-              <span class="skill">Photoshop</span>
-              <span class="skill">Google Workspace</span>
-              <span class="skill">MS Office</span>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-4">Languages</h3>
-            <div class="flex flex-wrap gap-2">
-              <span class="skill">English</span>
-              <span class="skill">Nepali</span>
-              <span class="skill">Hindi</span>
-            </div>
-          </div>
+        <div class="skills__group reveal-up">
+          <h4>Operations</h4>
+          <ul>
+            <li>Event Planning</li>
+            <li>Client Coordination</li>
+            <li>Workflow Design</li>
+            <li>Cross-functional Leadership</li>
+          </ul>
+        </div>
+        <div class="skills__group reveal-up">
+          <h4>Creative</h4>
+          <ul>
+            <li>Digital Content</li>
+            <li>Storytelling</li>
+            <li>Creative Direction</li>
+            <li>Social Media</li>
+          </ul>
+        </div>
+        <div class="skills__group reveal-up">
+          <h4>Tools</h4>
+          <ul>
+            <li>Notion</li>
+            <li>Canva</li>
+            <li>Photoshop</li>
+            <li>Google Workspace</li>
+            <li>MS Office</li>
+          </ul>
+        </div>
+        <div class="skills__group reveal-up">
+          <h4>Languages</h4>
+          <ul>
+            <li>English</li>
+            <li>Nepali</li>
+            <li>Hindi</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="px-6 py-28 border-t border-white/5">
-      <div class="max-w-5xl mx-auto text-center">
-        <p class="font-mono text-xs text-accent tracking-widest uppercase mb-4">05 / contact</p>
-        <h2 class="text-4xl md:text-6xl font-semibold tracking-tight mb-6">
-          Let’s build something.
-        </h2>
-        <p class="max-w-xl mx-auto text-bone-300 mb-10">
-          Got a brand, a brief, or just an idea worth a conversation? My inbox
-          is open.
-        </p>
-        <a href="mailto:official.sandeshpandey@gmail.com" class="inline-flex items-center gap-2 bg-accent text-ink-950 font-medium rounded-full px-6 py-3 hover:bg-bone-50 transition">
-          official.sandeshpandey@gmail.com <span aria-hidden="true">→</span>
-        </a>
-
-        <ul class="flex justify-center gap-6 mt-10 text-sm text-bone-300">
-          <li><a href="https://linkedin.com/in/sandeysandesh/" target="_blank" rel="noopener" class="hover:text-accent transition">LinkedIn</a></li>
-          <li><a href="#" class="hover:text-accent transition">Instagram</a></li>
-          <li><a href="#" class="hover:text-accent transition">Twitter / X</a></li>
-        </ul>
+    <!-- ── 07 · MARQUEE ───────────────────────────────── -->
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Brand Strategy</span><span class="dot">•</span>
+        <span class="font-display italic">storytelling</span><span class="dot">•</span>
+        <span>Founder mindset</span><span class="dot">•</span>
+        <span class="font-display italic">cultural ventures</span><span class="dot">•</span>
+        <span>Content systems</span><span class="dot">•</span>
+        <span class="font-display italic">creative direction</span><span class="dot">•</span>
+        <span>Brand Strategy</span><span class="dot">•</span>
+        <span class="font-display italic">storytelling</span><span class="dot">•</span>
+        <span>Founder mindset</span><span class="dot">•</span>
+        <span class="font-display italic">cultural ventures</span><span class="dot">•</span>
+        <span>Content systems</span><span class="dot">•</span>
+        <span class="font-display italic">creative direction</span><span class="dot">•</span>
       </div>
     </section>
+
+    <!-- ── 08 · FINALE / CONTACT ──────────────────────── -->
+    <section class="finale" id="contact">
+      <span class="eyebrow"><span>·</span> 05 / contact</span>
+
+      <h2 class="finale__title" aria-label="Let's build something">
+        <span class="line"><span class="reveal-line"><span>Let's</span></span></span>
+        <span class="line"><span class="reveal-line"><span class="font-display italic">build</span></span></span>
+        <span class="line"><span class="reveal-line"><span>something.</span></span></span>
+      </h2>
+
+      <p class="finale__sub">
+        Got a brand, a brief, or just an idea worth a conversation?
+        My inbox is open.
+      </p>
+
+      <a href="mailto:official.sandeshpandey@gmail.com" class="finale__email">
+        <span>official.sandeshpandey@gmail.com</span>
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <ul class="finale__socials">
+        <li><a href="https://linkedin.com/in/sandeysandesh/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Instagram ↗</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Twitter / X ↗</a></li>
+      </ul>
+    </section>
+
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-white/5 px-6 py-10">
-    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-bone-400 font-mono">
-      <p>© <span id="year"></span> Sandesh Pandey — sandeshpandey.info.np</p>
+  <footer class="footer">
+    <div class="footer__inner">
+      <p>© <span id="year"></span> Sandesh Pandey</p>
+      <p class="font-display italic">sandeshpandey.info.np</p>
       <p>built by hand · hosted with ♥</p>
     </div>
   </footer>
 
+  <!-- Smooth scroll engine -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <!-- Animation engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
