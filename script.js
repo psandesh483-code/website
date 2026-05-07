@@ -25,6 +25,7 @@ function init() {
   setupSmoothScroll();
   setupCover();
   setupReveals();
+  setupReel();
 }
 
 /* ─── Lenis smooth scroll ──────────────────────── */
@@ -74,12 +75,97 @@ function setupCover() {
     y: 0,
     duration: 0.9,
   }, '-=0.7');
+}
 
-  tl.to('.cover__portrait', {
-    opacity: 1,
-    y: 0,
-    duration: 1.2,
-  }, '-=0.9');
+/* ─── REEL — sliced strip parallax ─────────────── */
+
+function setupReel() {
+  const portrait = document.querySelector('[data-reel-portrait]');
+  if (!portrait) return;
+
+  const strips = portrait.querySelectorAll('.reel__strip');
+  if (!strips.length) return;
+
+  if (prefersReducedMotion) return; // strips render in place; image is whole
+
+  // Each strip parallaxes vertically with its own speed/direction.
+  // Result: the image is whole only at one scroll moment; before/after,
+  // strips drift apart at slightly different speeds.
+  strips.forEach((strip, i) => {
+    const direction = i % 2 === 0 ? -1 : 1;
+    const intensity = 14 + Math.abs(i - 2.5) * 5; // 14 → 26.5%
+    const offset = direction * intensity;
+
+    gsap.fromTo(strip,
+      { yPercent: offset },
+      {
+        yPercent: -offset,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.reel',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.2,
+        },
+      }
+    );
+  });
+
+  // The whole portrait gently inhales — slight scale shift across the section.
+  gsap.fromTo(portrait,
+    { scale: 0.94 },
+    {
+      scale: 1.05,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.reel',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.2,
+      },
+    }
+  );
+
+  // Stage labels (N° 01, Kathmandu) drift opposite directions on scroll.
+  const stage = document.querySelector('[data-reel-stage]');
+  if (stage) {
+    const num = stage.querySelector('.reel__num');
+    const date = stage.querySelector('.reel__date');
+
+    if (num) {
+      gsap.fromTo(num,
+        { yPercent: 25, opacity: 0 },
+        {
+          yPercent: -25,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.reel',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.2,
+          },
+        }
+      );
+    }
+
+    if (date) {
+      gsap.fromTo(date,
+        { yPercent: -25, opacity: 0 },
+        {
+          yPercent: 25,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.reel',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.2,
+          },
+        }
+      );
+    }
+  }
 }
 
 /* ─── REVEALS — soft, editorial ─────────────────── */
