@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandesh Pandey — Portfolio</title>
+  <meta name="description" content="Sandesh Pandey — personal portfolio. Designer, developer, builder." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sandesh Pandey — Portfolio" />
+  <meta property="og:description" content="Personal portfolio of Sandesh Pandey." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sandeshpandey.info.np" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind (Play CDN — fine for development; we can switch to a build later) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              950: '#0a0a0a',
+              900: '#0f0f0f',
+              800: '#161616',
+              700: '#1f1f1f',
+              600: '#2a2a2a',
+            },
+            bone: {
+              50: '#fafafa',
+              100: '#ededed',
+              200: '#d4d4d4',
+              300: '#a3a3a3',
+              400: '#737373',
+            },
+            accent: {
+              DEFAULT: '#a3e635',
+              dim: '#65a30d',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-ink-950 text-bone-100 font-sans antialiased selection:bg-accent selection:text-ink-950">
+  <!-- Subtle grid background -->
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- Nav -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink-950/70 border-b border-white/5">
+    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#top" class="font-mono text-sm tracking-tight">
+        <span class="text-accent">/</span>sandesh
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-bone-300">
+        <li><a href="#about" class="hover:text-bone-50 transition">About</a></li>
+        <li><a href="#projects" class="hover:text-bone-50 transition">Projects</a></li>
+        <li><a href="#skills" class="hover:text-bone-50 transition">Skills</a></li>
+        <li><a href="#contact" class="hover:text-bone-50 transition">Contact</a></li>
+      </ul>
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-sm border border-white/10 hover:border-accent hover:text-accent rounded-full px-4 py-1.5 transition">
+        Get in touch
+        <span aria-hidden="true">→</span>
+      </a>
+      <button id="menu-toggle" class="md:hidden text-bone-200" aria-label="Open menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        </svg>
+      </button>
+    </nav>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-white/5">
+      <ul class="px-6 py-4 space-y-3 text-sm text-bone-200">
+        <li><a href="#about" class="block py-1">About</a></li>
+        <li><a href="#projects" class="block py-1">Projects</a></li>
+        <li><a href="#skills" class="block py-1">Skills</a></li>
+        <li><a href="#contact" class="block py-1">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top" class="relative">
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center px-6 pt-24">
+      <div class="max-w-5xl mx-auto w-full">
+        <p class="reveal font-mono text-xs text-accent tracking-widest uppercase mb-6">
+          // portfolio · 2026
+        </p>
+        <h1 class="reveal text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] mb-6">
+          Sandesh Pandey.
+          <span class="block text-bone-400 font-light">
+            Building things on the web.
+          </span>
+        </h1>
+        <p class="reveal max-w-xl text-bone-300 text-base sm:text-lg leading-relaxed mb-10">
+          I’m a developer based in Nepal — interested in clean design, thoughtful
+          interfaces, and building useful things. This is a small corner of the
+          internet that’s mine.
+        </p>
+        <div class="reveal flex flex-wrap gap-3">
+          <a href="#projects" class="inline-flex items-center gap-2 bg-accent text-ink-950 font-medium rounded-full px-5 py-2.5 hover:bg-bone-50 transition">
+            View projects <span aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="inline-flex items-center gap-2 border border-white/10 hover:border-white/30 rounded-full px-5 py-2.5 transition">
+            Contact
+          </a>
+        </div>
+
+        <!-- Status pill -->
+        <div class="reveal mt-16 inline-flex items-center gap-2 text-xs font-mono text-bone-400">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+          available for new projects
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="px-6 py-28 border-t border-white/5">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-12 gap-10">
+        <div class="md:col-span-4">
+          <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">01 / about</p>
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">A bit about me.</h2>
+        </div>
+        <div class="md:col-span-8 space-y-5 text-bone-300 leading-relaxed">
+          <p>
+            I’m Sandesh — I like making things that feel simple but do something
+            useful. Most of what I build lives on the web.
+          </p>
+          <p>
+            Outside of code, I spend time
+            <span class="text-bone-100">[ reading / sketching / hiking — replace this ]</span>
+            and slowly figuring out what I want to be good at.
+          </p>
+          <p>
+            This site is a work in progress, the same way I am. Thanks for
+            stopping by.
+          </p>
+
+          <dl class="grid grid-cols-2 gap-6 pt-6 border-t border-white/5">
+            <div>
+              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Location</dt>
+              <dd class="text-bone-100">Nepal</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Focus</dt>
+              <dd class="text-bone-100">Web · Design</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Email</dt>
+              <dd class="text-bone-100"><a class="hover:text-accent transition" href="mailto:devixxpro@gmail.com">devixxpro@gmail.com</a></dd>
+            </div>
+            <div>
+              <dt class="font-mono text-xs text-bone-400 uppercase tracking-widest mb-1">Status</dt>
+              <dd class="text-bone-100">Open to work</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="px-6 py-28 border-t border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-end justify-between mb-12">
+          <div>
+            <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">02 / projects</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Selected work.</h2>
+          </div>
+          <p class="hidden sm:block text-sm text-bone-400">A few things I’ve built.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <!-- Project card -->
+          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-xs text-bone-400">project · 01</span>
+              <span class="font-mono text-xs text-accent">2026</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">Project name one</h3>
+            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+              Short description of the project — what it does, what was interesting
+              about it, what you learned. Replace me.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">HTML</span>
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">CSS</span>
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">JS</span>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-sm text-bone-200 group-hover:text-accent transition">
+              Visit <span aria-hidden="true" class="group-hover:translate-x-0.5 transition">→</span>
+            </a>
+          </article>
+
+          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-xs text-bone-400">project · 02</span>
+              <span class="font-mono text-xs text-accent">2026</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">Project name two</h3>
+            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+              Short description of the project — what it does, what was interesting
+              about it, what you learned. Replace me.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">React</span>
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Tailwind</span>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-sm text-bone-200 group-hover:text-accent transition">
+              Visit <span aria-hidden="true" class="group-hover:translate-x-0.5 transition">→</span>
+            </a>
+          </article>
+
+          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-xs text-bone-400">project · 03</span>
+              <span class="font-mono text-xs text-accent">2025</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">Project name three</h3>
+            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+              Short description of the project — what it does, what was interesting
+              about it, what you learned. Replace me.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Node</span>
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Express</span>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-sm text-bone-200 group-hover:text-accent transition">
+              Visit <span aria-hidden="true" class="group-hover:translate-x-0.5 transition">→</span>
+            </a>
+          </article>
+
+          <article class="reveal group relative bg-ink-900 border border-white/5 rounded-2xl p-6 hover:border-accent/40 transition">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-xs text-bone-400">project · 04</span>
+              <span class="font-mono text-xs text-accent">2025</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">Project name four</h3>
+            <p class="text-bone-300 text-sm leading-relaxed mb-6">
+              Short description of the project — what it does, what was interesting
+              about it, what you learned. Replace me.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">Figma</span>
+              <span class="text-xs font-mono text-bone-400 border border-white/10 rounded-full px-2.5 py-1">UI</span>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-sm text-bone-200 group-hover:text-accent transition">
+              Visit <span aria-hidden="true" class="group-hover:translate-x-0.5 transition">→</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="px-6 py-28 border-t border-white/5">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-12 gap-10">
+        <div class="md:col-span-4">
+          <p class="font-mono text-xs text-accent tracking-widest uppercase mb-3">03 / skills</p>
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Tools I use.</h2>
+        </div>
+        <div class="md:col-span-8">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <span class="skill">HTML</span>
+            <span class="skill">CSS</span>
+            <span class="skill">JavaScript</span>
+            <span class="skill">Tailwind</span>
+            <span class="skill">React</span>
+            <span class="skill">Node.js</span>
+            <span class="skill">Git</span>
+            <span class="skill">Figma</span>
+            <span class="skill">Python</span>
+          </div>
+          <p class="mt-8 text-sm text-bone-400">
+            Always learning — currently exploring
+            <span class="text-bone-100">[ replace with what you’re learning ]</span>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="px-6 py-28 border-t border-white/5">
+      <div class="max-w-5xl mx-auto text-center">
+        <p class="font-mono text-xs text-accent tracking-widest uppercase mb-4">04 / contact</p>
+        <h2 class="text-4xl md:text-6xl font-semibold tracking-tight mb-6">
+          Let’s build something.
+        </h2>
+        <p class="max-w-xl mx-auto text-bone-300 mb-10">
+          Got an idea, a project, or just want to say hi? My inbox is open.
+        </p>
+        <a href="mailto:devixxpro@gmail.com" class="inline-flex items-center gap-2 bg-accent text-ink-950 font-medium rounded-full px-6 py-3 hover:bg-bone-50 transition">
+          devixxpro@gmail.com <span aria-hidden="true">→</span>
+        </a>
+
+        <ul class="flex justify-center gap-6 mt-10 text-sm text-bone-300">
+          <li><a href="#" class="hover:text-accent transition">GitHub</a></li>
+          <li><a href="#" class="hover:text-accent transition">LinkedIn</a></li>
+          <li><a href="#" class="hover:text-accent transition">Twitter / X</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 px-6 py-10">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-bone-400 font-mono">
+      <p>© <span id="year"></span> Sandesh Pandey — sandeshpandey.info.np</p>
+      <p>built by hand · hosted with ♥</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
