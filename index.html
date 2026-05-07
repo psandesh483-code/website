@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sandesh Pandey — Brand strategist & founder</title>
   <meta name="description" content="Sandesh Pandey — brand strategist, founder, and storyteller from Kathmandu. Building brands, ventures, and culture-led products." />
-  <meta name="theme-color" content="#0a0908" />
+  <meta name="theme-color" content="#0b0b0b" />
 
   <meta property="og:title" content="Sandesh Pandey — Brand strategist & founder" />
   <meta property="og:description" content="Brand strategist, founder, and storyteller from Kathmandu." />
@@ -15,58 +15,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            coal: '#0a0908',
-            ink: '#14110f',
-            slate: '#2a2520',
-            cream: '#f5f1ea',
-            bone: '#c8c1b4',
-            dust: '#6b6357',
-            saffron: '#ff7a1a',
-            ember: '#ffb380',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['"Instrument Serif"', 'serif'],
-            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="bg-coal text-cream font-sans antialiased overflow-x-hidden selection:bg-saffron selection:text-coal">
+<body>
 
-  <!-- Film grain overlay -->
-  <div class="grain" aria-hidden="true"></div>
-
-  <!-- Loader / intro -->
-  <div id="loader" class="loader" aria-hidden="true">
-    <div class="loader__inner">
-      <span class="loader__count" data-count>00</span>
-      <span class="loader__label">loading</span>
-    </div>
-  </div>
+  <!-- Hidden form for Netlify build bot to detect (required) -->
+  <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="message"></textarea>
+  </form>
 
   <!-- Navigation -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#top" class="nav__logo">
-        <span class="text-saffron">/</span>sandesh
-      </a>
-      <nav class="nav__links" aria-label="primary">
+      <a href="#top" class="nav__logo">Sandesh Pandey</a>
+      <nav class="nav__links" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#experience">Work</a>
         <a href="#skills">Craft</a>
@@ -74,41 +43,40 @@
       </nav>
       <a href="#contact" class="nav__cta">
         <span>Say hello</span>
-        <span aria-hidden="true">→</span>
       </a>
     </div>
   </header>
 
   <main id="top">
 
-    <!-- ── 01 · HERO ─────────────────────────────────── -->
+    <!-- ── HERO ──────────────────────────────────────── -->
     <section class="hero">
-      <div class="hero__meta">
-        <span class="line">// Kathmandu, Nepal</span>
-        <span class="line"><span class="dot"></span> open to briefs · 2026</span>
-      </div>
+      <p class="hero__meta">
+        <span>Kathmandu, Nepal</span>
+        <span class="hero__status"><span class="dot"></span>Open to briefs · 2026</span>
+      </p>
 
       <h1 class="hero__title" aria-label="Sandesh Pandey">
         <span class="line"><span class="reveal-line"><span>Sandesh</span></span></span>
-        <span class="line"><span class="reveal-line"><span class="italic font-display">Pandey.</span></span></span>
+        <span class="line"><span class="reveal-line"><span class="italic">Pandey.</span></span></span>
       </h1>
 
       <p class="hero__sub">
-        <span class="reveal-text">Brand strategist · Founder · Storyteller —</span>
+        <span class="reveal-text">Brand strategist, founder, and storyteller —</span>
         <span class="reveal-text">building brands, ventures, and stories from</span>
         <span class="reveal-text">the foothills of the Himalaya.</span>
       </p>
 
       <div class="hero__scroll" aria-hidden="true">
-        <span class="hero__scroll-label">scroll</span>
+        <span>Scroll</span>
         <span class="hero__scroll-line"></span>
       </div>
     </section>
 
-    <!-- ── 02 · MANIFESTO (pinned, word-by-word reveal) ── -->
+    <!-- ── MANIFESTO ─────────────────────────────────── -->
     <section class="manifesto" id="manifesto">
       <div class="manifesto__inner">
-        <p class="eyebrow"><span>·</span> manifesto</p>
+        <p class="eyebrow">Manifesto</p>
         <h2 class="manifesto__text" data-words>
           I work where brand, content, and culture meet — turning slow ideas
           into things people remember, and small ventures into stories worth
@@ -117,19 +85,17 @@
       </div>
     </section>
 
-    <!-- ── 03 · ABOUT ──────────────────────────────────── -->
+    <!-- ── ABOUT ─────────────────────────────────────── -->
     <section class="about" id="about">
       <div class="about__grid">
         <aside class="about__index">
-          <span class="eyebrow"><span>·</span> 01 / about</span>
+          <p class="eyebrow">01 — About</p>
           <figure class="portrait" data-portrait>
             <div class="portrait__frame">
-              <span class="portrait__placeholder font-display">SP</span>
+              <span class="portrait__placeholder">SP</span>
               <img src="assets/portrait.png" alt="Portrait of Sandesh Pandey" onerror="this.classList.add('is-missing')" />
-              <div class="portrait__overlay" aria-hidden="true"></div>
               <div class="portrait__tint" aria-hidden="true"></div>
-              <div class="portrait__corner portrait__corner--tl" aria-hidden="true"></div>
-              <div class="portrait__corner portrait__corner--br" aria-hidden="true"></div>
+              <div class="portrait__overlay" aria-hidden="true"></div>
             </div>
             <figcaption class="portrait__caption">
               <span>Sandesh Pandey</span>
@@ -146,10 +112,9 @@
             platforms, and building ventures rooted in Nepal's identity.
           </p>
           <p class="reveal-line-block">
-            Right now: Head of Marketing at <em class="font-display not-italic md:italic">FinTruction</em>,
-            Brand Manager at <em class="font-display not-italic md:italic">Unchained</em>, founder of
-            <em class="font-display not-italic md:italic">Kranti</em>, and co-founder of
-            <em class="font-display not-italic md:italic">Stitch</em>.
+            Right now: Head of Marketing at <em>FinTruction</em>, Brand Manager
+            at <em>Unchained</em>, founder of <em>Kranti</em>, and co-founder
+            of <em>Stitch</em>.
           </p>
           <p class="reveal-line-block">
             Outside work — Uunchai Fellow, researcher at Project Abhaya,
@@ -179,12 +144,12 @@
       </div>
     </section>
 
-    <!-- ── 04 · EXPERIENCE (horizontal scroll) ────────── -->
+    <!-- ── EXPERIENCE (horizontal scroll) ────────────── -->
     <section class="exp" id="experience">
       <div class="exp__intro">
-        <span class="eyebrow"><span>·</span> 02 / what i'm building</span>
+        <p class="eyebrow">02 — Work</p>
         <h2 class="exp__heading">
-          Four roles. <span class="font-display italic">One throughline.</span>
+          Four roles. <span class="italic">One throughline.</span>
         </h2>
       </div>
 
@@ -196,7 +161,7 @@
               <span class="exp__num">01</span>
               <span class="exp__date">Mar 2026 — Present</span>
             </div>
-            <h3 class="exp__role">Head of <span class="font-display italic">Marketing</span></h3>
+            <h3 class="exp__role">Head of Marketing</h3>
             <p class="exp__company">FinTruction</p>
             <p class="exp__desc">
               Leading marketing strategy and brand growth at an early-stage
@@ -215,7 +180,7 @@
               <span class="exp__num">02</span>
               <span class="exp__date">May 2025 — Present</span>
             </div>
-            <h3 class="exp__role">Brand <span class="font-display italic">Manager</span></h3>
+            <h3 class="exp__role">Brand Manager</h3>
             <p class="exp__company">Unchained · Remote</p>
             <p class="exp__desc">
               Spearheading outbound communications and long-term client
@@ -234,7 +199,7 @@
               <span class="exp__num">03</span>
               <span class="exp__date">2023 — Present</span>
             </div>
-            <h3 class="exp__role">Founder & <span class="font-display italic">Creator</span></h3>
+            <h3 class="exp__role">Founder & Creator</h3>
             <p class="exp__company">Kranti</p>
             <p class="exp__desc">
               Founded a content platform that simplifies current affairs and
@@ -253,7 +218,7 @@
               <span class="exp__num">04</span>
               <span class="exp__date">Jun 2025 — Present</span>
             </div>
-            <h3 class="exp__role">Co-<span class="font-display italic">founder</span></h3>
+            <h3 class="exp__role">Co-founder</h3>
             <p class="exp__company">Stitch · Cultural Fashion</p>
             <p class="exp__desc">
               Co-founded a cultural fashion brand. Leading creative direction
@@ -268,17 +233,17 @@
           </article>
 
           <div class="exp__end">
-            <p class="font-display italic text-bone">to be continued.</p>
+            <p class="italic">to be continued.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── 05 · INITIATIVES ───────────────────────────── -->
+    <!-- ── INITIATIVES & RECOGNITION ─────────────────── -->
     <section class="init">
       <div class="init__head">
-        <span class="eyebrow"><span>·</span> 03 / beyond work</span>
-        <h2>Initiatives & <span class="font-display italic">recognition</span>.</h2>
+        <p class="eyebrow">03 — Beyond Work</p>
+        <h2>Initiatives & <span class="italic">recognition</span>.</h2>
       </div>
 
       <div class="init__grid">
@@ -288,19 +253,19 @@
           <p class="init__where">Project Abhaya · NGO</p>
           <p class="init__desc">
             Research-backed publications on gender equity, youth voice, and
-            community empowerment. Donor engagement & outreach for grassroots
-            campaigns.
+            community empowerment. Donor engagement and outreach for
+            grassroots campaigns.
           </p>
         </article>
 
         <article class="init__card reveal-up">
           <p class="init__date">Jun — Aug 2025</p>
-          <h3>Uunchai <span class="font-display italic">Fellow</span></h3>
+          <h3>Uunchai Fellow</h3>
           <p class="init__where">Uunchai · Summer Cohort</p>
           <p class="init__desc">
             Selected among top students for a competitive, impact-driven
-            fellowship — contributing to launch of a premium cultural
-            product rooted in Nepali tradition.
+            fellowship — contributing to launch of a premium cultural product
+            rooted in Nepali tradition.
           </p>
         </article>
 
@@ -317,18 +282,18 @@
       </div>
 
       <ul class="init__wins">
-        <li class="reveal-up"><span class="num">₹50,000</span><span>District-Level Debate Champion</span></li>
-        <li class="reveal-up"><span class="num">5x</span><span>Quiz Winner — school & college</span></li>
-        <li class="reveal-up"><span class="num">2024</span><span>Creators Mela · Nepal Youth Summit</span></li>
-        <li class="reveal-up"><span class="num">2024</span><span>Volunteer · National Youth Festival</span></li>
+        <li class="reveal-up"><span class="num italic">₹50,000</span><span>District-Level Debate Champion</span></li>
+        <li class="reveal-up"><span class="num italic">5×</span><span>Quiz Winner — school & college</span></li>
+        <li class="reveal-up"><span class="num italic">2024</span><span>Creators Mela · Nepal Youth Summit</span></li>
+        <li class="reveal-up"><span class="num italic">2024</span><span>Volunteer · National Youth Festival</span></li>
       </ul>
     </section>
 
-    <!-- ── 06 · SKILLS ────────────────────────────────── -->
+    <!-- ── SKILLS ────────────────────────────────────── -->
     <section class="skills" id="skills">
       <div class="skills__head">
-        <span class="eyebrow"><span>·</span> 04 / craft</span>
-        <h2>How I <span class="font-display italic">work</span>.</h2>
+        <p class="eyebrow">04 — Craft</p>
+        <h2>How I <span class="italic">work</span>.</h2>
       </div>
 
       <div class="skills__cluster">
@@ -381,48 +346,107 @@
       </div>
     </section>
 
-    <!-- ── 07 · MARQUEE ───────────────────────────────── -->
+    <!-- ── MARQUEE ────────────────────────────────────── -->
     <section class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Brand Strategy</span><span class="dot">•</span>
-        <span class="font-display italic">storytelling</span><span class="dot">•</span>
-        <span>Founder mindset</span><span class="dot">•</span>
-        <span class="font-display italic">cultural ventures</span><span class="dot">•</span>
-        <span>Content systems</span><span class="dot">•</span>
-        <span class="font-display italic">creative direction</span><span class="dot">•</span>
-        <span>Brand Strategy</span><span class="dot">•</span>
-        <span class="font-display italic">storytelling</span><span class="dot">•</span>
-        <span>Founder mindset</span><span class="dot">•</span>
-        <span class="font-display italic">cultural ventures</span><span class="dot">•</span>
-        <span>Content systems</span><span class="dot">•</span>
-        <span class="font-display italic">creative direction</span><span class="dot">•</span>
+        <span>Brand Strategy</span><span class="dot">·</span>
+        <span class="italic">storytelling</span><span class="dot">·</span>
+        <span>Founder mindset</span><span class="dot">·</span>
+        <span class="italic">cultural ventures</span><span class="dot">·</span>
+        <span>Content systems</span><span class="dot">·</span>
+        <span class="italic">creative direction</span><span class="dot">·</span>
+        <span>Brand Strategy</span><span class="dot">·</span>
+        <span class="italic">storytelling</span><span class="dot">·</span>
+        <span>Founder mindset</span><span class="dot">·</span>
+        <span class="italic">cultural ventures</span><span class="dot">·</span>
+        <span>Content systems</span><span class="dot">·</span>
+        <span class="italic">creative direction</span><span class="dot">·</span>
       </div>
     </section>
 
-    <!-- ── 08 · FINALE / CONTACT ──────────────────────── -->
+    <!-- ── CONTACT / FINALE ──────────────────────────── -->
     <section class="finale" id="contact">
-      <span class="eyebrow"><span>·</span> 05 / contact</span>
+      <p class="eyebrow">05 — Contact</p>
 
       <h2 class="finale__title" aria-label="Let's build something">
         <span class="line"><span class="reveal-line"><span>Let's</span></span></span>
-        <span class="line"><span class="reveal-line"><span class="font-display italic">build</span></span></span>
+        <span class="line"><span class="reveal-line"><span class="italic">build</span></span></span>
         <span class="line"><span class="reveal-line"><span>something.</span></span></span>
       </h2>
 
       <p class="finale__sub">
         Got a brand, a brief, or just an idea worth a conversation?
-        My inbox is open.
+        Drop a note — I read everything.
       </p>
 
+      <!-- Contact form -->
+      <form
+        class="form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        data-form
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="form__hp" hidden>
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="form__row">
+          <label for="name" class="form__label">Name</label>
+          <input type="text" name="name" id="name" required autocomplete="name" />
+        </div>
+
+        <div class="form__row">
+          <label for="email" class="form__label">Email</label>
+          <input type="email" name="email" id="email" required autocomplete="email" />
+        </div>
+
+        <div class="form__row">
+          <label for="message" class="form__label">Message</label>
+          <textarea name="message" id="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="form__submit">
+          <span class="form__submit-text">Send message</span>
+          <span class="form__submit-arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="form__success" role="status" aria-live="polite">
+          Thanks — your message is in. I'll be in touch soon.
+        </p>
+        <p class="form__error" role="status" aria-live="polite">
+          Something went wrong. Please email
+          <a href="mailto:official.sandeshpandey@gmail.com">official.sandeshpandey@gmail.com</a>
+          directly.
+        </p>
+      </form>
+
+      <!-- Or direct -->
+      <p class="finale__or">or write directly</p>
       <a href="mailto:official.sandeshpandey@gmail.com" class="finale__email">
-        <span>official.sandeshpandey@gmail.com</span>
-        <span aria-hidden="true">→</span>
+        official.sandeshpandey@gmail.com
       </a>
 
-      <ul class="finale__socials">
-        <li><a href="https://linkedin.com/in/sandeysandesh/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-        <li><a href="#" target="_blank" rel="noopener">Instagram ↗</a></li>
-        <li><a href="#" target="_blank" rel="noopener">Twitter / X ↗</a></li>
+      <!-- Socials -->
+      <ul class="socials">
+        <li>
+          <a href="https://www.linkedin.com/in/sandeyverse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zm1.78 13.02H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0h.01z"/>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/sandeyverse/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+              <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.21-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85 0-3.2.01-3.58.07-4.85.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zm0-2.16C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95 0-3.26-.01-3.67-.07-4.95C23.74 2.7 21.32.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zm0 10.16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+        </li>
       </ul>
     </section>
 
@@ -431,8 +455,8 @@
   <footer class="footer">
     <div class="footer__inner">
       <p>© <span id="year"></span> Sandesh Pandey</p>
-      <p class="font-display italic">sandeshpandey.info.np</p>
-      <p>built by hand · hosted with ♥</p>
+      <p class="italic">sandeshpandey.info.np</p>
+      <p>built by hand</p>
     </div>
   </footer>
 
