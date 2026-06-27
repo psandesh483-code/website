@@ -1,19 +1,23 @@
-/* ────────────────────────────────────────────────
-   Sandesh Pandey — editorial broadsheet
-   Minimal, considered motion
-   ──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   Sandesh Pandey — Liquid Glass portfolio
+   Interactions: smooth scroll · reveals · tilt ·
+   cursor glow · floating widgets · nav · form
+   ════════════════════════════════════════════════ */
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(hover: none)').matches;
 
 window.addEventListener('load', init);
 
 function init() {
+  setupNav();
   setupContactForm();
 
+  // If GSAP failed to load, just show everything.
   if (typeof gsap === 'undefined') {
-    document.querySelectorAll('.reveal-line > span, .reveal-fade').forEach((el) => {
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
       el.style.opacity = 1;
       el.style.transform = 'none';
     });
@@ -23,27 +27,26 @@ function init() {
   gsap.registerPlugin(ScrollTrigger);
 
   setupSmoothScroll();
-  setupCover();
   setupReveals();
-  setupReel();
+  setupTilt();
+  setupFloat();
+  setupCursorGlow();
 }
 
 /* ─── Lenis smooth scroll ──────────────────────── */
-
 function setupSmoothScroll() {
-  if (prefersReducedMotion) return;
-  if (typeof Lenis === 'undefined') return;
-
-  const lenis = new Lenis({
-    duration: 1.25,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    smoothTouch: false,
-  });
-
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  if (!reduceMotion && typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis;
+  }
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -52,145 +55,132 @@ function setupSmoothScroll() {
         const target = document.querySelector(id);
         if (target) {
           e.preventDefault();
-          lenis.scrollTo(target, { offset: -10, duration: 1.4 });
+          if (window.__lenis) window.__lenis.scrollTo(target, { offset: -8, duration: 1.3 });
+          else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
         }
       }
     });
   });
 }
 
-/* ─── COVER entrance ───────────────────────────── */
-
-function setupCover() {
-  const tl = gsap.timeline({ delay: 0.2, defaults: { ease: 'expo.out' } });
-
-  tl.to('.cover__title .reveal-line > span', {
-    yPercent: 0,
-    duration: 1.3,
-    stagger: 0.08,
-  });
-
-  tl.to('.cover__sub', {
-    opacity: 1,
-    y: 0,
-    duration: 0.9,
-  }, '-=0.7');
-}
-
-/* ─── REEL — sliced strip parallax ─────────────── */
-
-function setupReel() {
-  const portrait = document.querySelector('[data-reel-portrait]');
-  if (!portrait) return;
-
-  const strips = portrait.querySelectorAll('.reel__strip');
-  if (!strips.length) return;
-
-  if (prefersReducedMotion) return; // strips render in place; image is whole
-
-  // Each strip parallaxes vertically with its own speed/direction.
-  // Result: the image is whole only at one scroll moment; before/after,
-  // strips drift apart at slightly different speeds.
-  strips.forEach((strip, i) => {
-    const direction = i % 2 === 0 ? -1 : 1;
-    const intensity = 14 + Math.abs(i - 2.5) * 5; // 14 → 26.5%
-    const offset = direction * intensity;
-
-    gsap.fromTo(strip,
-      { yPercent: offset },
-      {
-        yPercent: -offset,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.reel',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.2,
-        },
-      }
-    );
-  });
-
-  // The whole portrait gently inhales — slight scale shift across the section.
-  gsap.fromTo(portrait,
-    { scale: 0.94 },
-    {
-      scale: 1.05,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.reel',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.2,
-      },
-    }
-  );
-
-  // Stage labels (N° 01, Kathmandu) drift opposite directions on scroll.
-  const stage = document.querySelector('[data-reel-stage]');
-  if (stage) {
-    const num = stage.querySelector('.reel__num');
-    const date = stage.querySelector('.reel__date');
-
-    if (num) {
-      gsap.fromTo(num,
-        { yPercent: 25, opacity: 0 },
-        {
-          yPercent: -25,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.reel',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2,
-          },
-        }
-      );
-    }
-
-    if (date) {
-      gsap.fromTo(date,
-        { yPercent: -25, opacity: 0 },
-        {
-          yPercent: 25,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.reel',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2,
-          },
-        }
-      );
-    }
-  }
-}
-
-/* ─── REVEALS — soft, editorial ─────────────────── */
-
+/* ─── Reveals ──────────────────────────────────── */
 function setupReveals() {
-  if (prefersReducedMotion) {
-    gsap.set('.reveal-fade', { opacity: 1, y: 0 });
+  if (reduceMotion) {
+    gsap.set('[data-reveal]', { opacity: 1, y: 0 });
     return;
   }
 
-  // batch reveal-fade elements (excluding cover ones already handled)
-  gsap.utils.toArray('.reveal-fade').forEach((el) => {
-    if (el.closest('.cover')) return; // skip — handled in setupCover
+  // Group elements by their nearest section so siblings stagger together.
+  const items = gsap.utils.toArray('[data-reveal]');
+  items.forEach((el) => {
     gsap.to(el, {
       opacity: 1,
       y: 0,
-      duration: 1.0,
+      duration: 0.9,
       ease: 'expo.out',
-      scrollTrigger: { trigger: el, start: 'top 90%' },
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+    });
+  });
+
+  // Hero items: orchestrate a staggered entrance on load instead of waiting.
+  const heroItems = gsap.utils.toArray('.hero [data-reveal]');
+  if (heroItems.length) {
+    gsap.killTweensOf(heroItems);
+    gsap.set(heroItems, { opacity: 0, y: 28 });
+    gsap.to(heroItems, {
+      opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.15,
+    });
+  }
+}
+
+/* ─── 3D tilt on glass cards ───────────────────── */
+function setupTilt() {
+  if (reduceMotion || isTouch) return;
+  const MAX = 6; // degrees
+
+  document.querySelectorAll('[data-tilt]').forEach((el) => {
+    let raf = null;
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.transform =
+          `perspective(900px) rotateX(${(-py * MAX).toFixed(2)}deg) rotateY(${(px * MAX).toFixed(2)}deg) translateZ(0)`;
+      });
+    });
+    el.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      el.style.transform = '';
     });
   });
 }
 
-/* ─── CONTACT FORM (Netlify Forms via AJAX) ────── */
+/* ─── Floating hero widgets ────────────────────── */
+function setupFloat() {
+  if (reduceMotion) return;
 
+  document.querySelectorAll('[data-float]').forEach((el, i) => {
+    gsap.to(el, {
+      y: i % 2 ? 12 : -12,
+      duration: 3 + i * 0.6,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    });
+  });
+
+  // subtle mouse parallax for the whole hero cluster
+  if (isTouch) return;
+  const cluster = document.querySelector('.hero__cluster');
+  const hero = document.querySelector('.hero');
+  if (!cluster || !hero) return;
+
+  hero.addEventListener('mousemove', (e) => {
+    const r = hero.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    gsap.to(cluster, { x: px * 18, y: py * 18, duration: 0.8, ease: 'power2.out' });
+  });
+  hero.addEventListener('mouseleave', () => {
+    gsap.to(cluster, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' });
+  });
+}
+
+/* ─── Cursor glow ──────────────────────────────── */
+function setupCursorGlow() {
+  if (reduceMotion || isTouch) return;
+  const glow = document.querySelector('.cursor-glow');
+  if (!glow) return;
+
+  let visible = false;
+  window.addEventListener('mousemove', (e) => {
+    if (!visible) { glow.style.opacity = '1'; visible = true; }
+    gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
+  });
+  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; visible = false; });
+}
+
+/* ─── Mobile nav drawer ────────────────────────── */
+function setupNav() {
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const drawer = document.querySelector('[data-nav-drawer]');
+  if (!toggle || !drawer) return;
+
+  const close = () => {
+    drawer.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+}
+
+/* ─── Contact form (Netlify Forms via AJAX) ────── */
 function setupContactForm() {
   const form = document.querySelector('[data-form]');
   if (!form) return;
@@ -204,35 +194,29 @@ function setupContactForm() {
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      if (submitText) submitText.textContent = 'Sending...';
+      if (submitText) submitText.textContent = 'Sending…';
     }
-
     form.classList.remove('is-error');
 
-    const formData = new FormData(form);
-
     try {
+      const formData = new FormData(form);
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData).toString(),
       });
-
       if (!response.ok) throw new Error('Network error');
-
       form.classList.add('is-sent');
     } catch (err) {
       console.error('Form submission failed:', err);
       form.classList.add('is-error');
-
       if (submitBtn) submitBtn.disabled = false;
       if (submitText) submitText.textContent = originalText;
     }
   });
 }
 
-/* ─── refresh on resize ────────────────────────── */
-
+/* ─── Refresh ScrollTrigger on resize ──────────── */
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);

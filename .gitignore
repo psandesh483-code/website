@@ -17,6 +17,13 @@ desktop.ini
 .env
 .env.local
 
+# Private documents — NEVER commit (contain personal ID / signature)
+Sandesh_Citizenship.jpg
+Sandesh_CoverLetter.jpg
+
+# Heavy photo sources — only the optimized assets/*.jpg ship to the site
+Sandesh Images/
+
 # Build output (if you later add a build step)
 dist/
 build/

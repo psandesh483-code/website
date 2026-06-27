@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sandesh Pandey — Brand strategist & founder</title>
-  <meta name="description" content="Sandesh Pandey — brand strategist, founder, and storyteller from Kathmandu. An ongoing personal record." />
-  <meta name="theme-color" content="#f5f1e8" />
+  <title>Sandesh Pandey · Marketing, strategy & growth</title>
+  <meta name="description" content="Sandesh Pandey, a Kathmandu-based marketer helping brands grow through strategy, content, brand, and growth. Marketing that actually works." />
+  <meta name="theme-color" content="#0d0a08" />
 
-  <meta property="og:title" content="Sandesh Pandey — Brand strategist & founder" />
-  <meta property="og:description" content="Brand strategist, founder, and storyteller from Kathmandu." />
+  <meta property="og:title" content="Sandesh Pandey · Marketing, strategy & growth" />
+  <meta property="og:description" content="I help brands grow through marketing that actually works: strategy, content, brand & growth." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sandeshpandey.info.np" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   />
 
@@ -31,351 +31,466 @@
     <textarea name="message"></textarea>
   </form>
 
-  <!-- ── MASTHEAD ─────────────────────────────────── -->
-  <header class="masthead">
-    <div class="masthead__line">
-      <span>Sandesh Pandey</span>
-      <span class="masthead__center">Vol. 01</span>
-      <span>Kathmandu · 2026</span>
+  <!-- ── ATMOSPHERE: aurora orbs + grain + cursor glow ── -->
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="orb orb--4"></div>
+    <div class="bg__grain"></div>
+  </div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ── NAV ─────────────────────────────────────── -->
+  <header class="nav" id="top">
+    <div class="nav__inner glass">
+      <a href="#top" class="nav__brand" aria-label="Sandesh Pandey, home">
+        <img class="nav__avatar" src="assets/avatar.jpg" alt="Sandesh Pandey" width="36" height="36" />
+        <span class="nav__name">Sandesh Pandey</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#recognition">Recognition</a>
+        <a href="#craft">Craft</a>
+      </nav>
+
+      <a href="#contact" class="btn btn--accent nav__cta">Get in touch</a>
+
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav__drawer glass" data-nav-drawer>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#recognition">Recognition</a>
+      <a href="#craft">Craft</a>
+      <a href="#contact" class="btn btn--accent">Get in touch</a>
     </div>
   </header>
 
-  <main>
+  <main id="main">
 
-    <!-- ── COVER ──────────────────────────────────── -->
-    <section class="cover" id="top">
-      <div class="cover__grid">
-        <h1 class="cover__title" aria-label="Brand strategist, founder, and storyteller from the foothills of the Himalaya">
-          <span class="line"><span class="reveal-line"><span>Brand strategist,</span></span></span>
-          <span class="line"><span class="reveal-line"><span><em>founder,</em></span></span></span>
-          <span class="line"><span class="reveal-line"><span>and storyteller</span></span></span>
-          <span class="line"><span class="reveal-line"><span>from the <em>foothills</em></span></span></span>
-          <span class="line"><span class="reveal-line"><span>of the Himalaya.</span></span></span>
+    <!-- ── HERO ─────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero__media" aria-hidden="true">
+        <img src="assets/hero.jpg" alt="" width="1040" height="1300" fetchpriority="high" />
+      </div>
+
+      <div class="hero__text">
+        <span class="badge reveal" data-reveal>
+          <span class="badge__dot"></span> Open to B2B marketing chats
+        </span>
+
+        <h1 class="hero__title">
+          <span class="line" data-reveal>Allegedly, I help</span>
+          <span class="line" data-reveal>brands <span class="grad">print money</span>.</span>
         </h1>
-        <p class="cover__sub reveal-fade">
-          An ongoing personal record of work, ventures, and ideas — by
-          Sandesh Pandey, written in Kathmandu.
-        </p>
-      </div>
 
-      <a href="#note" class="cover__scroll" aria-hidden="true">
-        <span>Begin reading</span>
-        <span class="cover__scroll-line"></span>
-      </a>
-    </section>
-
-    <!-- ── AUTHOR'S NOTE ────────────────────────── -->
-    <section class="note" id="note">
-      <p class="section-label reveal-fade">A note from the author</p>
-      <p class="note__body reveal-fade">
-        <span class="dropcap">I</span> work where brand, content, and culture
-        meet — turning slow ideas into things people remember, and small
-        ventures into stories worth telling. This is a small corner of the
-        internet that holds a record of that work, written in roughly the
-        order it happened.
-      </p>
-    </section>
-
-    <!-- ── BIOGRAPHY ──────────────────────────────── -->
-    <section class="bio" id="about">
-      <p class="section-label reveal-fade">— About</p>
-
-      <div class="bio__body">
-        <p class="reveal-fade">
-          Sandesh Pandey is a Kathmandu-based brand strategist and creator
-          whose work sits at the intersection of brand, content, and
-          culture. He runs marketing for early-stage companies, scales
-          creator-led platforms, and builds ventures rooted in Nepal's
-          identity.
+        <p class="hero__sub reveal" data-reveal>
+          Through marketing that actually works: strategy, content, brand &amp; growth.
         </p>
 
-        <p class="reveal-fade">
-          He is presently Head of Marketing at <em>FinTruction</em>, Brand
-          Manager at <em>Unchained</em>, founder of <em>Kranti</em> — a
-          content platform on current affairs and culture — and co-founder
-          of <em>Stitch</em>, a cultural fashion brand.
-        </p>
-
-        <p class="reveal-fade">
-          Outside of his commercial work, he is a Uunchai Fellow, a
-          researcher with Project Abhaya, and a former Event Manager at
-          the SXC Literary Club. He studied science at St. Xavier's
-          College, Maitighar.
-        </p>
-      </div>
-    </section>
-
-    <!-- ── PHOTOGRAPH (sliced strip parallax) ─────── -->
-    <section class="reel" data-reel>
-      <div class="reel__inner">
-        <p class="section-label reveal-fade">— A photograph</p>
-
-        <div class="reel__stage" data-reel-stage>
-          <span class="reel__num reveal-fade">N° 01</span>
-          <div class="reel__portrait" data-reel-portrait>
-            <div class="reel__strip" style="--i: 0; --total: 6;"></div>
-            <div class="reel__strip" style="--i: 1; --total: 6;"></div>
-            <div class="reel__strip" style="--i: 2; --total: 6;"></div>
-            <div class="reel__strip" style="--i: 3; --total: 6;"></div>
-            <div class="reel__strip" style="--i: 4; --total: 6;"></div>
-            <div class="reel__strip" style="--i: 5; --total: 6;"></div>
-          </div>
-          <span class="reel__date reveal-fade">Kathmandu<br/>March 2026</span>
+        <div class="hero__actions reveal" data-reveal>
+          <a href="#contact" class="btn btn--accent">
+            Let's talk
+            <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#work" class="btn btn--ghost">View work</a>
         </div>
 
-        <p class="reel__caption reveal-fade">
-          <em>A working portrait.</em> Six vertical frames, parallaxed at
-          different speeds — the image is whole only at a single moment in
-          your scroll.
-        </p>
-      </div>
-    </section>
-
-    <!-- ── CURRENTLY ──────────────────────────────── -->
-    <section class="now">
-      <p class="section-label reveal-fade">— Currently</p>
-
-      <ul class="now__list">
-        <li class="reveal-fade">
-          <span class="now__role">Head of Marketing</span>
-          at <em>FinTruction</em>.
-          <span class="now__date">Mar 2026 → present.</span>
-        </li>
-        <li class="reveal-fade">
-          <span class="now__role">Brand Manager</span>
-          at <em>Unchained</em>, remote.
-          <span class="now__date">May 2025 → present.</span>
-        </li>
-        <li class="reveal-fade">
-          <span class="now__role">Founder & Creator</span>
-          of <em>Kranti</em>.
-          <span class="now__date">2023 → present.</span>
-        </li>
-        <li class="reveal-fade">
-          <span class="now__role">Co-founder</span>
-          of <em>Stitch</em>, a cultural fashion brand.
-          <span class="now__date">Jun 2025 → present.</span>
-        </li>
-        <li class="reveal-fade">
-          <span class="now__role">Researcher & Volunteer</span>
-          at <em>Project Abhaya</em>.
-          <span class="now__date">Jul 2025 → present.</span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ── SELECTED WORK ─────────────────────────── -->
-    <section class="work" id="experience">
-      <p class="section-label reveal-fade">— Selected work</p>
-
-      <ol class="work__list">
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2026 →</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>FinTruction</em>, Head of Marketing.</h3>
-            <p class="work__desc">
-              Leading marketing strategy and brand growth at an early-stage
-              fintech — shaping positioning, launch motions, and the broader
-              go-to-market story.
-            </p>
-          </div>
-        </li>
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2025 →</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>Unchained</em>, Brand Manager.</h3>
-            <p class="work__desc">
-              Spearheading outbound communications and long-term client
-              relationships across international markets. Co-developing
-              scalable content systems for high-impact creators.
-            </p>
-          </div>
-        </li>
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2025 →</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>Stitch</em>, Co-founder.</h3>
-            <p class="work__desc">
-              Co-founded a cultural fashion brand. Leading creative direction
-              and premium bag design that blends Nepal's regional heritage
-              with modern, sustainable fashion.
-            </p>
-          </div>
-        </li>
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2023 →</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>Kranti</em>, Founder & Creator.</h3>
-            <p class="work__desc">
-              Founded a content platform that simplifies current affairs and
-              cultural topics through digital storytelling. Scaled reach
-              with research-led strategy and narrative optimization.
-            </p>
-          </div>
-        </li>
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2023 — 2025</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>SXC Literary Club</em>, Event Manager.</h3>
-            <p class="work__desc">
-              Led inter-college events — Prawaha Kabi Gosthi, Debates,
-              Quiz Mania — managing teams of 20+ and 500+ attendees per
-              event.
-            </p>
-          </div>
-        </li>
-
-        <li class="work__item reveal-fade">
-          <div class="work__year">2025</div>
-          <div class="work__detail">
-            <h3 class="work__head"><em>Uunchai</em>, Summer Fellow.</h3>
-            <p class="work__desc">
-              Selected among top students for a competitive,
-              impact-driven fellowship — contributing to launch of a
-              premium cultural product rooted in Nepali tradition.
-            </p>
-          </div>
-        </li>
-
-      </ol>
-    </section>
-
-    <!-- ── RECOGNITION ───────────────────────────── -->
-    <section class="awards">
-      <p class="section-label reveal-fade">— Recognition</p>
-      <ol class="awards__list">
-        <li class="reveal-fade">
-          <span>District-Level Debate Champion</span>
-          <span class="awards__note">Rs. 50,000 prize · 2024</span>
-        </li>
-        <li class="reveal-fade">
-          <span>Quiz Winner — multiple events</span>
-          <span class="awards__note">School & college, ongoing</span>
-        </li>
-        <li class="reveal-fade">
-          <span>Creators Mela 2024 · Nepal Youth Summit 2024</span>
-          <span class="awards__note">Participant</span>
-        </li>
-        <li class="reveal-fade">
-          <span>National Youth Festival 2024 · SXC Mini Marathon</span>
-          <span class="awards__note">Volunteer</span>
-        </li>
-      </ol>
-    </section>
-
-    <!-- ── CRAFT ─────────────────────────────────── -->
-    <section class="craft" id="skills">
-      <p class="section-label reveal-fade">— Craft</p>
-      <p class="craft__body reveal-fade">
-        I work in <em>strategic communication</em>,
-        <em>brand strategy</em>, <em>marketing</em>,
-        <em>research writing</em>, <em>event planning</em>,
-        <em>creative direction</em>, and <em>storytelling</em> — moving
-        between research, narrative, and execution depending on the brief.
-      </p>
-      <p class="craft__body reveal-fade">
-        Tools I reach for: Notion, Canva, Photoshop, the Google Workspace.
-        I write and speak in English, Nepali, and Hindi.
-      </p>
-    </section>
-
-    <!-- ── COLOPHON / CONTACT ────────────────────── -->
-    <section class="colophon" id="contact">
-      <p class="section-label reveal-fade">— Get in touch</p>
-
-      <p class="colophon__intro reveal-fade">
-        For a brief, a conversation, or just to say hello — drop a note.
-        I read everything.
-      </p>
-
-      <form
-        class="form reveal-fade"
-        name="contact"
-        method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        data-form
-      >
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="form__hp" hidden>
-          <label>Don't fill this out: <input name="bot-field" /></label>
-        </p>
-
-        <div class="form__row">
-          <label for="name" class="form__label">Your name</label>
-          <input type="text" name="name" id="name" required autocomplete="name" />
-        </div>
-
-        <div class="form__row">
-          <label for="email" class="form__label">Your email</label>
-          <input type="email" name="email" id="email" required autocomplete="email" />
-        </div>
-
-        <div class="form__row">
-          <label for="message" class="form__label">A note</label>
-          <textarea name="message" id="message" rows="5" required></textarea>
-        </div>
-
-        <button type="submit" class="form__submit">
-          <span class="form__submit-text">Send the note</span>
-          <span class="form__submit-arrow" aria-hidden="true">→</span>
-        </button>
-
-        <p class="form__success" role="status" aria-live="polite">
-          <em>Received.</em> I'll be in touch.
-        </p>
-        <p class="form__error" role="status" aria-live="polite">
-          The form didn't go through. Write to
-          <a href="mailto:official.sandeshpandey@gmail.com">official.sandeshpandey@gmail.com</a>
-          instead.
-        </p>
-      </form>
-
-      <div class="colophon__direct reveal-fade">
-        <p class="section-label">Or, more directly</p>
-        <ul class="colophon__links">
+        <ul class="hero__social reveal" data-reveal aria-label="Social links">
           <li>
-            <a href="mailto:official.sandeshpandey@gmail.com">
-              <span>Email</span>
-              <span class="colophon__handle">official.sandeshpandey@gmail.com</span>
+            <a href="mailto:official.sandeshpandey@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/sandeyverse/" target="_blank" rel="noopener">
-              <span>LinkedIn</span>
-              <span class="colophon__handle">@sandeyverse ↗</span>
+            <a href="https://www.linkedin.com/in/sandeyverse/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" class="icon icon--fill" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.4 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9z"/></svg>
             </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/sandeyverse/" target="_blank" rel="noopener">
-              <span>Instagram</span>
-              <span class="colophon__handle">@sandeyverse ↗</span>
+            <a href="https://www.instagram.com/sandeyverse/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
             </a>
           </li>
         </ul>
       </div>
     </section>
 
+    <!-- ── ABOUT ────────────────────────────────────── -->
+    <section class="section" id="about">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">01 · About</span>
+        <h2 class="section__title">A bit <em>about me</em></h2>
+      </div>
+
+      <div class="about glass" data-reveal>
+        <p class="about__lead">
+          <span class="dropcap">I</span>'m a marketer who cares less about vanity
+          metrics and more about the ones that move revenue. I help brands find
+          their <em>position</em>, sharpen their <em>story</em>, and turn
+          attention into <em>growth</em>, the kind of marketing that actually
+          works.
+        </p>
+        <p class="about__body">
+          Right now I'm Head of Marketing at <em>FinTruction</em> and Brand
+          Manager at <em>Unchained</em>, while running <em>Kranti</em>, a content
+          platform on current affairs and culture, and co-founding
+          <em>Stitch</em>. My work runs across strategy, content, brand, and
+          growth, with a soft spot for B2B. Off the clock, I'm a Uunchai Fellow
+          and a researcher with Project Abhaya. I studied science at St. Xavier's
+          College, Maitighar.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CINEMATIC BAND I (silhouette) ────────────── -->
+    <section class="cinematic" aria-label="Portrait of Sandesh Pandey">
+      <img src="assets/silhouette.jpg" alt="Sandesh Pandey in silhouette against a Himalayan sunrise" loading="lazy" />
+      <div class="cinematic__inner">
+        <p class="cinematic__quote" data-reveal>
+          I turn slow ideas into things people <span class="grad">remember</span>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── WHAT I DO / SERVICES ─────────────────────── -->
+    <section class="section" id="services">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">02 · What I do</span>
+        <h2 class="section__title">Four things I <em>do</em></h2>
+      </div>
+
+      <div class="cards cards--4">
+        <article class="service glass tilt" data-tilt data-reveal>
+          <span class="service__no">01</span>
+          <h3 class="service__title">Strategy</h3>
+          <p class="service__desc">
+            Positioning, messaging, and go-to-market that give a brand a real
+            reason to be chosen.
+          </p>
+        </article>
+        <article class="service glass tilt" data-tilt data-reveal>
+          <span class="service__no">02</span>
+          <h3 class="service__title">Content</h3>
+          <p class="service__desc">
+            Research-led content and storytelling that earns attention, and
+            actually keeps it.
+          </p>
+        </article>
+        <article class="service glass tilt" data-tilt data-reveal>
+          <span class="service__no">03</span>
+          <h3 class="service__title">Brand</h3>
+          <p class="service__desc">
+            Identity and narrative that make a brand recognisable, consistent,
+            and hard to forget.
+          </p>
+        </article>
+        <article class="service glass tilt" data-tilt data-reveal>
+          <span class="service__no">04</span>
+          <h3 class="service__title">Growth</h3>
+          <p class="service__desc">
+            Campaigns, funnels, and creator-led motion that turn attention into
+            revenue.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── CURRENTLY ────────────────────────────────── -->
+    <section class="section" id="now">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">03 · Currently</span>
+        <h2 class="section__title">Where I am <em>now</em></h2>
+      </div>
+
+      <div class="cards">
+        <article class="card glass tilt" data-tilt data-reveal>
+          <span class="card__tag">Marketing</span>
+          <h3 class="card__title">Head of Marketing</h3>
+          <p class="card__org">FinTruction</p>
+          <p class="card__date">Mar 2026 → present</p>
+        </article>
+        <article class="card glass tilt" data-tilt data-reveal>
+          <span class="card__tag">Brand</span>
+          <h3 class="card__title">Brand Manager</h3>
+          <p class="card__org">Unchained · remote</p>
+          <p class="card__date">May 2025 → present</p>
+        </article>
+        <article class="card glass tilt" data-tilt data-reveal>
+          <span class="card__tag">Founder</span>
+          <h3 class="card__title">Founder &amp; Creator</h3>
+          <p class="card__org">Kranti</p>
+          <p class="card__date">2023 → present</p>
+        </article>
+        <article class="card glass tilt" data-tilt data-reveal>
+          <span class="card__tag">Co-founder</span>
+          <h3 class="card__title">Co-founder</h3>
+          <p class="card__org">Stitch · cultural fashion</p>
+          <p class="card__date">Jun 2025 → present</p>
+        </article>
+        <article class="card glass tilt" data-tilt data-reveal>
+          <span class="card__tag">Research</span>
+          <h3 class="card__title">Researcher &amp; Volunteer</h3>
+          <p class="card__org">Project Abhaya</p>
+          <p class="card__date">Jul 2025 → present</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── SELECTED WORK ────────────────────────────── -->
+    <section class="section" id="work">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">04 · Selected work</span>
+        <h2 class="section__title">Things I've <em>built</em></h2>
+      </div>
+
+      <ol class="work">
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2026 →</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>FinTruction</em>, Head of Marketing</h3>
+            <p class="work__desc">
+              Leading marketing strategy and brand growth at an early-stage
+              fintech, shaping positioning, launch motions, and the broader
+              go-to-market story.
+            </p>
+          </div>
+        </li>
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2025 →</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>Unchained</em>, Brand Manager</h3>
+            <p class="work__desc">
+              Spearheading outbound communications and long-term client
+              relationships across international markets. Co-developing scalable
+              content systems for high-impact creators.
+            </p>
+          </div>
+        </li>
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2025 →</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>Stitch</em>, Co-founder</h3>
+            <p class="work__desc">
+              Co-founded a cultural fashion brand. Leading creative direction
+              and premium bag design that blends Nepal's regional heritage with
+              modern, sustainable fashion.
+            </p>
+          </div>
+        </li>
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2023 →</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>Kranti</em>, Founder &amp; Creator</h3>
+            <p class="work__desc">
+              Founded a content platform that simplifies current affairs and
+              cultural topics through digital storytelling. Scaled reach with
+              research-led strategy and narrative optimization.
+            </p>
+          </div>
+        </li>
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2023–25</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>SXC Literary Club</em>, Event Manager</h3>
+            <p class="work__desc">
+              Led inter-college events: Prawaha Kabi Gosthi, Debates, Quiz
+              Mania, managing teams of 20+ and 500+ attendees per event.
+            </p>
+          </div>
+        </li>
+        <li class="work__item glass" data-reveal>
+          <div class="work__year">2025</div>
+          <div class="work__detail">
+            <h3 class="work__head"><em>Uunchai</em>, Summer Fellow</h3>
+            <p class="work__desc">
+              Selected among top students for a competitive, impact-driven
+              fellowship, contributing to launch of a premium cultural product
+              rooted in Nepali tradition.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ── RECOGNITION ──────────────────────────────── -->
+    <section class="section" id="recognition">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">05 · Recognition</span>
+        <h2 class="section__title">A few <em>honours</em></h2>
+      </div>
+
+      <ul class="awards glass" data-reveal>
+        <li>
+          <span class="awards__name">District-Level Debate Champion</span>
+          <span class="awards__note">Rs. 50,000 prize · 2024</span>
+        </li>
+        <li>
+          <span class="awards__name">Quiz Winner, multiple events</span>
+          <span class="awards__note">School &amp; college, ongoing</span>
+        </li>
+        <li>
+          <span class="awards__name">Creators Mela · Nepal Youth Summit</span>
+          <span class="awards__note">Participant · 2024</span>
+        </li>
+        <li>
+          <span class="awards__name">National Youth Festival · SXC Mini Marathon</span>
+          <span class="awards__note">Volunteer · 2024</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ── CRAFT ────────────────────────────────────── -->
+    <section class="section" id="craft">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">06 · Craft</span>
+        <h2 class="section__title">How I <em>work</em></h2>
+      </div>
+
+      <div class="craft glass" data-reveal>
+        <div class="craft__group">
+          <span class="craft__label">Disciplines</span>
+          <div class="chips">
+            <span class="chip">Strategic communication</span>
+            <span class="chip">Brand strategy</span>
+            <span class="chip">Marketing</span>
+            <span class="chip">Research writing</span>
+            <span class="chip">Event planning</span>
+            <span class="chip">Creative direction</span>
+            <span class="chip">Storytelling</span>
+          </div>
+        </div>
+        <div class="craft__group">
+          <span class="craft__label">Tools</span>
+          <div class="chips">
+            <span class="chip">Notion</span>
+            <span class="chip">Canva</span>
+            <span class="chip">Photoshop</span>
+            <span class="chip">Google Workspace</span>
+          </div>
+        </div>
+        <div class="craft__group">
+          <span class="craft__label">Languages</span>
+          <div class="chips">
+            <span class="chip">English</span>
+            <span class="chip">Nepali</span>
+            <span class="chip">Hindi</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CINEMATIC BAND II (mountain) ─────────────── -->
+    <section class="cinematic cinematic--closer" aria-label="On a Himalayan ridge">
+      <img src="assets/mountain.jpg" alt="Sandesh Pandey standing on a Himalayan ridge at sunset" loading="lazy" />
+      <div class="cinematic__inner">
+        <p class="cinematic__quote" data-reveal>
+          Let's build something <span class="grad">worth telling</span>.
+        </p>
+        <a href="#contact" class="btn btn--accent cinematic__cta" data-reveal>
+          Start a conversation
+          <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ──────────────────────────────────── -->
+    <section class="section" id="contact">
+      <div class="section__head" data-reveal>
+        <span class="eyebrow">07 · Get in touch</span>
+        <h2 class="section__title">Let's <span class="grad">make something</span></h2>
+      </div>
+
+      <div class="contact">
+        <form
+          class="form glass"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          data-form
+          data-reveal
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="form__hp" hidden>
+            <label>Don't fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div class="form__row">
+            <label for="name" class="form__label">Your name</label>
+            <input type="text" name="name" id="name" required autocomplete="name" placeholder="Jane Doe" />
+          </div>
+
+          <div class="form__row">
+            <label for="email" class="form__label">Your email</label>
+            <input type="email" name="email" id="email" required autocomplete="email" placeholder="jane@email.com" />
+          </div>
+
+          <div class="form__row">
+            <label for="message" class="form__label">A note</label>
+            <textarea name="message" id="message" rows="4" required placeholder="Tell me about the brief, the idea, or just say hello…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--accent form__submit">
+            <span class="form__submit-text">Send the note</span>
+            <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+
+          <p class="form__success" role="status" aria-live="polite">
+            <em>Received.</em> I'll be in touch soon.
+          </p>
+          <p class="form__error" role="status" aria-live="polite">
+            The form didn't go through. Write to
+            <a href="mailto:official.sandeshpandey@gmail.com">official.sandeshpandey@gmail.com</a>
+            instead.
+          </p>
+        </form>
+
+        <aside class="contact__direct glass" data-reveal>
+          <span class="craft__label">Or, more directly</span>
+          <ul class="contact__links">
+            <li>
+              <a href="mailto:official.sandeshpandey@gmail.com">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+                <span class="contact__type">Email</span>
+                <span class="contact__handle">official.sandeshpandey@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/sandeyverse/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" class="icon icon--fill" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.4 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9z"/></svg>
+                <span class="contact__type">LinkedIn</span>
+                <span class="contact__handle">@sandeyverse ↗</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/sandeyverse/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+                <span class="contact__type">Instagram</span>
+                <span class="contact__handle">@sandeyverse ↗</span>
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
   </main>
 
-  <!-- ── FOOTER / COLOPHON ────────────────────────── -->
+  <!-- ── FOOTER ───────────────────────────────────── -->
   <footer class="footer">
-    <div class="footer__rule"></div>
-    <div class="footer__inner">
-      <p>
-        © <span id="year"></span> Sandesh Pandey · Kathmandu.
-      </p>
-      <p class="footer__set">
-        Set in <em>Fraunces</em> and Inter. Hosted on Netlify.
-      </p>
-      <p>
-        <a href="#top">Back to top ↑</a>
-      </p>
+    <div class="footer__inner glass">
+      <p>© <span id="year"></span> Sandesh Pandey · Kathmandu</p>
+      <p class="footer__set">Set in Bricolage Grotesque &amp; Manrope · Hosted on Netlify</p>
+      <a href="#top" class="footer__top">Back to top ↑</a>
     </div>
   </footer>
 
