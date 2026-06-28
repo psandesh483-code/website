@@ -355,6 +355,17 @@ em { font-style: italic; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px -12px rgba(0,0,0,0.7);
 }
 .card__brand img { height: 20px; width: auto; display: block; }
+
+/* whole-card link affordance */
+a.card { cursor: pointer; }
+.card__go {
+  position: absolute; top: 18px; right: 18px;
+  color: var(--text-faint);
+  transition: color .25s var(--ease), transform .25s var(--ease);
+}
+.card__go .icon { width: 18px; height: 18px; }
+a.card:hover .card__go,
+a.card:focus-visible .card__go { color: var(--accent); transform: translate(2px, -2px); }
 .card__brand[data-logo="kr"] { padding: 0 8px; }
 .card__brand[data-logo="kr"] img { height: 28px; border-radius: 6px; }
 .card__brand[data-logo="un"] img { height: 22px; filter: brightness(0); opacity: 0.8; }
