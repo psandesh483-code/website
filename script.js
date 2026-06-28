@@ -37,7 +37,7 @@ function init() {
 function setupSmoothScroll() {
   if (!reduceMotion && typeof Lenis !== 'undefined') {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
@@ -51,13 +51,22 @@ function setupSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
-      if (id.length > 1) {
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          if (window.__lenis) window.__lenis.scrollTo(target, { offset: -8, duration: 1.3 });
-          else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-        }
+      if (id.length <= 1) return;
+
+      // "#top" (nav brand + back-to-top) points at the fixed header, which
+      // Lenis can't resolve a scroll position for — send it to the very top.
+      if (id === '#top') {
+        e.preventDefault();
+        if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
+        else window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        return;
+      }
+
+      const target = document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        if (window.__lenis) window.__lenis.scrollTo(target, { offset: -8, duration: 1.2 });
+        else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
       }
     });
   });

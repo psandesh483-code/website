@@ -32,7 +32,7 @@
   --radius:        24px;
   --radius-sm:     16px;
   --maxw:          1200px;
-  --blur:          22px;
+  --blur:          14px;
 
   --ease:          cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -41,6 +41,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* Lenis drives smooth scroll; native smooth-scroll fights it → disable when active */
+html.lenis-smooth { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -53,6 +55,7 @@ body {
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img { max-width: 100%; display: block; }
@@ -86,7 +89,7 @@ em { font-style: italic; }
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(64px);
   opacity: 0.55;
   will-change: transform;
 }
@@ -108,7 +111,7 @@ em { font-style: italic; }
 @keyframes drift3 { to { transform: translate3d(6vw, -7vw, 0) scale(1.2); } }
 
 .bg__grain {
-  position: absolute; inset: -200%;
+  position: absolute; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
   opacity: 0.05; mix-blend-mode: overlay; pointer-events: none;
 }
@@ -308,7 +311,7 @@ em { font-style: italic; }
   position: absolute; inset: 0; z-index: -2;
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
 }
-.cinematic--closer img { object-position: 50% 72%; }
+.cinematic--closer img { object-position: 50% 40%; }
 /* silhouette band: push the figure to the right, leave the left clear for text */
 .cinematic:not(.cinematic--closer) img {
   left: auto; right: 0; width: min(72%, 820px);
@@ -332,6 +335,7 @@ em { font-style: italic; }
   font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600;
   font-size: clamp(1.9rem, 4.6vw, 3.3rem); line-height: 1.08; letter-spacing: -0.025em;
   max-width: 15ch;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
 }
 .cinematic__by { color: var(--text-dim); margin-top: 16px; font-size: 0.95rem; }
 .cinematic__cta { margin-top: 26px; }
@@ -533,6 +537,11 @@ em { font-style: italic; }
   .work__year { padding-top: 0; }
   .hero__stats { gap: 24px; }
   body { font-size: 16px; }
+
+  /* Performance: cheaper glass + still aurora, but no constant GPU churn */
+  :root { --blur: 9px; }
+  .orb { animation: none; filter: blur(48px); opacity: 0.42; will-change: auto; }
+  .bg__grain { display: none; }
 }
 
 @media (max-width: 420px) {
