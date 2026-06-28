@@ -346,6 +346,18 @@ em { font-style: italic; }
 }
 .cards--4 { grid-template-columns: repeat(4, 1fr); }
 .card, .service { padding: clamp(22px, 2.4vw, 30px); position: relative; overflow: hidden; }
+
+/* small brand-logo chip — uniform cream plate so mixed logos read as a set */
+.card__brand {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 40px; padding: 0 14px; margin-bottom: 18px;
+  background: #f4ede1; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px -12px rgba(0,0,0,0.7);
+}
+.card__brand img { height: 20px; width: auto; display: block; }
+.card__brand[data-logo="kr"] { padding: 0 8px; }
+.card__brand[data-logo="kr"] img { height: 28px; border-radius: 6px; }
+.card__brand[data-logo="un"] img { height: 22px; filter: brightness(0); opacity: 0.8; }
 .card__tag {
   display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--sky);
@@ -399,15 +411,54 @@ em { font-style: italic; }
 .work__head em { font-style: normal; }
 .work__desc { color: var(--text-dim); margin-top: 10px; max-width: 58ch; font-size: 0.97rem; }
 
-/* ─── Recognition ────────────────────────────────── */
-.awards { list-style: none; padding: clamp(10px, 2vw, 22px) clamp(20px, 3vw, 38px); }
-.awards li {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
-  padding: 20px 0; border-bottom: 1px solid var(--glass-brd); flex-wrap: wrap;
+/* ─── Academics — education + honours card ────────── */
+.honours { padding: clamp(24px, 3.4vw, 42px); max-width: 760px; }
+.honours__eyebrow {
+  display: block; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--sky); margin-bottom: 8px;
 }
-.awards li:last-child { border-bottom: none; }
-.awards__name { font-weight: 600; font-size: 1.05rem; }
-.awards__note { color: var(--text-faint); font-size: 0.86rem; }
+
+/* education feature */
+.edu { display: flex; gap: 20px; align-items: center; }
+.edu__crest {
+  flex: none; width: 64px; height: 64px; border-radius: 16px;
+  display: grid; place-items: center;
+  background: #f4ede1; border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px -12px rgba(0,0,0,0.7);
+}
+.edu__crest img { height: 42px; width: auto; display: block; }
+.edu__name {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.22rem;
+  font-weight: 600; letter-spacing: -0.02em;
+}
+.edu__meta {
+  color: var(--text-dim); font-size: 0.92rem; margin-top: 6px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+}
+.edu__grade {
+  font-weight: 600; color: var(--accent); font-size: 0.82rem;
+  padding: 3px 10px; border-radius: 999px;
+  background: rgba(255,176,89,0.14); border: 1px solid var(--glass-brd);
+}
+
+/* divider with label between education and honours */
+.honours__rule {
+  display: flex; align-items: center; gap: 16px;
+  margin: 26px 0 6px; color: var(--sky);
+  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.honours__rule::after {
+  content: ""; flex: 1; height: 1px; background: var(--glass-brd);
+}
+
+.honours__list { list-style: none; }
+.honours__list li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+  padding: 18px 0; border-bottom: 1px solid var(--glass-brd); flex-wrap: wrap;
+}
+.honours__list li:last-child { border-bottom: none; padding-bottom: 0; }
+.honours__name { font-weight: 600; font-size: 1.05rem; }
+.honours__note { color: var(--text-faint); font-size: 0.86rem; }
 
 /* ─── Craft ──────────────────────────────────────── */
 .craft { padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; gap: 30px; }
