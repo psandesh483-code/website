@@ -99,6 +99,7 @@
     <div class="wrap">
       <button class="back" onclick="go('home')">← Games</button>
       <div class="center">
+        <div class="row" id="mode-chips"></div>
         <div class="row" id="cat-chips"></div>
         <div class="card-word">
           <div class="tag" id="ch-tag">Charades</div>
@@ -192,15 +193,32 @@
       General:['Taking a selfie','Brushing teeth','Riding a bike','Swimming','Dancing','Sneezing','Cooking noodles','Texting','Playing cricket','Gym workout','Eating spicy food','Rickroll','Gangnam Style','Distracted boyfriend','Making a TikTok','Slow internet buffering','Cat video','Falling asleep in class','Wifi not working','Exam tomorrow panic']
     };
     let cats = {Bollywood:true,Nepali:true,Hollywood:true,General:true};
+    let chMode = 'headsup';           // 'headsup' (best for a shared screen) or 'classic' (pass a phone)
+    let hu = { count:0, running:false };
+
     function initCharades(){
+      const mc=$('#mode-chips'); mc.innerHTML='';
+      [['headsup','🧠 Heads Up (actor guesses)'],['classic','🙈 Classic (needs a phone)']].forEach(([k,label])=>{
+        const b=document.createElement('button'); b.className='chip'+(chMode===k?' on':''); b.textContent=label;
+        b.onclick=()=>{ chMode=k; stopTimer(); hu.running=false; initCharades(); }; mc.append(b);
+      });
       const chips=$('#cat-chips'); chips.innerHTML='';
       Object.keys(WORDS).forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(cats[c]?' on':''); b.textContent=c; b.onclick=()=>{ cats[c]=!cats[c]; if(!Object.values(cats).some(Boolean))cats[c]=true; initCharades(); }; chips.append(b); });
-      $('#ch-word').textContent='Tap “Reveal” — actor only!'; $('#ch-word').style.filter='';
-      $('#ch-tag').textContent='Ready?'; $('#ch-timer').style.display='none'; stopTimer();
-      renderControls('start'); renderScore('#ch-score');
+      $('#ch-timer').style.display='none'; stopTimer(); hu.running=false;
+      if(chMode==='headsup'){
+        $('#ch-tag').textContent='🧠 Heads Up — actor faces AWAY from the board';
+        $('#ch-word').textContent='Team acts it out • actor guesses. Ready?';
+        renderControls('hu-idle');
+      } else {
+        $('#ch-tag').textContent='🙈 Classic — open /play on the actor’s phone';
+        $('#ch-word').textContent='Actor reads it on their phone, then acts. Team guesses.';
+        renderControls('start');
+      }
+      renderScore('#ch-score');
     }
     function pool(){ let p=[]; Object.keys(cats).forEach(c=>{ if(cats[c])p=p.concat(WORDS[c]); }); return p; }
     let curWord='';
+    function newWord(){ curWord=rand(pool()); return curWord; }
     function renderControls(state){
       const c=$('#ch-controls'); c.innerHTML='';
       const mk=(t,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=t; b.onclick=fn; return b; };
@@ -208,10 +226,20 @@
       else if(state==='revealed'){ c.append(mk('▶️ Hide & Start 60s','green',startActing)); c.append(mk('🔄 Another','ghost',revealWord)); }
       else if(state==='acting'){ c.append(mk('✅ Guessed! Next','green',nextWord)); c.append(mk('⏭️ Pass','ghost',nextWord)); }
       else if(state==='timeup'){ c.append(mk('➡️ Next word','pink',revealWord)); }
+      else if(state==='hu-idle'){ c.append(mk('▶️ Start 60s','green',huStart)); }
+      else if(state==='hu-run'){ c.append(mk('✅ Got it +1','green',huGot)); c.append(mk('⏭️ Skip','ghost',huSkip)); }
+      else if(state==='hu-done'){ c.append(mk('🔁 Play again','pink',huStart)); }
     }
-    function revealWord(){ const p=pool(); curWord=rand(p); const cat=Object.keys(WORDS).find(k=>WORDS[k].includes(curWord)); $('#ch-tag').textContent='🙈 Actor only — others look away!'; $('#ch-word').textContent=curWord; $('#ch-word').style.filter=''; $('#ch-timer').style.display='none'; stopTimer(); renderControls('revealed'); }
-    function startActing(){ $('#ch-word').textContent='🤫 Act it out!'; $('#ch-tag').textContent='Guess!'; renderControls('acting'); runTimer(60,$('#ch-timer'),()=>{ $('#ch-word').textContent='⏰ Time up! It was: '+curWord; renderControls('timeup'); }); }
+    /* classic — pass a phone to the actor */
+    function revealWord(){ newWord(); $('#ch-tag').textContent='🙈 Actor only — others look away!'; $('#ch-word').textContent=curWord; $('#ch-timer').style.display='none'; stopTimer(); renderControls('revealed'); }
+    function startActing(){ $('#ch-word').textContent='🤫 Act it out!'; $('#ch-tag').textContent='Team: guess!'; renderControls('acting'); runTimer(60,$('#ch-timer'),()=>{ $('#ch-word').textContent='⏰ Time up! It was: '+curWord; renderControls('timeup'); }); }
     function nextWord(){ beep(990,.12); confetti(); revealWord(); }
+    /* heads up — best for the smart board: word shows for the TEAM, actor guesses */
+    function huStart(){ hu.count=0; hu.running=true; $('#ch-tag').textContent='📣 Team acts it out — actor guesses!'; $('#ch-word').textContent=newWord(); renderControls('hu-run'); runTimer(60,$('#ch-timer'),huEnd); }
+    function huGot(){ if(!hu.running)return; hu.count++; beep(990,.1); confetti(); $('#ch-word').textContent=newWord(); }
+    function huSkip(){ if(!hu.running)return; beep(440,.08); $('#ch-word').textContent=newWord(); }
+    function huEnd(){ hu.running=false; $('#ch-tag').textContent='⏰ Round over!'; $('#ch-word').textContent='✅ '+hu.count+' correct — add it to a team below!'; renderControls('hu-done'); }
+    addEventListener('keydown',e=>{ if(!$('#charades').classList.contains('on')||chMode!=='headsup'||!hu.running)return; if(e.code==='Space'||e.code==='Enter'){ e.preventDefault(); huGot(); } else if(e.code==='ArrowRight'||e.code==='ArrowDown'){ e.preventDefault(); huSkip(); } });
 
     /* ---- WHEEL ---- */
     function loadWheel(){ const saved=localStorage.getItem('party_wheel'); if(saved!=null)$('#wheel-names').value=saved; }
