@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0d0a08" />
+  <title>Shared files · Sandesh Pandey</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{ color-scheme:dark;
+      --bg:#0d0a08; --brd:rgba(255,230,200,.14); --brd2:rgba(255,215,170,.34);
+      --text:#f7efe6; --dim:rgba(247,239,230,.66); --faint:rgba(247,239,230,.5);
+      --amber:#ffb059; --grad:linear-gradient(120deg,#ffd784,#ff9d4d 55%,#ff6a3d); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Manrope',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+      min-height:100dvh;line-height:1.55;-webkit-font-smoothing:antialiased;
+      background-image:radial-gradient(120% 80% at 80% -10%,#2a1608 0%,transparent 45%),radial-gradient(100% 90% at 10% 110%,#1c1209 0%,transparent 50%);}
+    .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,7vw,64px) clamp(16px,4vw,24px) 80px}
+    a{color:var(--amber);text-decoration:none}
+    .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+    h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.8rem,6vw,2.6rem);letter-spacing:-.025em;margin:8px 0 6px}
+    .sub{color:var(--dim);margin-bottom:28px}
+    .list{display:flex;flex-direction:column;gap:12px}
+    .item{padding:16px 18px;border:1px solid var(--brd);border-radius:16px;background:rgba(255,255,255,.04);
+      box-shadow:0 16px 40px -20px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.06)}
+    .item .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .name{font-weight:700;font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;word-break:break-word}
+    .tag{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);
+      background:rgba(255,176,89,.12);padding:3px 9px;border-radius:999px;white-space:nowrap}
+    .meta{color:var(--faint);font-size:.8rem;margin-top:4px}
+    .note{margin-top:10px;white-space:pre-wrap;color:var(--dim);font-size:.92rem;
+      background:rgba(0,0,0,.25);border:1px solid var(--brd);border-radius:10px;padding:12px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:.85rem;padding:9px 16px;
+      border-radius:999px;background:var(--grad);color:#2a1402;box-shadow:0 8px 20px -8px rgba(255,140,70,.55)}
+    .btn.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--brd);box-shadow:none}
+    .empty{text-align:center;color:var(--faint);padding:40px 12px;border:1px dashed var(--brd);border-radius:16px}
+    footer{margin-top:36px;color:var(--faint);font-size:.82rem;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Shared by Sandesh Pandey</div>
+    <h1>Files &amp; links</h1>
+    <p class="sub">Grab what you need — no sign-in required. These are temporary and disappear on their own.</p>
+    <div id="list" class="list"><div class="empty">Loading…</div></div>
+    <footer><a href="/">← sandeshpandey.info.np</a></footer>
+  </div>
+
+  <script>
+    const fmtSize = n => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : n>=1024 ? Math.round(n/1024)+' KB' : (n||0)+' B';
+    function left(ts){ const d=ts-Date.now(); if(d<=0)return 'expiring'; const h=d/3600000; if(h<1)return 'expires in '+Math.max(1,Math.round(h*60))+' min'; if(h<24)return 'expires in '+Math.round(h)+' h'; return 'expires in '+Math.round(h/24)+' d'; }
+    function el(t,p={},...k){ const e=document.createElement(t); for(const[a,v]of Object.entries(p)){ if(a==='class')e.className=v; else if(a.startsWith('on'))e.addEventListener(a.slice(2),v); else e.setAttribute(a,v);} for(const c of k){ if(c==null)continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; }
+    async function copy(t){ try{ await navigator.clipboard.writeText(t); }catch{} }
+
+    (async () => {
+      const box = document.getElementById('list');
+      let items = [];
+      try { ({ items } = await (await fetch('/api/public-drops')).json()); } catch {}
+      box.innerHTML = '';
+      if (!items.length) { box.append(el('div',{class:'empty'},'Nothing shared right now.')); return; }
+      for (const it of items) {
+        const actions = [];
+        let title, meta;
+        if (it.kind === 'file') {
+          title = it.name; meta = fmtSize(it.size)+' · '+left(it.expiresAt);
+          actions.push(el('a',{class:'btn',href:'/d/'+it.id+'?dl'},'⬇ Download'));
+          actions.push(el('a',{class:'btn ghost',href:'/d/'+it.id,target:'_blank',rel:'noopener'},'View'));
+        } else if (it.kind === 'link') {
+          title = it.title || it.url; meta = left(it.expiresAt);
+          actions.push(el('a',{class:'btn',href:it.url,target:'_blank',rel:'noopener'},'Open ↗'));
+          const b=el('button',{class:'btn ghost'},'Copy'); b.addEventListener('click',()=>{copy(it.url);b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy',1500);}); actions.push(b);
+        } else {
+          title = it.title || 'Note'; meta = left(it.expiresAt);
+          const b=el('button',{class:'btn'},'Copy text'); b.addEventListener('click',()=>{copy(it.text||'');b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy text',1500);}); actions.push(b);
+        }
+        const item = el('div',{class:'item'},
+          el('div',{class:'top'}, el('div',{class:'name'}, title), el('span',{class:'tag'}, it.kind)),
+          el('div',{class:'meta'}, meta),
+          it.kind==='text' ? el('div',{class:'note'}, it.text||'') : null,
+          el('div',{class:'row'}, ...actions)
+        );
+        box.append(item);
+      }
+    })();
+  </script>
+</body>
+</html>

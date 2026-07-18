@@ -140,24 +140,40 @@
     <!-- DROP -->
     <div id="tab-drop" class="tabpane hide">
       <div class="panel glass">
-        <div class="eyebrow">Quick Drop</div>
-        <h2>Send a file, note, or link to yourself</h2>
-        <p class="muted">Access it from any device — just log in here. Files up to 4&nbsp;MB.</p>
-        <div class="drop-actions" style="margin-top:16px">
+        <div class="eyebrow">Quick Drop · public &amp; temporary</div>
+        <h2>Share a file, note, or link publicly</h2>
+        <p class="muted">Whatever you drop shows up on your public page
+          <a href="/files" target="_blank" rel="noopener">sandeshpandey.info.np/files</a> and gets a shareable link —
+          <strong>anyone can download, no login needed.</strong> It auto-deletes when it expires.
+          Files up to 4&nbsp;MB. <strong>Don’t put anything private here.</strong></p>
+
+        <div class="field" style="margin-top:14px">
+          <label>Auto-delete after</label>
+          <select id="d-ttl">
+            <option value="hour">1 hour</option>
+            <option value="day">1 day</option>
+            <option value="week" selected>7 days</option>
+          </select>
+        </div>
+
+        <div class="drop-actions">
           <label class="filelabel">
             <span id="fileName">📄 Tap to choose a file</span>
             <input id="d-file" type="file" />
           </label>
           <div class="field" style="margin:0">
             <label>Or a quick note</label>
-            <textarea id="d-note" placeholder="Paste text you want on another device…"></textarea>
-            <div class="row" style="margin-top:8px"><button id="d-note-btn" class="btn btn--ghost btn--sm">Save note</button></div>
+            <textarea id="d-note" placeholder="Text you want to share…"></textarea>
+            <div class="row" style="margin-top:8px"><button id="d-note-btn" class="btn btn--ghost btn--sm">Share note</button></div>
           </div>
           <div class="field" style="margin:0">
             <label>Or a link</label>
             <input id="d-link" type="url" placeholder="https://…" />
-            <div class="row" style="margin-top:8px"><button id="d-link-btn" class="btn btn--ghost btn--sm">Save link</button></div>
+            <div class="row" style="margin-top:8px"><button id="d-link-btn" class="btn btn--ghost btn--sm">Share link</button></div>
           </div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <a class="btn btn--ghost btn--sm" href="/files" target="_blank" rel="noopener">Open public page ↗</a>
         </div>
       </div>
       <div id="drop-list" class="list"></div>
@@ -184,6 +200,7 @@ const api = (path, opts={}) => fetch(path, { credentials:'same-origin', ...opts 
 const toast = (m) => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); };
 const fmtTime = (ts) => { try{ return new Date(ts).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch{ return ''; } };
 const fmtSize = (n) => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : n>=1024 ? Math.round(n/1024)+' KB' : n+' B';
+const fmtLeft = (ts) => { const d=ts-Date.now(); if(d<=0)return 'expiring'; const h=d/3600000; if(h<1)return 'expires in '+Math.max(1,Math.round(h*60))+'m'; if(h<24)return 'expires in '+Math.round(h)+'h'; return 'expires in '+Math.round(h/24)+'d'; };
 const esc = (s) => String(s??'');
 function el(tag, props={}, ...kids){ const e=document.createElement(tag); for(const[k,v]of Object.entries(props)){ if(k==='class')e.className=v; else if(k==='html')e.innerHTML=v; else if(k.startsWith('on'))e.addEventListener(k.slice(2).toLowerCase(),v); else if(k==='href'||k==='src'||k==='type'||k==='target'||k==='rel')e.setAttribute(k,v); else e[k]=v; } for(const c of kids){ if(c==null)continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; }
 async function copy(text){ try{ await navigator.clipboard.writeText(text); toast('Copied ✓'); }catch{ toast('Copy failed'); } }
@@ -270,33 +287,33 @@ $('#d-file').addEventListener('change', async (e)=>{
   const f=e.target.files[0]; if(!f)return;
   if(f.size>4*1024*1024){ toast('Max 4 MB'); e.target.value=''; return; }
   $('#fileName').textContent='⏳ Uploading '+f.name;
-  const fd=new FormData(); fd.append('file',f);
-  try{ await api('/api/drop',{method:'POST',body:fd}); toast('File dropped ✓'); loadDrops(); }
+  const fd=new FormData(); fd.append('file',f); fd.append('ttl',$('#d-ttl').value);
+  try{ await api('/api/drop',{method:'POST',body:fd}); toast('Shared publicly ✓'); loadDrops(); }
   catch(err){ toast(err.message); }
   $('#fileName').textContent='📄 Tap to choose a file'; e.target.value='';
 });
 $('#d-note-btn').onclick = async ()=>{
   const content=$('#d-note').value.trim(); if(!content){ toast('Note is empty'); return; }
-  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'text',content})}); $('#d-note').value=''; toast('Note saved ✓'); loadDrops(); }catch(e){ toast(e.message); }
+  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'text',content,ttl:$('#d-ttl').value})}); $('#d-note').value=''; toast('Shared publicly ✓'); loadDrops(); }catch(e){ toast(e.message); }
 };
 $('#d-link-btn').onclick = async ()=>{
   const content=$('#d-link').value.trim(); if(!content){ toast('Link is empty'); return; }
-  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'link',content})}); $('#d-link').value=''; toast('Link saved ✓'); loadDrops(); }catch(e){ toast(e.message); }
+  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'link',content,ttl:$('#d-ttl').value})}); $('#d-link').value=''; toast('Shared publicly ✓'); loadDrops(); }catch(e){ toast(e.message); }
 };
 async function loadDrops(){
   const box=$('#drop-list'); box.innerHTML='';
   let items=[]; try{ ({items} = await api('/api/drop')); }catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); }
   if(!items.length){ box.append(el('div',{class:'empty'},'Nothing dropped yet.')); return; }
   for(const it of items){
-    const actions=[];
+    const publicLink = it.kind==='link' ? it.preview : (location.origin+'/d/'+it.id);
+    const actions=[ el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(publicLink)},'Copy public link') ];
     if(it.kind==='file'){
       actions.push(el('a',{class:'btn btn--ghost btn--sm',href:'/d/'+it.id,target:'_blank',rel:'noopener'},'Open'));
       actions.push(el('a',{class:'btn btn--ghost btn--sm',href:'/d/'+it.id+'?dl',target:'_blank',rel:'noopener'},'Download'));
     } else if(it.kind==='link'){
       actions.push(el('a',{class:'btn btn--ghost btn--sm',href:it.preview,target:'_blank',rel:'noopener'},'Open ↗'));
-      actions.push(el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(it.preview)},'Copy'));
     } else {
-      actions.push(el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(it.preview)},'Copy'));
+      actions.push(el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(it.preview)},'Copy text'));
     }
     actions.push(el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this drop?'))return; await api('/api/drop',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:it.id})}); loadDrops(); }},'Delete'));
     const label = it.kind==='file' ? (it.name+' · '+fmtSize(it.size||0)) : (it.title || (it.kind==='link'?'Link':'Note'));
@@ -305,7 +322,7 @@ async function loadDrops(){
         el('div',{class:'grow'},
           el('div',{class:'row',style:'gap:8px'}, el('span',{class:'tag'}, it.kind), el('span',{style:'font-weight:600'}, label)),
           it.kind!=='file' ? el('div',{class:'muted mono',style:'margin-top:6px;font-size:.82rem;white-space:pre-wrap'}, (it.preview||'').slice(0,200)) : null,
-          el('div',{class:'faint',style:'margin-top:6px'}, fmtTime(it.createdAt))
+          el('div',{class:'faint',style:'margin-top:6px'}, fmtLeft(it.expiresAt)+' · '+fmtTime(it.createdAt))
         )
       ),
       el('div',{class:'row',style:'margin-top:12px'}, ...actions)
