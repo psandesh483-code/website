@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════
    Sandesh Pandey — Liquid Glass portfolio
    Interactions: smooth scroll · reveals · tilt ·
-   cursor glow · floating widgets · nav · form
+   cursor glow · nav · form
    ════════════════════════════════════════════════ */
 
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -29,7 +29,6 @@ function init() {
   setupSmoothScroll();
   setupReveals();
   setupTilt();
-  setupFloat();
   setupCursorGlow();
 }
 
@@ -123,37 +122,6 @@ function setupTilt() {
       if (raf) cancelAnimationFrame(raf);
       el.style.transform = '';
     });
-  });
-}
-
-/* ─── Floating hero widgets ────────────────────── */
-function setupFloat() {
-  if (reduceMotion) return;
-
-  document.querySelectorAll('[data-float]').forEach((el, i) => {
-    gsap.to(el, {
-      y: i % 2 ? 12 : -12,
-      duration: 3 + i * 0.6,
-      ease: 'sine.inOut',
-      yoyo: true,
-      repeat: -1,
-    });
-  });
-
-  // subtle mouse parallax for the whole hero cluster
-  if (isTouch) return;
-  const cluster = document.querySelector('.hero__cluster');
-  const hero = document.querySelector('.hero');
-  if (!cluster || !hero) return;
-
-  hero.addEventListener('mousemove', (e) => {
-    const r = hero.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(cluster, { x: px * 18, y: py * 18, duration: 0.8, ease: 'power2.out' });
-  });
-  hero.addEventListener('mouseleave', () => {
-    gsap.to(cluster, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' });
   });
 }
 

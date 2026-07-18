@@ -3,14 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Mark JS as available so content-reveal hiding only applies when JS can un-hide it -->
+  <script>document.documentElement.classList.add('js');</script>
   <title>Sandesh Pandey · Marketing, strategy & growth</title>
   <meta name="description" content="Sandesh Pandey, a Kathmandu-based marketer helping brands grow through strategy, content, brand, and growth. Marketing that actually works." />
   <meta name="theme-color" content="#0d0a08" />
+  <link rel="canonical" href="https://sandeshpandey.info.np/" />
 
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Sandesh Pandey · Marketing, strategy & growth" />
   <meta property="og:description" content="I help brands grow through marketing that actually works: strategy, content, brand & growth." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://sandeshpandey.info.np" />
+  <meta property="og:url" content="https://sandeshpandey.info.np/" />
+  <meta property="og:site_name" content="Sandesh Pandey" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://sandeshpandey.info.np/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Sandesh Pandey — Marketing, Strategy, Growth" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sandesh Pandey · Marketing, strategy & growth" />
+  <meta name="twitter:description" content="I help brands grow through marketing that actually works: strategy, content, brand & growth." />
+  <meta name="twitter:image" content="https://sandeshpandey.info.np/assets/og-image.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +41,25 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Structured data for name searches -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sandesh Pandey",
+    "url": "https://sandeshpandey.info.np/",
+    "image": "https://sandeshpandey.info.np/assets/og-image.jpg",
+    "jobTitle": "Head of Marketing",
+    "worksFor": { "@type": "Organization", "name": "FinTruction" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Kathmandu", "addressCountry": "NP" },
+    "sameAs": [
+      "https://www.linkedin.com/in/sandeyverse/",
+      "https://www.instagram.com/sandeyverse/",
+      "https://www.youtube.com/@Kraaanti"
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -54,7 +94,7 @@
       <nav class="nav__links" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#work">Work</a>
-        <a href="#recognition">Academics</a>
+        <a href="#academics">Academics</a>
         <a href="#craft">Craft</a>
       </nav>
 
@@ -68,7 +108,7 @@
     <div class="nav__drawer glass" data-nav-drawer>
       <a href="#about">About</a>
       <a href="#work">Work</a>
-      <a href="#recognition">Academics</a>
+      <a href="#academics">Academics</a>
       <a href="#craft">Craft</a>
       <a href="#contact" class="btn btn--accent">Get in touch</a>
     </div>
@@ -296,7 +336,7 @@
             <p class="work__desc">
               Founded a content platform that simplifies current affairs and
               cultural topics through digital storytelling. Scaled reach with
-              research-led strategy and narrative optimization.
+              research-led strategy and narrative optimisation.
             </p>
           </div>
         </li>
@@ -304,7 +344,7 @@
     </section>
 
     <!-- ── RECOGNITION ──────────────────────────────── -->
-    <section class="section" id="recognition">
+    <section class="section" id="academics">
       <div class="section__head" data-reveal>
         <span class="eyebrow">05 · Academics</span>
         <h2 class="section__title">School &amp; <em>honours</em></h2>
@@ -485,11 +525,12 @@
     </div>
   </footer>
 
-  <!-- Smooth scroll engine -->
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <!-- Animation engine -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="script.js"></script>
+  <!-- Smooth scroll engine (self-hosted) -->
+  <script src="assets/vendor/lenis.min.js"></script>
+  <!-- Animation engine (self-hosted) -->
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <!-- If the main script fails to load, drop the "js" flag so hidden content is shown -->
+  <script src="script.js" onerror="document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
