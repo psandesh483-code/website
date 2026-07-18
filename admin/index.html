@@ -25,7 +25,21 @@
     a{color:var(--amber);text-decoration:none}
     button{font:inherit;cursor:pointer;border:none}
     input,textarea,select{font:inherit;width:100%;color:var(--text);background:rgba(255,255,255,.04);
-      border:1px solid var(--brd);border-radius:12px;padding:12px 14px;min-height:46px;transition:border-color .2s,box-shadow .2s}
+      border:1px solid var(--brd);border-radius:12px;padding:12px 14px;min-height:46px;transition:border-color .2s,box-shadow .2s;color-scheme:dark}
+    /* theme the native dropdown popup so options aren't white-on-white */
+    select option,select optgroup{background:#160f0a;color:var(--text)}
+    /* expense tracker */
+    .exp-total{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(2.1rem,7vw,3rem);font-weight:800;color:var(--gold);line-height:1.05}
+    .exp-total small{display:block;font-family:'Manrope',sans-serif;font-size:.86rem;font-weight:600;color:var(--dim);margin-top:5px}
+    .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px;margin-top:8px}
+    .cat-chip{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 5px;border-radius:13px;background:var(--card);border:1px solid var(--brd);color:var(--dim);font-weight:600;font-size:.72rem;cursor:pointer;text-align:center;line-height:1.15;transition:transform .12s,background .15s}
+    .cat-chip:active{transform:scale(.95)}
+    .cat-chip .em{font-size:1.55rem;line-height:1}
+    .cat-chip.on{background:linear-gradient(120deg,#ffd784,#ff9d4d);color:#2a1402;border-color:transparent}
+    .bar-row{margin:13px 0}
+    .bar-top{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;margin-bottom:6px}
+    .bar-track{height:11px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}
+    .bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#ffd784,#ff9d4d,#ff6a3d)}
     input:focus,textarea:focus,select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,176,89,.16)}
     textarea{resize:vertical;min-height:90px}
     label{display:block;font-size:.82rem;font-weight:600;color:var(--dim);margin:0 0 6px}
@@ -119,7 +133,7 @@
       <button class="tab active" data-tab="links">🔗 Links</button>
       <button class="tab" data-tab="drop">📎 Quick Drop</button>
       <button class="tab" data-tab="hub">🌟 Hub</button>
-      <button class="tab" data-tab="money">💰 Money</button>
+      <button class="tab" data-tab="money">💸 Expenses</button>
       <button class="tab" data-tab="inbox">✉️ Inbox <span id="inboxCount" class="faint"></span></button>
     </nav>
 
@@ -214,29 +228,40 @@
       </div>
     </div>
 
-    <!-- MONEY -->
+    <!-- EXPENSES -->
     <div id="tab-money" class="tabpane hide">
       <div class="panel glass">
-        <div class="eyebrow">Money</div>
-        <h2>Income &amp; expenses</h2>
-        <div class="row" style="gap:10px;margin:10px 0 14px;align-items:center">
+        <div class="eyebrow">💸 Expenses</div>
+        <h2>Where your money goes</h2>
+        <div class="row" style="gap:10px;margin:12px 0 16px;align-items:center">
           <label style="margin:0">Month</label>
-          <input id="m-month" type="month" style="max-width:190px" onchange="renderMoney()" />
+          <input id="m-month" type="month" style="max-width:180px" onchange="renderMoney()" />
         </div>
-        <div class="row" id="m-summary" style="gap:10px"></div>
+        <div id="m-total" class="exp-total">Rs 0<small>no expenses yet</small></div>
       </div>
 
       <div class="panel glass">
-        <label>Add a transaction</label>
-        <div class="row" id="m-type" style="margin:8px 0 4px"></div>
-        <div class="field"><label>Amount (Rs)</label><input id="m-amount" type="number" inputmode="decimal" placeholder="0" /></div>
-        <div class="field"><label>Category</label><select id="m-cat"></select></div>
-        <div class="field"><label>Note (optional)</label><input id="m-note" type="text" placeholder="e.g. Kranti sponsorship" /></div>
-        <div class="field"><label>Date</label><input id="m-date" type="date" /></div>
-        <button id="m-add" class="btn">Add</button>
+        <h2 style="font-size:1.05rem;margin-bottom:2px">📊 Breakdown by category</h2>
+        <div id="m-breakdown"></div>
       </div>
 
-      <div id="m-list" class="list"></div>
+      <div class="panel glass">
+        <h2 style="font-size:1.05rem;margin-bottom:10px">➕ Add an expense</h2>
+        <div class="field"><label>How much? (Rs)</label><input id="m-amount" type="number" inputmode="decimal" placeholder="0" /></div>
+        <label>Category</label>
+        <div id="m-cats" class="cat-grid"></div>
+        <div class="field" style="margin-top:14px"><label>Note (optional)</label><input id="m-note" type="text" placeholder="e.g. Momo with friends" /></div>
+        <div class="field"><label>Date</label><input id="m-date" type="date" /></div>
+        <button id="m-add" class="btn" style="width:100%">Add expense</button>
+      </div>
+
+      <div class="panel glass">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:6px">
+          <h2 style="font-size:1.05rem">🧾 Statement</h2>
+          <span id="m-count" class="faint"></span>
+        </div>
+        <div id="m-list" class="list"></div>
+      </div>
     </div>
   </section>
 
@@ -443,51 +468,61 @@ $('#h-save').onclick = async ()=>{
   btn.disabled=false;
 };
 
-/* ── Money (income & expenses) ── */
-let MONEY = { tx:[], cats:{income:[],expense:[]}, type:'expense' };
+/* ── Expenses ── */
+const EXP_CATS = [
+  {k:'Food',e:'🍔'},{k:'Snacks & Tea',e:'☕'},{k:'Transport',e:'🚌'},{k:'Mobile/Data',e:'📱'},
+  {k:'Subscriptions',e:'📺'},{k:'Shopping',e:'🛍️'},{k:'Bills',e:'🧾'},{k:'Rent',e:'🏠'},
+  {k:'Education',e:'📚'},{k:'Entertainment',e:'🎬'},{k:'Health',e:'💊'},{k:'Travel',e:'✈️'},
+  {k:'Gifts',e:'🎁'},{k:'Other',e:'📦'}
+];
+const catEmoji = k => (EXP_CATS.find(c=>c.k===k)||{e:'📦'}).e;
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthLabel = m => { if(!m)return''; const [y,mo]=m.split('-'); return (MONTHS[+mo-1]||'')+' '+y; };
+const fmtDate = d => { if(!d)return''; const p=d.split('-'); return (+p[2])+' '+(MONTHS[+p[1]-1]||''); };
+let MONEY = { tx:[], cat:'Food' };
 async function loadMoney(){
-  try{ const d = await api('/api/money'); MONEY.tx = d.transactions||[]; MONEY.cats = d.categories||MONEY.cats; }
+  try{ const d = await api('/api/money'); MONEY.tx = d.transactions||[]; }
   catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); return; }
   if(!$('#m-month').value) $('#m-month').value = new Date().toISOString().slice(0,7);
   if(!$('#m-date').value) $('#m-date').value = new Date().toISOString().slice(0,10);
-  renderMType(); renderMoney();
+  renderMCats(); renderMoney();
 }
-function renderMType(){
-  const box=$('#m-type'); box.innerHTML='';
-  [['expense','➖ Expense'],['income','➕ Income']].forEach(([k,l])=>{ box.append(el('button',{class:'chip'+(MONEY.type===k?' on':''),onClick:()=>{ MONEY.type=k; renderMType(); }}, l)); });
-  const sel=$('#m-cat'); sel.innerHTML='';
-  (MONEY.cats[MONEY.type]||[]).forEach(c=> sel.append(el('option',{value:c}, c)));
+function renderMCats(){
+  const box=$('#m-cats'); box.innerHTML='';
+  EXP_CATS.forEach(c=> box.append(el('div',{class:'cat-chip'+(MONEY.cat===c.k?' on':''),onClick:()=>{ MONEY.cat=c.k; renderMCats(); }}, el('span',{class:'em'}, c.e), c.k)));
 }
 function renderMoney(){
   const month=$('#m-month').value;
-  const inMonth = MONEY.tx.filter(t=> (t.date||'').startsWith(month));
-  const inc = inMonth.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-  const exp = inMonth.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-  const allBal = MONEY.tx.reduce((s,t)=> s + (t.type==='income'?t.amount:-t.amount), 0);
-  const sum=$('#m-summary'); sum.innerHTML='';
-  const tile=(label,val,color)=> el('div',{class:'team',style:'max-width:none'}, el('div',{class:'faint'},label), el('div',{class:'pts',style:'color:'+color+';font-size:1.35rem'}, fmtMoney(val)));
-  sum.append(tile('Income',inc,'#4ade80'), tile('Expense',exp,'#ff6a6a'), tile('This month', inc-exp, (inc-exp)>=0?'#4ade80':'#ff6a6a'));
+  const inMonth = MONEY.tx.filter(t=>(t.date||'').startsWith(month));
+  const total = inMonth.reduce((s,t)=>s+t.amount,0);
+  $('#m-total').innerHTML=''; $('#m-total').append(document.createTextNode(fmtMoney(total)));
+  const sub=document.createElement('small'); sub.textContent='spent in '+monthLabel(month)+' · '+inMonth.length+' item'+(inMonth.length===1?'':'s'); $('#m-total').append(sub);
+  const byCat={}; inMonth.forEach(t=>{ byCat[t.category]=(byCat[t.category]||0)+t.amount; });
+  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+  const bd=$('#m-breakdown'); bd.innerHTML='';
+  if(!cats.length){ bd.append(el('div',{class:'empty'},'No expenses yet — add one below.')); }
+  else cats.forEach(([k,v])=>{ const pct=total?Math.round(v/total*100):0; bd.append(el('div',{class:'bar-row'},
+    el('div',{class:'bar-top'}, el('span',{}, catEmoji(k)+' '+k), el('span',{style:'font-weight:700'}, fmtMoney(v)+'  ·  '+pct+'%')),
+    el('div',{class:'bar-track'}, el('div',{class:'bar-fill',style:'width:'+pct+'%'})))); });
   const box=$('#m-list'); box.innerHTML='';
-  box.append(el('div',{class:'faint',style:'text-align:center;padding:6px'}, 'All-time balance: '+fmtMoney(allBal)));
-  if(!inMonth.length){ box.append(el('div',{class:'empty'},'No transactions this month.')); return; }
-  inMonth.forEach(t=>{
-    box.append(el('div',{class:'item glass'},
-      el('div',{class:'head'},
-        el('div',{class:'grow'},
-          el('div',{class:'row',style:'gap:8px'}, el('span',{class:'tag'}, t.category), t.note?el('span',{style:'font-weight:600'}, t.note):null),
-          el('div',{class:'faint',style:'margin-top:4px'}, t.date)
-        ),
-        el('div',{style:'font-weight:800;font-size:1.05rem;white-space:nowrap;color:'+(t.type==='income'?'#4ade80':'#ff6a6a')}, (t.type==='income'?'+':'−')+fmtMoney(t.amount))
+  $('#m-count').textContent = inMonth.length ? fmtMoney(total)+' total' : '';
+  if(!inMonth.length){ box.append(el('div',{class:'empty'},'Nothing logged this month.')); return; }
+  inMonth.forEach(t=> box.append(el('div',{class:'item glass'},
+    el('div',{class:'head'},
+      el('div',{class:'grow'},
+        el('div',{class:'row',style:'gap:8px;align-items:center'}, el('span',{style:'font-size:1.25rem'}, catEmoji(t.category)), el('span',{style:'font-weight:700'}, t.category), t.note?el('span',{class:'faint'}, '· '+t.note):null),
+        el('div',{class:'faint',style:'margin-top:4px'}, fmtDate(t.date))
       ),
-      el('div',{class:'row',style:'margin-top:8px'}, el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this transaction?'))return; await api('/api/money',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:t.id})}); loadMoney(); }},'Delete'))
-    ));
-  });
+      el('div',{style:'font-weight:800;font-size:1.05rem;white-space:nowrap;color:#ff8a6a'}, '−'+fmtMoney(t.amount))
+    ),
+    el('div',{class:'row',style:'margin-top:8px'}, el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this expense?'))return; await api('/api/money',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:t.id})}); loadMoney(); }},'Delete'))
+  )));
 }
 $('#m-add').onclick = async ()=>{
-  const amount=$('#m-amount').value, category=$('#m-cat').value, note=$('#m-note').value, date=$('#m-date').value;
+  const amount=$('#m-amount').value, note=$('#m-note').value, date=$('#m-date').value;
   if(!(Number(amount)>0)){ toast('Enter a valid amount'); return; }
   const btn=$('#m-add'); btn.disabled=true;
-  try{ await api('/api/money',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:MONEY.type,amount,category,note,date})}); $('#m-amount').value=''; $('#m-note').value=''; toast('Added ✓'); loadMoney(); }
+  try{ await api('/api/money',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({amount,category:MONEY.cat,note,date})}); $('#m-amount').value=''; $('#m-note').value=''; toast('Expense added ✓'); loadMoney(); }
   catch(e){ toast(e.message); }
   btn.disabled=false;
 };
