@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0d0a08" />
+  <title>Class Party 🎉</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{ color-scheme:dark;
+      --bg:#0d0a08; --text:#fdf6ee; --dim:rgba(253,246,238,.68);
+      --gold:#ffd15c; --amber:#ff9d4d; --ember:#ff5e3a; --pink:#ff5c8a; --violet:#9b6bff; --cyan:#38d9d9; --green:#4ade80;
+      --card:rgba(255,255,255,.06); --brd:rgba(255,225,190,.18); }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%}
+    body{font-family:'Bricolage Grotesque',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+      min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+      background-image:radial-gradient(120% 70% at 15% -10%,#3a1d0c 0%,transparent 45%),radial-gradient(120% 80% at 90% 110%,#2a1236 0%,transparent 50%);}
+    button{font-family:inherit;cursor:pointer;border:none;color:inherit}
+    input{font-family:inherit}
+    .screen{display:none;min-height:100dvh;padding:clamp(20px,4vw,48px);flex-direction:column}
+    .screen.on{display:flex}
+    .wrap{width:100%;max-width:1100px;margin:0 auto;flex:1;display:flex;flex-direction:column}
+    .back{align-self:flex-start;background:var(--card);border:1px solid var(--brd);border-radius:999px;
+      padding:12px 22px;font-size:1.1rem;font-weight:600;margin-bottom:18px}
+    .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px}
+    /* HOME */
+    .title{font-size:clamp(2.6rem,8vw,5rem);font-weight:800;letter-spacing:-.03em;line-height:1;
+      background:linear-gradient(100deg,#ffd15c,#ff9d4d 40%,#ff5c8a 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{color:var(--dim);font-size:clamp(1rem,2.4vw,1.5rem);font-weight:500;margin-top:6px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2.5vw,26px);width:100%;margin-top:clamp(24px,5vw,48px)}
+    .game{border-radius:28px;padding:clamp(24px,4vw,44px);text-align:left;font-weight:800;color:#1a0e04;
+      display:flex;flex-direction:column;gap:8px;min-height:clamp(150px,22vw,230px);justify-content:flex-end;
+      transition:transform .15s;box-shadow:0 18px 44px -16px rgba(0,0,0,.7)}
+    .game:active{transform:scale(.97)}
+    .game .ic{font-size:clamp(2.4rem,6vw,4rem);line-height:1}
+    .game .nm{font-size:clamp(1.4rem,3.6vw,2.4rem);letter-spacing:-.02em}
+    .game .ds{font-weight:600;font-size:clamp(.85rem,1.8vw,1.1rem);opacity:.72}
+    .g1{background:linear-gradient(140deg,#ffd15c,#ff9d4d)} .g2{background:linear-gradient(140deg,#38d9d9,#4ade80)}
+    .g3{background:linear-gradient(140deg,#ff5c8a,#9b6bff)} .g4{background:linear-gradient(140deg,#ffb347,#ff5e3a)}
+    /* generic big UI */
+    h2.head{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;letter-spacing:-.02em}
+    .big{font-size:clamp(2.4rem,8vw,6rem);font-weight:800;letter-spacing:-.02em;line-height:1.05;word-break:break-word;padding:0 8px}
+    .btn{background:linear-gradient(120deg,#ffd15c,#ff9d4d);color:#1a0e04;font-weight:800;font-size:clamp(1.1rem,2.6vw,1.6rem);
+      padding:clamp(14px,2.4vw,22px) clamp(28px,5vw,48px);border-radius:999px;box-shadow:0 12px 30px -10px rgba(255,140,70,.6)}
+    .btn:active{transform:scale(.97)}
+    .btn.ghost{background:var(--card);border:1px solid var(--brd);color:var(--text);box-shadow:none}
+    .btn.green{background:linear-gradient(120deg,#4ade80,#38d9d9)} .btn.pink{background:linear-gradient(120deg,#ff5c8a,#9b6bff);color:#fff}
+    .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center}
+    .timer{font-size:clamp(3rem,12vw,8rem);font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+    .timer.low{color:var(--ember);animation:pulse .6s infinite}
+    @keyframes pulse{50%{opacity:.45}}
+    .chip{padding:10px 20px;border-radius:999px;font-weight:700;font-size:clamp(.9rem,2vw,1.15rem);
+      background:var(--card);border:2px solid var(--brd);color:var(--dim)}
+    .chip.on{background:linear-gradient(120deg,#ffd15c,#ff9d4d);color:#1a0e04;border-color:transparent}
+    .hint{color:var(--dim);font-size:clamp(.95rem,2vw,1.25rem);font-weight:600}
+    .card-word{background:var(--card);border:2px solid var(--brd);border-radius:28px;padding:clamp(28px,6vw,60px);
+      width:100%;max-width:800px;display:flex;flex-direction:column;align-items:center;gap:18px;min-height:clamp(220px,38vh,380px);justify-content:center}
+    .tag{font-size:clamp(.8rem,1.8vw,1.05rem);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+    /* scoreboard */
+    .score{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;margin-top:6px}
+    .team{background:var(--card);border:1px solid var(--brd);border-radius:18px;padding:12px 16px;min-width:130px;text-align:center;flex:1;max-width:220px}
+    .team input{background:transparent;border:none;color:var(--text);font-weight:800;font-size:1.1rem;text-align:center;width:100%;outline:none}
+    .team .pts{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--gold);line-height:1;margin:4px 0}
+    .team .pm{display:flex;gap:8px;justify-content:center}
+    .team .pm button{width:42px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--brd);font-size:1.4rem;font-weight:800}
+    .names-input{width:100%;max-width:640px;background:var(--card);border:2px solid var(--brd);border-radius:18px;
+      color:var(--text);padding:16px 18px;font-size:clamp(1rem,2.2vw,1.3rem);min-height:120px;resize:vertical}
+    .picker{font-size:clamp(2.6rem,10vw,7rem);font-weight:800;min-height:1.2em;transition:transform .1s}
+    .picker.pop{animation:pop .5s}
+    @keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+    canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:100}
+    .footer-note{color:rgba(253,246,238,.35);text-align:center;font-size:.85rem;font-weight:600;padding-top:16px}
+  </style>
+</head>
+<body>
+  <canvas class="confetti" id="confetti"></canvas>
+
+  <!-- HOME -->
+  <section class="screen on" id="home">
+    <div class="wrap center">
+      <div>
+        <div class="title">Class Party 🎉</div>
+        <div class="subtitle">Pick a game — tap to play on the big screen</div>
+      </div>
+      <div class="grid">
+        <button class="game g1" onclick="go('charades')"><span class="ic">🎭</span><span class="nm">Dumb Charades</span><span class="ds">Act it out, team guesses</span></button>
+        <button class="game g2" onclick="go('wheel')"><span class="ic">🎡</span><span class="nm">Spin the Wheel</span><span class="ds">Pick a random name or dare</span></button>
+        <button class="game g3" onclick="go('mostlikely')"><span class="ic">👉</span><span class="nm">Most Likely To…</span><span class="ds">Point at someone!</span></button>
+        <button class="game g4" onclick="go('antakshari')"><span class="ic">🎤</span><span class="nm">Antakshari</span><span class="ds">Sing on the letter</span></button>
+      </div>
+      <div class="footer-note">Made by Sandesh · sandeshpandey.info.np</div>
+    </div>
+  </section>
+
+  <!-- CHARADES -->
+  <section class="screen" id="charades">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="row" id="cat-chips"></div>
+        <div class="card-word">
+          <div class="tag" id="ch-tag">Charades</div>
+          <div class="big" id="ch-word">Tap “Reveal” — actor only!</div>
+          <div class="timer" id="ch-timer" style="display:none">60</div>
+        </div>
+        <div class="row" id="ch-controls"></div>
+        <div class="score" id="ch-score"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHEEL -->
+  <section class="screen" id="wheel">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <h2 class="head">🎡 Spin the Wheel</h2>
+        <div class="picker" id="wheel-result">—</div>
+        <button class="btn pink" id="wheel-spin" onclick="spinWheel()">SPIN!</button>
+        <div class="hint">Names / dares (one per line):</div>
+        <textarea class="names-input" id="wheel-names" oninput="saveWheel()" placeholder="Sandesh&#10;Riya&#10;Do 5 pushups&#10;Sing a song"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOST LIKELY -->
+  <section class="screen" id="mostlikely">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="tag">Who in this class is most likely to…</div>
+        <div class="big" id="ml-prompt">Tap Next to start</div>
+        <button class="btn green" onclick="nextMostLikely()">Next 👉</button>
+        <div class="hint">Everyone point at the person on “3”!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANTAKSHARI -->
+  <section class="screen" id="antakshari">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="tag">Sing a song starting with</div>
+        <div class="big" id="ak-letter" style="font-size:clamp(5rem,22vw,14rem)">?</div>
+        <div class="timer" id="ak-timer" style="display:none">30</div>
+        <div class="row">
+          <button class="btn" onclick="nextLetter()">New Letter 🔤</button>
+          <button class="btn ghost" onclick="akTimer()">Start 30s ⏱️</button>
+        </div>
+        <div class="score" id="ak-score"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const rand = a => a[Math.floor(Math.random()*a.length)];
+    function go(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); $('#'+id).classList.add('on'); stopTimer(); if(id==='charades')initCharades(); if(id==='wheel')loadWheel(); if(id==='antakshari')renderScore('#ak-score'); }
+
+    /* ---- sound + confetti ---- */
+    let ac;
+    function beep(freq=880,dur=0.15){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const o=ac.createOscillator(),g=ac.createGain(); o.frequency.value=freq; o.connect(g); g.connect(ac.destination); g.gain.setValueAtTime(.001,ac.currentTime); g.gain.exponentialRampToValueAtTime(.3,ac.currentTime+.02); g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+dur); o.start(); o.stop(ac.currentTime+dur); }catch{} }
+    const cvs=$('#confetti'), ctx=cvs.getContext('2d'); let parts=[];
+    function sizeCanvas(){ cvs.width=innerWidth; cvs.height=innerHeight; } sizeCanvas(); addEventListener('resize',sizeCanvas);
+    function confetti(){ const cols=['#ffd15c','#ff9d4d','#ff5c8a','#9b6bff','#38d9d9','#4ade80']; for(let i=0;i<120;i++){ parts.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:(Math.random()-.5)*16-4,g:.3,s:6+Math.random()*8,c:rand(cols),life:80+Math.random()*40}); } if(parts.length<=120)tick(); }
+    function tick(){ ctx.clearRect(0,0,cvs.width,cvs.height); parts=parts.filter(p=>p.life>0); for(const p of parts){ p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.life--; ctx.fillStyle=p.c; ctx.globalAlpha=Math.max(0,p.life/80); ctx.fillRect(p.x,p.y,p.s,p.s); } ctx.globalAlpha=1; if(parts.length)requestAnimationFrame(tick); }
+
+    /* ---- timer ---- */
+    let tInt;
+    function stopTimer(){ clearInterval(tInt); }
+    function runTimer(sec, elTimer, onEnd){ stopTimer(); let t=sec; elTimer.style.display=''; elTimer.textContent=t; elTimer.classList.remove('low'); tInt=setInterval(()=>{ t--; elTimer.textContent=t; if(t<=5)elTimer.classList.add('low'); if(t<=5&&t>0)beep(660,.1); if(t<=0){ stopTimer(); beep(300,.5); onEnd&&onEnd(); } },1000); }
+
+    /* ---- shared scoreboard (localStorage) ---- */
+    function getTeams(){ try{ return JSON.parse(localStorage.getItem('party_teams'))||null; }catch{ return null; } }
+    function setTeams(t){ localStorage.setItem('party_teams', JSON.stringify(t)); }
+    let TEAMS = getTeams() || [{n:'Team 1',p:0},{n:'Team 2',p:0}];
+    function renderScore(sel){ const box=$(sel); if(!box)return; box.innerHTML='';
+      TEAMS.forEach((tm,i)=>{ const d=document.createElement('div'); d.className='team';
+        d.innerHTML=`<input value="${tm.n.replace(/"/g,'&quot;')}" data-i="${i}"><div class="pts">${tm.p}</div><div class="pm"><button data-m="-1" data-i="${i}">−</button><button data-m="1" data-i="${i}">＋</button></div>`;
+        box.append(d); });
+      box.querySelectorAll('input').forEach(inp=>inp.oninput=e=>{ TEAMS[+e.target.dataset.i].n=e.target.value; setTeams(TEAMS); });
+      box.querySelectorAll('.pm button').forEach(b=>b.onclick=e=>{ const i=+e.target.dataset.i,m=+e.target.dataset.m; TEAMS[i].p=Math.max(0,TEAMS[i].p+m); if(m>0){beep(990,.12);} setTeams(TEAMS); renderScore(sel); if(m>0)confetti(); }); }
+
+    /* ---- CHARADES ---- */
+    const WORDS = {
+      Bollywood:['3 Idiots','Dangal','Sholay','Lagaan','PK','Bahubali','Dilwale Dulhania Le Jayenge','Kabhi Khushi Kabhie Gham','Om Shanti Om','Gully Boy','Zindagi Na Milegi Dobara','Chennai Express','Bajrangi Bhaijaan','Krrish','Dhoom','Kuch Kuch Hota Hai','Shah Rukh Khan','Salman Khan','Amitabh Bachchan','Deepika Padukone','Ranveer Singh','Alia Bhatt'],
+      Nepali:['Kabaddi','Chhakka Panja','Loot','Pashupati Prasad','Prem Geet','Jatra','Rajesh Hamal','Paul Shah','Swastima Khadka','Anmol KC','Priyanka Karki','Momo','Dashain','Tihar','Mount Everest','Sel Roti','Dal Bhat','Khukuri','Kathmandu','Pokhara','Sadhu at Pashupati'],
+      Hollywood:['Titanic','Avatar','Avengers','Spider-Man','Harry Potter','Frozen','Jurassic Park','Fast and Furious','Inception','The Lion King','Batman','Iron Man','Joker','Interstellar','Pirates of the Caribbean','Star Wars','Toy Story','Minions','Tom Cruise','Leonardo DiCaprio'],
+      General:['Taking a selfie','Brushing teeth','Riding a bike','Swimming','Dancing','Sneezing','Cooking noodles','Texting','Playing cricket','Gym workout','Eating spicy food','Rickroll','Gangnam Style','Distracted boyfriend','Making a TikTok','Slow internet buffering','Cat video','Falling asleep in class','Wifi not working','Exam tomorrow panic']
+    };
+    let cats = {Bollywood:true,Nepali:true,Hollywood:true,General:true};
+    function initCharades(){
+      const chips=$('#cat-chips'); chips.innerHTML='';
+      Object.keys(WORDS).forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(cats[c]?' on':''); b.textContent=c; b.onclick=()=>{ cats[c]=!cats[c]; if(!Object.values(cats).some(Boolean))cats[c]=true; initCharades(); }; chips.append(b); });
+      $('#ch-word').textContent='Tap “Reveal” — actor only!'; $('#ch-word').style.filter='';
+      $('#ch-tag').textContent='Ready?'; $('#ch-timer').style.display='none'; stopTimer();
+      renderControls('start'); renderScore('#ch-score');
+    }
+    function pool(){ let p=[]; Object.keys(cats).forEach(c=>{ if(cats[c])p=p.concat(WORDS[c]); }); return p; }
+    let curWord='';
+    function renderControls(state){
+      const c=$('#ch-controls'); c.innerHTML='';
+      const mk=(t,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=t; b.onclick=fn; return b; };
+      if(state==='start'){ c.append(mk('🎬 Reveal word','pink',revealWord)); }
+      else if(state==='revealed'){ c.append(mk('▶️ Hide & Start 60s','green',startActing)); c.append(mk('🔄 Another','ghost',revealWord)); }
+      else if(state==='acting'){ c.append(mk('✅ Guessed! Next','green',nextWord)); c.append(mk('⏭️ Pass','ghost',nextWord)); }
+      else if(state==='timeup'){ c.append(mk('➡️ Next word','pink',revealWord)); }
+    }
+    function revealWord(){ const p=pool(); curWord=rand(p); const cat=Object.keys(WORDS).find(k=>WORDS[k].includes(curWord)); $('#ch-tag').textContent='🙈 Actor only — others look away!'; $('#ch-word').textContent=curWord; $('#ch-word').style.filter=''; $('#ch-timer').style.display='none'; stopTimer(); renderControls('revealed'); }
+    function startActing(){ $('#ch-word').textContent='🤫 Act it out!'; $('#ch-tag').textContent='Guess!'; renderControls('acting'); runTimer(60,$('#ch-timer'),()=>{ $('#ch-word').textContent='⏰ Time up! It was: '+curWord; renderControls('timeup'); }); }
+    function nextWord(){ beep(990,.12); confetti(); revealWord(); }
+
+    /* ---- WHEEL ---- */
+    function loadWheel(){ const saved=localStorage.getItem('party_wheel'); if(saved!=null)$('#wheel-names').value=saved; }
+    function saveWheel(){ localStorage.setItem('party_wheel',$('#wheel-names').value); }
+    function wheelList(){ return $('#wheel-names').value.split('\n').map(s=>s.trim()).filter(Boolean); }
+    function spinWheel(){ const names=wheelList(); const res=$('#wheel-result'); if(names.length<2){ res.textContent='Add 2+ names!'; return; }
+      let delay=60; res.classList.remove('pop');
+      (function step(){ res.textContent=rand(names); beep(1200,.03); delay*=1.14; if(delay<520){ setTimeout(step,delay); } else { const pick=rand(names); res.textContent='🎉 '+pick; res.classList.add('pop'); confetti(); beep(880,.3); } })();
+    }
+
+    /* ---- MOST LIKELY ---- */
+    const ML=['become famous','be late to class','become a millionaire','start a YouTube channel','get married first','become a teacher','travel the whole world','fall asleep in class','win any argument','become a politician','go viral online','start a business','be on TV','break their phone','eat the most momo','crack the funniest joke','become a doctor','move abroad','forget their own birthday','never reply to texts','become class president','cry during a movie'];
+    let mlLast=-1;
+    function nextMostLikely(){ let i; do{ i=Math.floor(Math.random()*ML.length); }while(i===mlLast&&ML.length>1); mlLast=i; $('#ml-prompt').textContent='…'+ML[i]; beep(760,.1); }
+
+    /* ---- ANTAKSHARI ---- */
+    const LETTERS=['S','M','P','K','R','T','J','D','A','B','G','N','H','L','C','V','Y','O','I'];
+    let akLast='';
+    function nextLetter(){ let l; do{ l=rand(LETTERS); }while(l===akLast); akLast=l; $('#ak-letter').textContent=l; $('#ak-timer').style.display='none'; stopTimer(); beep(880,.12); }
+    function akTimer(){ runTimer(30,$('#ak-timer'),()=>{ $('#ak-letter').textContent='⏰'; }); }
+  </script>
+</body>
+</html>
