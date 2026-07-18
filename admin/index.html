@@ -118,6 +118,7 @@
     <nav class="tabs">
       <button class="tab active" data-tab="links">🔗 Links</button>
       <button class="tab" data-tab="drop">📎 Quick Drop</button>
+      <button class="tab" data-tab="hub">🌟 Hub</button>
       <button class="tab" data-tab="inbox">✉️ Inbox <span id="inboxCount" class="faint"></span></button>
     </nav>
 
@@ -188,6 +189,29 @@
       </div>
       <div id="inbox-list" class="list"></div>
     </div>
+
+    <!-- HUB -->
+    <div id="tab-hub" class="tabpane hide">
+      <div class="panel glass">
+        <div class="eyebrow">Link-in-bio</div>
+        <h2>Your public hub</h2>
+        <p class="muted">Lives at <a href="/hub" target="_blank" rel="noopener">sandeshpandey.info.np/hub</a> — one link for all your links. Share it in your bios.</p>
+        <div class="field" style="margin-top:14px">
+          <label>Tagline</label>
+          <input id="h-tagline" type="text" placeholder="Marketing · Strategy · Growth" />
+        </div>
+        <label>Links (reorder with ↑ ↓)</label>
+        <div id="h-links" class="list" style="margin-top:8px"></div>
+        <div class="row" style="margin-top:12px">
+          <button id="h-add" class="btn btn--ghost btn--sm">+ Add link</button>
+        </div>
+        <hr class="sep" />
+        <div class="row">
+          <button id="h-save" class="btn">Save hub</button>
+          <a class="btn btn--ghost btn--sm" href="/hub" target="_blank" rel="noopener">Preview ↗</a>
+        </div>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -242,12 +266,12 @@ $('#authBtn').onclick = async () => {
 /* ── app ── */
 function showApp(){
   $('#auth').classList.add('hide'); $('#app').classList.remove('hide');
-  loadLinks(); loadDrops(); loadInbox();
+  loadLinks(); loadDrops(); loadInbox(); loadHub();
 }
 $('#logout').onclick = async ()=>{ try{ await api('/api/auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'logout'})}); }catch{} showAuth('login'); };
 document.querySelectorAll('.tab').forEach(t=> t.onclick = ()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
-  ['links','drop','inbox'].forEach(n=> $('#tab-'+n).classList.toggle('hide', n!==t.dataset.tab));
+  ['links','drop','hub','inbox'].forEach(n=> $('#tab-'+n).classList.toggle('hide', n!==t.dataset.tab));
 });
 
 /* ── Links ── */
@@ -353,6 +377,44 @@ async function loadInbox(){
     ));
   }
 }
+
+/* ── Hub (link-in-bio) ── */
+function hubRow(l={}){
+  const emoji = el('input',{type:'text',value:l.emoji||'',placeholder:'🔗',style:'width:60px;text-align:center'}); emoji.className='h-emoji';
+  const title = el('input',{type:'text',value:l.title||'',placeholder:'Title (e.g. Kranti on YouTube)'}); title.className='h-title';
+  const url = el('input',{type:'text',value:l.url||'',placeholder:'https://…  (or mailto:you@mail.com)'}); url.className='h-url';
+  const row = el('div',{class:'item'});
+  row.append(
+    el('div',{class:'row',style:'gap:8px;align-items:center'}, emoji, el('div',{class:'grow'}, title)),
+    el('div',{style:'margin-top:8px'}, url),
+    el('div',{class:'row',style:'margin-top:8px'},
+      el('button',{class:'btn btn--ghost btn--sm',onClick:()=>{ const p=row.previousElementSibling; if(p)row.parentNode.insertBefore(row,p); }},'↑'),
+      el('button',{class:'btn btn--ghost btn--sm',onClick:()=>{ const n=row.nextElementSibling; if(n)row.parentNode.insertBefore(n,row); }},'↓'),
+      el('button',{class:'btn btn--danger btn--sm',onClick:()=>row.remove()},'Remove')
+    )
+  );
+  return row;
+}
+async function loadHub(){
+  let data={profile:{tagline:''},links:[]};
+  try{ data = await api('/api/hub'); }catch{}
+  $('#h-tagline').value = data.profile?.tagline || '';
+  const box=$('#h-links'); box.innerHTML='';
+  (data.links||[]).forEach(l=> box.append(hubRow(l)));
+}
+$('#h-add').onclick = ()=> $('#h-links').append(hubRow({}));
+$('#h-save').onclick = async ()=>{
+  const links = [...$('#h-links').children].map((row,i)=>({
+    id:'l'+i,
+    emoji: row.querySelector('.h-emoji').value.trim(),
+    title: row.querySelector('.h-title').value.trim(),
+    url: row.querySelector('.h-url').value.trim(),
+  })).filter(l=>l.title && l.url);
+  const btn=$('#h-save'); btn.disabled=true;
+  try{ await api('/api/hub',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({profile:{tagline:$('#h-tagline').value.trim()},links})}); toast('Hub saved ✓'); }
+  catch(e){ toast(e.message); if(String(e.message).includes('unauthorized'))showAuth('login'); }
+  btn.disabled=false;
+};
 
 boot();
 </script>

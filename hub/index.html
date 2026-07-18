@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0a08" />
+  <title>Sandesh Pandey — links</title>
+  <meta name="description" content="All of Sandesh Pandey's links in one place — portfolio, Kranti, LinkedIn, Instagram." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{ color-scheme:dark;
+      --bg:#0d0a08; --brd:rgba(255,230,200,.14); --brd2:rgba(255,215,170,.34);
+      --text:#f7efe6; --dim:rgba(247,239,230,.66); --amber:#ffb059;
+      --grad:linear-gradient(120deg,#ffd784,#ff9d4d 55%,#ff6a3d); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;
+      -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;
+      background-image:radial-gradient(120% 60% at 50% -10%,#3a1d0c 0%,transparent 50%),radial-gradient(100% 80% at 50% 120%,#1c1209 0%,transparent 55%);}
+    .wrap{width:100%;max-width:520px;padding:clamp(40px,10vw,72px) 20px 60px;text-align:center}
+    .avatar{width:104px;height:104px;border-radius:50%;object-fit:cover;object-position:50% 40%;margin:0 auto 18px;
+      border:2px solid var(--brd2);box-shadow:0 10px 30px -8px rgba(255,140,70,.5)}
+    h1{font-family:'Bricolage Grotesque',sans-serif;font-size:1.7rem;letter-spacing:-.02em}
+    .tagline{color:var(--dim);margin:8px 0 30px;font-size:.98rem}
+    .links{display:flex;flex-direction:column;gap:12px}
+    .link{display:flex;align-items:center;gap:12px;justify-content:center;position:relative;
+      padding:16px 20px;border-radius:16px;font-weight:600;font-size:1rem;
+      background:rgba(255,255,255,.05);border:1px solid var(--brd);color:var(--text);
+      -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      transition:transform .2s,border-color .2s,background .2s}
+    .link:hover{transform:translateY(-2px);border-color:var(--brd2);background:rgba(255,140,70,.14)}
+    .link .emoji{font-size:1.25rem;line-height:1}
+    footer{margin-top:34px;color:rgba(247,239,230,.4);font-size:.8rem}
+    footer a{color:var(--amber);text-decoration:none}
+    .empty{color:rgba(247,239,230,.5);padding:30px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="avatar" src="/assets/avatar.jpg" alt="Sandesh Pandey" />
+    <h1>Sandesh Pandey</h1>
+    <p class="tagline" id="tagline">—</p>
+    <div class="links" id="links"><div class="empty">Loading…</div></div>
+    <footer>Made with <a href="/">sandeshpandey.info.np</a></footer>
+  </div>
+
+  <script>
+    function el(t,p={},...k){ const e=document.createElement(t); for(const[a,v]of Object.entries(p)){ if(a==='class')e.className=v; else e.setAttribute(a,v);} for(const c of k){ if(c==null)continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; }
+    (async () => {
+      let data = { profile:{tagline:''}, links:[] };
+      try { data = await (await fetch('/api/hub')).json(); } catch {}
+      document.getElementById('tagline').textContent = data.profile?.tagline || '';
+      const box = document.getElementById('links'); box.innerHTML='';
+      if (!(data.links||[]).length) { box.append(el('div',{class:'empty'},'No links yet.')); return; }
+      for (const l of data.links) {
+        const ext = /^https?:/i.test(l.url);
+        box.append(el('a', { class:'link', href:l.url, ...(ext?{target:'_blank',rel:'noopener'}:{}) },
+          el('span',{class:'emoji'}, l.emoji||'🔗'), l.title));
+      }
+    })();
+  </script>
+</body>
+</html>
