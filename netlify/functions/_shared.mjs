@@ -16,6 +16,7 @@ export const linksStore = () => getStore({ name: 'links', consistency: 'strong' 
 export const dropsStore = () => getStore({ name: 'drops', consistency: 'strong' });
 export const msgsStore = () => getStore({ name: 'messages', consistency: 'strong' });
 export const hubStore = () => getStore({ name: 'hub', consistency: 'strong' });
+export const moneyStore = () => getStore({ name: 'money', consistency: 'strong' });
 
 async function hash(pw, salt) {
   const dk = await scrypt(String(pw), salt, 64);

@@ -119,6 +119,7 @@
       <button class="tab active" data-tab="links">🔗 Links</button>
       <button class="tab" data-tab="drop">📎 Quick Drop</button>
       <button class="tab" data-tab="hub">🌟 Hub</button>
+      <button class="tab" data-tab="money">💰 Money</button>
       <button class="tab" data-tab="inbox">✉️ Inbox <span id="inboxCount" class="faint"></span></button>
     </nav>
 
@@ -212,6 +213,31 @@
         </div>
       </div>
     </div>
+
+    <!-- MONEY -->
+    <div id="tab-money" class="tabpane hide">
+      <div class="panel glass">
+        <div class="eyebrow">Money</div>
+        <h2>Income &amp; expenses</h2>
+        <div class="row" style="gap:10px;margin:10px 0 14px;align-items:center">
+          <label style="margin:0">Month</label>
+          <input id="m-month" type="month" style="max-width:190px" onchange="renderMoney()" />
+        </div>
+        <div class="row" id="m-summary" style="gap:10px"></div>
+      </div>
+
+      <div class="panel glass">
+        <label>Add a transaction</label>
+        <div class="row" id="m-type" style="margin:8px 0 4px"></div>
+        <div class="field"><label>Amount (Rs)</label><input id="m-amount" type="number" inputmode="decimal" placeholder="0" /></div>
+        <div class="field"><label>Category</label><select id="m-cat"></select></div>
+        <div class="field"><label>Note (optional)</label><input id="m-note" type="text" placeholder="e.g. Kranti sponsorship" /></div>
+        <div class="field"><label>Date</label><input id="m-date" type="date" /></div>
+        <button id="m-add" class="btn">Add</button>
+      </div>
+
+      <div id="m-list" class="list"></div>
+    </div>
   </section>
 
 </div>
@@ -225,6 +251,7 @@ const toast = (m) => { const t=$('#toast'); t.textContent=m; t.classList.add('sh
 const fmtTime = (ts) => { try{ return new Date(ts).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch{ return ''; } };
 const fmtSize = (n) => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : n>=1024 ? Math.round(n/1024)+' KB' : n+' B';
 const fmtLeft = (ts) => { const d=ts-Date.now(); if(d<=0)return 'expiring'; const h=d/3600000; if(h<1)return 'expires in '+Math.max(1,Math.round(h*60))+'m'; if(h<24)return 'expires in '+Math.round(h)+'h'; return 'expires in '+Math.round(h/24)+'d'; };
+const fmtMoney = (n) => 'Rs ' + Number(n||0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
 const esc = (s) => String(s??'');
 function el(tag, props={}, ...kids){ const e=document.createElement(tag); for(const[k,v]of Object.entries(props)){ if(k==='class')e.className=v; else if(k==='html')e.innerHTML=v; else if(k.startsWith('on'))e.addEventListener(k.slice(2).toLowerCase(),v); else if(k==='href'||k==='src'||k==='type'||k==='target'||k==='rel')e.setAttribute(k,v); else e[k]=v; } for(const c of kids){ if(c==null)continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; }
 async function copy(text){ try{ await navigator.clipboard.writeText(text); toast('Copied ✓'); }catch{ toast('Copy failed'); } }
@@ -266,12 +293,12 @@ $('#authBtn').onclick = async () => {
 /* ── app ── */
 function showApp(){
   $('#auth').classList.add('hide'); $('#app').classList.remove('hide');
-  loadLinks(); loadDrops(); loadInbox(); loadHub();
+  loadLinks(); loadDrops(); loadInbox(); loadHub(); loadMoney();
 }
 $('#logout').onclick = async ()=>{ try{ await api('/api/auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'logout'})}); }catch{} showAuth('login'); };
 document.querySelectorAll('.tab').forEach(t=> t.onclick = ()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
-  ['links','drop','hub','inbox'].forEach(n=> $('#tab-'+n).classList.toggle('hide', n!==t.dataset.tab));
+  ['links','drop','hub','money','inbox'].forEach(n=> $('#tab-'+n).classList.toggle('hide', n!==t.dataset.tab));
 });
 
 /* ── Links ── */
@@ -413,6 +440,55 @@ $('#h-save').onclick = async ()=>{
   const btn=$('#h-save'); btn.disabled=true;
   try{ await api('/api/hub',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({profile:{tagline:$('#h-tagline').value.trim()},links})}); toast('Hub saved ✓'); }
   catch(e){ toast(e.message); if(String(e.message).includes('unauthorized'))showAuth('login'); }
+  btn.disabled=false;
+};
+
+/* ── Money (income & expenses) ── */
+let MONEY = { tx:[], cats:{income:[],expense:[]}, type:'expense' };
+async function loadMoney(){
+  try{ const d = await api('/api/money'); MONEY.tx = d.transactions||[]; MONEY.cats = d.categories||MONEY.cats; }
+  catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); return; }
+  if(!$('#m-month').value) $('#m-month').value = new Date().toISOString().slice(0,7);
+  if(!$('#m-date').value) $('#m-date').value = new Date().toISOString().slice(0,10);
+  renderMType(); renderMoney();
+}
+function renderMType(){
+  const box=$('#m-type'); box.innerHTML='';
+  [['expense','➖ Expense'],['income','➕ Income']].forEach(([k,l])=>{ box.append(el('button',{class:'chip'+(MONEY.type===k?' on':''),onClick:()=>{ MONEY.type=k; renderMType(); }}, l)); });
+  const sel=$('#m-cat'); sel.innerHTML='';
+  (MONEY.cats[MONEY.type]||[]).forEach(c=> sel.append(el('option',{value:c}, c)));
+}
+function renderMoney(){
+  const month=$('#m-month').value;
+  const inMonth = MONEY.tx.filter(t=> (t.date||'').startsWith(month));
+  const inc = inMonth.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const exp = inMonth.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const allBal = MONEY.tx.reduce((s,t)=> s + (t.type==='income'?t.amount:-t.amount), 0);
+  const sum=$('#m-summary'); sum.innerHTML='';
+  const tile=(label,val,color)=> el('div',{class:'team',style:'max-width:none'}, el('div',{class:'faint'},label), el('div',{class:'pts',style:'color:'+color+';font-size:1.35rem'}, fmtMoney(val)));
+  sum.append(tile('Income',inc,'#4ade80'), tile('Expense',exp,'#ff6a6a'), tile('This month', inc-exp, (inc-exp)>=0?'#4ade80':'#ff6a6a'));
+  const box=$('#m-list'); box.innerHTML='';
+  box.append(el('div',{class:'faint',style:'text-align:center;padding:6px'}, 'All-time balance: '+fmtMoney(allBal)));
+  if(!inMonth.length){ box.append(el('div',{class:'empty'},'No transactions this month.')); return; }
+  inMonth.forEach(t=>{
+    box.append(el('div',{class:'item glass'},
+      el('div',{class:'head'},
+        el('div',{class:'grow'},
+          el('div',{class:'row',style:'gap:8px'}, el('span',{class:'tag'}, t.category), t.note?el('span',{style:'font-weight:600'}, t.note):null),
+          el('div',{class:'faint',style:'margin-top:4px'}, t.date)
+        ),
+        el('div',{style:'font-weight:800;font-size:1.05rem;white-space:nowrap;color:'+(t.type==='income'?'#4ade80':'#ff6a6a')}, (t.type==='income'?'+':'−')+fmtMoney(t.amount))
+      ),
+      el('div',{class:'row',style:'margin-top:8px'}, el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this transaction?'))return; await api('/api/money',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:t.id})}); loadMoney(); }},'Delete'))
+    ));
+  });
+}
+$('#m-add').onclick = async ()=>{
+  const amount=$('#m-amount').value, category=$('#m-cat').value, note=$('#m-note').value, date=$('#m-date').value;
+  if(!(Number(amount)>0)){ toast('Enter a valid amount'); return; }
+  const btn=$('#m-add'); btn.disabled=true;
+  try{ await api('/api/money',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:MONEY.type,amount,category,note,date})}); $('#m-amount').value=''; $('#m-note').value=''; toast('Added ✓'); loadMoney(); }
+  catch(e){ toast(e.message); }
   btn.disabled=false;
 };
 
