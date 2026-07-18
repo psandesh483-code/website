@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0d0a08" />
+  <title>Admin · Sandesh Pandey</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{
+      color-scheme: dark;
+      --bg:#0d0a08; --card:rgba(255,255,255,.05); --card2:rgba(255,255,255,.09);
+      --brd:rgba(255,230,200,.14); --brd2:rgba(255,215,170,.34);
+      --text:#f7efe6; --dim:rgba(247,239,230,.66); --faint:rgba(247,239,230,.5);
+      --gold:#f4c479; --amber:#ffb059; --green:#4ade80; --red:#ff6a6a;
+      --grad:linear-gradient(120deg,#ffd784 0%,#ff9d4d 55%,#ff6a3d 100%);
+      --r:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Manrope',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+      line-height:1.55;min-height:100dvh;-webkit-font-smoothing:antialiased;
+      background-image:radial-gradient(120% 80% at 80% -10%,#2a1608 0%,transparent 45%),radial-gradient(100% 90% at 10% 110%,#1c1209 0%,transparent 50%);}
+    .wrap{max-width:760px;margin:0 auto;padding:clamp(16px,4vw,32px) clamp(14px,4vw,24px) 80px;}
+    a{color:var(--amber);text-decoration:none}
+    button{font:inherit;cursor:pointer;border:none}
+    input,textarea,select{font:inherit;width:100%;color:var(--text);background:rgba(255,255,255,.04);
+      border:1px solid var(--brd);border-radius:12px;padding:12px 14px;min-height:46px;transition:border-color .2s,box-shadow .2s}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,176,89,.16)}
+    textarea{resize:vertical;min-height:90px}
+    label{display:block;font-size:.82rem;font-weight:600;color:var(--dim);margin:0 0 6px}
+    .field{margin-bottom:14px}
+    .glass{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);
+      box-shadow:0 18px 50px -18px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);
+      -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:.92rem;
+      padding:12px 20px;border-radius:999px;min-height:46px;background:var(--grad);color:#2a1402;white-space:nowrap;
+      box-shadow:0 8px 22px -8px rgba(255,140,70,.6)}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn--ghost{background:var(--card2);color:var(--text);border:1px solid var(--brd);box-shadow:none}
+    .btn--sm{padding:8px 14px;min-height:38px;font-size:.84rem}
+    .btn--danger{background:rgba(255,106,106,.14);color:#ffb3b3;border:1px solid rgba(255,106,106,.3);box-shadow:none}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .grow{flex:1;min-width:0}
+    h1{font-family:'Bricolage Grotesque',sans-serif;font-size:1.5rem;letter-spacing:-.02em}
+    h2{font-family:'Bricolage Grotesque',sans-serif;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:4px}
+    .muted{color:var(--dim);font-size:.9rem}
+    .faint{color:var(--faint);font-size:.8rem}
+    .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+    /* header */
+    header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .brand .dot{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#2a1402;font-weight:800}
+    /* tabs */
+    .tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--brd);border-radius:999px;padding:5px;margin-bottom:20px;overflow-x:auto}
+    .tab{flex:1;min-width:max-content;padding:10px 14px;border-radius:999px;background:transparent;color:var(--dim);font-weight:600;font-size:.9rem}
+    .tab.active{background:var(--card2);color:var(--text)}
+    /* cards / lists */
+    .panel{padding:clamp(16px,3vw,22px);margin-bottom:16px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+    .item{padding:14px;border:1px solid var(--brd);border-radius:14px;background:rgba(255,255,255,.03)}
+    .item .head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--amber);background:rgba(255,176,89,.12);padding:3px 9px;border-radius:999px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all}
+    .notice{padding:11px 14px;border-radius:12px;font-size:.88rem;margin-bottom:14px;display:none}
+    .notice.err{display:block;background:rgba(255,106,106,.12);border:1px solid rgba(255,106,106,.32);color:#ffb3b3}
+    .notice.ok{display:block;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:#9ff0c8}
+    .hide{display:none!important}
+    .center{max-width:420px;margin:8vh auto 0}
+    .drop-actions{display:grid;grid-template-columns:1fr;gap:14px}
+    .empty{text-align:center;color:var(--faint);padding:26px 10px;font-size:.9rem}
+    hr.sep{border:none;border-top:1px solid var(--brd);margin:16px 0}
+    .filelabel{display:flex;align-items:center;justify-content:center;gap:8px;border:1px dashed var(--brd2);
+      border-radius:12px;padding:16px;color:var(--dim);cursor:pointer;background:rgba(255,255,255,.02)}
+    .filelabel input{display:none}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;
+      background:#1c130c;border:1px solid var(--brd2);color:var(--text);padding:11px 18px;border-radius:999px;
+      font-size:.88rem;transition:.3s;pointer-events:none;z-index:50;box-shadow:0 12px 30px -10px rgba(0,0,0,.7)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ─── AUTH ─── -->
+  <section id="auth" class="hide">
+    <div class="center glass panel">
+      <div class="eyebrow" style="margin-bottom:8px">Sandesh Pandey</div>
+      <h1 id="authTitle">Admin</h1>
+      <p class="muted" id="authSub" style="margin:6px 0 18px"></p>
+      <div id="authNotice" class="notice"></div>
+
+      <div id="setupKeyField" class="field hide">
+        <label>One-time setup key</label>
+        <input id="setupKey" type="text" autocomplete="off" placeholder="the key you were given" />
+      </div>
+      <div class="field">
+        <label id="pwLabel">Password</label>
+        <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••" />
+      </div>
+
+      <button id="authBtn" class="btn" style="width:100%">Continue</button>
+      <p style="margin-top:14px;text-align:center">
+        <a id="toReset" href="#" class="faint hide">Forgot password? Reset with setup key</a>
+        <a id="toLogin" href="#" class="faint hide">Back to login</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── APP ─── -->
+  <section id="app" class="hide">
+    <header class="top">
+      <div class="brand"><span class="dot">S</span> Admin</div>
+      <button id="logout" class="btn btn--ghost btn--sm">Log out</button>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="links">🔗 Links</button>
+      <button class="tab" data-tab="drop">📎 Quick Drop</button>
+      <button class="tab" data-tab="inbox">✉️ Inbox <span id="inboxCount" class="faint"></span></button>
+    </nav>
+
+    <!-- LINKS -->
+    <div id="tab-links" class="tabpane">
+      <div class="panel glass">
+        <div class="eyebrow">Create short link</div>
+        <h2>Branded link</h2>
+        <p class="muted">Turns into <span class="mono">sandeshpandey.info.np/go/&lt;slug&gt;</span></p>
+        <div style="margin-top:14px">
+          <div class="field"><label>Destination URL</label><input id="l-url" type="url" placeholder="https://example.com/very/long/link" /></div>
+          <div class="field"><label>Custom slug</label><input id="l-slug" type="text" placeholder="newsletter" autocomplete="off" /></div>
+          <div class="field"><label>Label (optional, for your reference)</label><input id="l-title" type="text" placeholder="Spring newsletter" /></div>
+          <button id="l-create" class="btn">Create link</button>
+        </div>
+      </div>
+      <div id="links-list" class="list"></div>
+    </div>
+
+    <!-- DROP -->
+    <div id="tab-drop" class="tabpane hide">
+      <div class="panel glass">
+        <div class="eyebrow">Quick Drop</div>
+        <h2>Send a file, note, or link to yourself</h2>
+        <p class="muted">Access it from any device — just log in here. Files up to 4&nbsp;MB.</p>
+        <div class="drop-actions" style="margin-top:16px">
+          <label class="filelabel">
+            <span id="fileName">📄 Tap to choose a file</span>
+            <input id="d-file" type="file" />
+          </label>
+          <div class="field" style="margin:0">
+            <label>Or a quick note</label>
+            <textarea id="d-note" placeholder="Paste text you want on another device…"></textarea>
+            <div class="row" style="margin-top:8px"><button id="d-note-btn" class="btn btn--ghost btn--sm">Save note</button></div>
+          </div>
+          <div class="field" style="margin:0">
+            <label>Or a link</label>
+            <input id="d-link" type="url" placeholder="https://…" />
+            <div class="row" style="margin-top:8px"><button id="d-link-btn" class="btn btn--ghost btn--sm">Save link</button></div>
+          </div>
+        </div>
+      </div>
+      <div id="drop-list" class="list"></div>
+    </div>
+
+    <!-- INBOX -->
+    <div id="tab-inbox" class="tabpane hide">
+      <div class="panel glass">
+        <div class="eyebrow">Inbox</div>
+        <h2>Messages from your contact form</h2>
+        <p class="muted">Everyone who submits the form on your site lands here.</p>
+      </div>
+      <div id="inbox-list" class="list"></div>
+    </div>
+  </section>
+
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const api = (path, opts={}) => fetch(path, { credentials:'same-origin', ...opts })
+  .then(async r => { const d = await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||('HTTP '+r.status)); return d; });
+const toast = (m) => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); };
+const fmtTime = (ts) => { try{ return new Date(ts).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch{ return ''; } };
+const fmtSize = (n) => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : n>=1024 ? Math.round(n/1024)+' KB' : n+' B';
+const esc = (s) => String(s??'');
+function el(tag, props={}, ...kids){ const e=document.createElement(tag); for(const[k,v]of Object.entries(props)){ if(k==='class')e.className=v; else if(k==='html')e.innerHTML=v; else if(k.startsWith('on'))e.addEventListener(k.slice(2).toLowerCase(),v); else if(k==='href'||k==='src'||k==='type'||k==='target'||k==='rel')e.setAttribute(k,v); else e[k]=v; } for(const c of kids){ if(c==null)continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; }
+async function copy(text){ try{ await navigator.clipboard.writeText(text); toast('Copied ✓'); }catch{ toast('Copy failed'); } }
+
+/* ── auth state ── */
+let state = { setupDone:false, authed:false, mode:'login' };
+const authNotice = (msg, ok=false) => { const n=$('#authNotice'); n.textContent=msg; n.className='notice '+(ok?'ok':'err'); };
+
+async function boot(){
+  try{ state = await api('/api/auth'); }catch{ state={setupDone:false,authed:false}; }
+  if(state.authed){ showApp(); } else { showAuth(state.setupDone ? 'login' : 'setup'); }
+}
+function showAuth(mode){
+  state.mode = mode;
+  $('#app').classList.add('hide'); $('#auth').classList.remove('hide');
+  $('#authNotice').className='notice';
+  $('#setupKeyField').classList.toggle('hide', mode==='login');
+  $('#pw').value=''; $('#pw').setAttribute('autocomplete', mode==='login'?'current-password':'new-password');
+  $('#toReset').classList.toggle('hide', mode!=='login' || !state.setupDone);
+  $('#toLogin').classList.toggle('hide', mode==='login');
+  if(mode==='setup'){ $('#authTitle').textContent='Welcome — set your password'; $('#authSub').textContent='First time here. Enter your one-time setup key and choose a password.'; $('#authBtn').textContent='Create my admin'; $('#pwLabel').textContent='Choose a password (8+ characters)'; }
+  else if(mode==='reset'){ $('#authTitle').textContent='Reset password'; $('#authSub').textContent='Enter your setup key and a new password.'; $('#authBtn').textContent='Reset password'; $('#pwLabel').textContent='New password (8+ characters)'; }
+  else { $('#authTitle').textContent='Admin login'; $('#authSub').textContent='Enter your password to continue.'; $('#authBtn').textContent='Log in'; $('#pwLabel').textContent='Password'; }
+}
+$('#toReset').onclick = (e)=>{ e.preventDefault(); showAuth('reset'); };
+$('#toLogin').onclick = (e)=>{ e.preventDefault(); showAuth('login'); };
+$('#pw').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#authBtn').click(); });
+
+$('#authBtn').onclick = async () => {
+  const pw = $('#pw').value, key = $('#setupKey').value.trim();
+  const btn = $('#authBtn'); btn.disabled = true;
+  try{
+    if(state.mode==='login'){ await api('/api/auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'login',password:pw})}); }
+    else { const action = state.mode==='reset'?'reset':'setup'; await api('/api/auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action,setupKey:key,password:pw})}); }
+    await boot();
+  }catch(err){ authNotice(err.message); btn.disabled=false; }
+};
+
+/* ── app ── */
+function showApp(){
+  $('#auth').classList.add('hide'); $('#app').classList.remove('hide');
+  loadLinks(); loadDrops(); loadInbox();
+}
+$('#logout').onclick = async ()=>{ try{ await api('/api/auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'logout'})}); }catch{} showAuth('login'); };
+document.querySelectorAll('.tab').forEach(t=> t.onclick = ()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  ['links','drop','inbox'].forEach(n=> $('#tab-'+n).classList.toggle('hide', n!==t.dataset.tab));
+});
+
+/* ── Links ── */
+async function loadLinks(){
+  const box = $('#links-list'); box.innerHTML='';
+  let links=[]; try{ ({links} = await api('/api/links')); }catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); }
+  if(!links.length){ box.append(el('div',{class:'empty'},'No links yet. Create your first one above.')); return; }
+  for(const l of links){
+    const full = location.origin+'/go/'+l.slug;
+    box.append(el('div',{class:'item glass'},
+      el('div',{class:'head'},
+        el('div',{class:'grow'},
+          el('div',{class:'row',style:'gap:8px'}, el('span',{class:'mono',style:'font-weight:700'},'/go/'+l.slug), el('span',{class:'tag'}, (l.clicks||0)+' clicks')),
+          l.title?el('div',{class:'faint'},l.title):null,
+          el('div',{class:'muted mono',style:'margin-top:4px;font-size:.82rem'}, l.url)
+        )
+      ),
+      el('div',{class:'row',style:'margin-top:12px'},
+        el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(full)},'Copy link'),
+        el('a',{class:'btn btn--ghost btn--sm',href:'/go/'+l.slug,target:'_blank',rel:'noopener'},'Test ↗'),
+        el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete /go/'+l.slug+'?'))return; await api('/api/links',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({slug:l.slug})}); loadLinks(); }},'Delete')
+      )
+    ));
+  }
+}
+$('#l-create').onclick = async ()=>{
+  const url=$('#l-url').value.trim(), slug=$('#l-slug').value.trim(), title=$('#l-title').value.trim();
+  if(!url||!slug){ toast('Add a URL and a slug'); return; }
+  const btn=$('#l-create'); btn.disabled=true;
+  try{ await api('/api/links',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({url,slug,title})});
+    $('#l-url').value='';$('#l-slug').value='';$('#l-title').value=''; toast('Link created ✓'); loadLinks();
+  }catch(e){ toast(e.message); } btn.disabled=false;
+};
+
+/* ── Quick Drop ── */
+$('#d-file').addEventListener('change', async (e)=>{
+  const f=e.target.files[0]; if(!f)return;
+  if(f.size>4*1024*1024){ toast('Max 4 MB'); e.target.value=''; return; }
+  $('#fileName').textContent='⏳ Uploading '+f.name;
+  const fd=new FormData(); fd.append('file',f);
+  try{ await api('/api/drop',{method:'POST',body:fd}); toast('File dropped ✓'); loadDrops(); }
+  catch(err){ toast(err.message); }
+  $('#fileName').textContent='📄 Tap to choose a file'; e.target.value='';
+});
+$('#d-note-btn').onclick = async ()=>{
+  const content=$('#d-note').value.trim(); if(!content){ toast('Note is empty'); return; }
+  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'text',content})}); $('#d-note').value=''; toast('Note saved ✓'); loadDrops(); }catch(e){ toast(e.message); }
+};
+$('#d-link-btn').onclick = async ()=>{
+  const content=$('#d-link').value.trim(); if(!content){ toast('Link is empty'); return; }
+  try{ await api('/api/drop',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'link',content})}); $('#d-link').value=''; toast('Link saved ✓'); loadDrops(); }catch(e){ toast(e.message); }
+};
+async function loadDrops(){
+  const box=$('#drop-list'); box.innerHTML='';
+  let items=[]; try{ ({items} = await api('/api/drop')); }catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); }
+  if(!items.length){ box.append(el('div',{class:'empty'},'Nothing dropped yet.')); return; }
+  for(const it of items){
+    const actions=[];
+    if(it.kind==='file'){
+      actions.push(el('a',{class:'btn btn--ghost btn--sm',href:'/d/'+it.id,target:'_blank',rel:'noopener'},'Open'));
+      actions.push(el('a',{class:'btn btn--ghost btn--sm',href:'/d/'+it.id+'?dl',target:'_blank',rel:'noopener'},'Download'));
+    } else if(it.kind==='link'){
+      actions.push(el('a',{class:'btn btn--ghost btn--sm',href:it.preview,target:'_blank',rel:'noopener'},'Open ↗'));
+      actions.push(el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(it.preview)},'Copy'));
+    } else {
+      actions.push(el('button',{class:'btn btn--ghost btn--sm',onClick:()=>copy(it.preview)},'Copy'));
+    }
+    actions.push(el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this drop?'))return; await api('/api/drop',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:it.id})}); loadDrops(); }},'Delete'));
+    const label = it.kind==='file' ? (it.name+' · '+fmtSize(it.size||0)) : (it.title || (it.kind==='link'?'Link':'Note'));
+    box.append(el('div',{class:'item glass'},
+      el('div',{class:'head'},
+        el('div',{class:'grow'},
+          el('div',{class:'row',style:'gap:8px'}, el('span',{class:'tag'}, it.kind), el('span',{style:'font-weight:600'}, label)),
+          it.kind!=='file' ? el('div',{class:'muted mono',style:'margin-top:6px;font-size:.82rem;white-space:pre-wrap'}, (it.preview||'').slice(0,200)) : null,
+          el('div',{class:'faint',style:'margin-top:6px'}, fmtTime(it.createdAt))
+        )
+      ),
+      el('div',{class:'row',style:'margin-top:12px'}, ...actions)
+    ));
+  }
+}
+
+/* ── Inbox ── */
+async function loadInbox(){
+  const box=$('#inbox-list'); box.innerHTML='';
+  let messages=[]; try{ ({messages} = await api('/api/messages')); }catch(e){ if(String(e.message).includes('unauthorized'))return showAuth('login'); }
+  $('#inboxCount').textContent = messages.length ? '('+messages.length+')' : '';
+  if(!messages.length){ box.append(el('div',{class:'empty'},'No messages yet.')); return; }
+  for(const m of messages){
+    box.append(el('div',{class:'item glass'},
+      el('div',{class:'head'},
+        el('div',{class:'grow'},
+          el('div',{style:'font-weight:700'}, m.name),
+          el('a',{class:'faint',href:'mailto:'+m.email}, m.email),
+          el('div',{style:'margin-top:8px;white-space:pre-wrap'}, m.message),
+          el('div',{class:'faint',style:'margin-top:8px'}, fmtTime(m.createdAt))
+        )
+      ),
+      el('div',{class:'row',style:'margin-top:10px'},
+        el('a',{class:'btn btn--ghost btn--sm',href:'mailto:'+m.email+'?subject=Re: your message'},'Reply'),
+        el('button',{class:'btn btn--danger btn--sm',onClick:async()=>{ if(!confirm('Delete this message?'))return; await api('/api/messages',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({id:m.id})}); loadInbox(); }},'Delete')
+      )
+    ));
+  }
+}
+
+boot();
+</script>
+</body>
+</html>

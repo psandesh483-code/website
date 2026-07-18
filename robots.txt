@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /d/
+Disallow: /go/
+
+Sitemap: https://sandeshpandey.info.np/sitemap.xml

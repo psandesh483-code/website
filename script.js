@@ -177,7 +177,7 @@ function setupContactForm() {
 
     try {
       const formData = new FormData(form);
-      const response = await fetch('/', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData).toString(),
