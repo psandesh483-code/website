@@ -29,7 +29,7 @@
     .title{font-size:clamp(2.6rem,8vw,5rem);font-weight:800;letter-spacing:-.03em;line-height:1;
       background:linear-gradient(100deg,#ffd15c,#ff9d4d 40%,#ff5c8a 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
     .subtitle{color:var(--dim);font-size:clamp(1rem,2.4vw,1.5rem);font-weight:500;margin-top:6px}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2.5vw,26px);width:100%;margin-top:clamp(24px,5vw,48px)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(14px,2.2vw,22px);width:100%;margin-top:clamp(24px,5vw,44px)}
     .game{border-radius:28px;padding:clamp(24px,4vw,44px);text-align:left;font-weight:800;color:#1a0e04;
       display:flex;flex-direction:column;gap:8px;min-height:clamp(150px,22vw,230px);justify-content:flex-end;
       transition:transform .15s;box-shadow:0 18px 44px -16px rgba(0,0,0,.7)}
@@ -39,6 +39,8 @@
     .game .ds{font-weight:600;font-size:clamp(.85rem,1.8vw,1.1rem);opacity:.72}
     .g1{background:linear-gradient(140deg,#ffd15c,#ff9d4d)} .g2{background:linear-gradient(140deg,#38d9d9,#4ade80)}
     .g3{background:linear-gradient(140deg,#ff5c8a,#9b6bff)} .g4{background:linear-gradient(140deg,#ffb347,#ff5e3a)}
+    .g5{background:linear-gradient(140deg,#a78bfa,#38bdf8)} .g6{background:linear-gradient(140deg,#fb7185,#fbbf24)}
+    .g7{background:linear-gradient(140deg,#34d399,#a3e635)}
     /* generic big UI */
     h2.head{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;letter-spacing:-.02em}
     .big{font-size:clamp(2.4rem,8vw,6rem);font-weight:800;letter-spacing:-.02em;line-height:1.05;word-break:break-word;padding:0 8px}
@@ -89,6 +91,9 @@
         <button class="game g2" onclick="go('wheel')"><span class="ic">🎡</span><span class="nm">Spin the Wheel</span><span class="ds">Pick a random name or dare</span></button>
         <button class="game g3" onclick="go('mostlikely')"><span class="ic">👉</span><span class="nm">Most Likely To…</span><span class="ds">Point at someone!</span></button>
         <button class="game g4" onclick="go('antakshari')"><span class="ic">🎤</span><span class="nm">Antakshari</span><span class="ds">Sing on the letter</span></button>
+        <button class="game g5" onclick="go('emoji')"><span class="ic">🧩</span><span class="nm">Emoji Guess</span><span class="ds">🦁👑 → guess it!</span></button>
+        <button class="game g6" onclick="go('guessit')"><span class="ic">🔍</span><span class="nm">Guess It</span><span class="ds">One clue, one answer</span></button>
+        <button class="game g7" onclick="go('trivia')"><span class="ic">❓</span><span class="nm">Trivia</span><span class="ds">Shout the answer</span></button>
       </div>
       <div class="footer-note">Made by Sandesh · sandeshpandey.info.np</div>
     </div>
@@ -156,10 +161,55 @@
     </div>
   </section>
 
+  <!-- EMOJI GUESS -->
+  <section class="screen" id="emoji">
+    <div class="wrap"><button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="tag">🧩 Guess the movie / thing from the emojis</div>
+        <div class="card-word">
+          <div id="em-clue" style="font-size:clamp(3.4rem,14vw,9rem);line-height:1.15;text-align:center">🎬</div>
+          <div class="big" id="em-answer" style="display:none;color:var(--gold)"></div>
+        </div>
+        <div class="row"><button class="btn green" id="em-reveal" onclick="emReveal()">👀 Reveal</button><button class="btn" onclick="emNext()">Next ▶</button></div>
+        <div class="score" id="em-score"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUESS IT -->
+  <section class="screen" id="guessit">
+    <div class="wrap"><button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="tag" id="gi-tag">🔍 Guess It</div>
+        <div class="card-word">
+          <div class="big" id="gi-clue" style="font-size:clamp(1.6rem,4.4vw,2.9rem);line-height:1.25">Tap Next to start</div>
+          <div class="big" id="gi-answer" style="display:none;color:var(--gold)"></div>
+        </div>
+        <div class="row"><button class="btn green" id="gi-reveal" onclick="giReveal()">👀 Reveal</button><button class="btn" onclick="giNext()">Next ▶</button></div>
+        <div class="score" id="gi-score"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRIVIA -->
+  <section class="screen" id="trivia">
+    <div class="wrap"><button class="back" onclick="go('home')">← Games</button>
+      <div class="center">
+        <div class="tag">❓ Trivia — first team to shout it wins the point</div>
+        <div class="card-word">
+          <div class="big" id="tv-clue" style="font-size:clamp(1.7rem,4.4vw,3rem);line-height:1.25">Tap Next to start</div>
+          <div class="big" id="tv-answer" style="display:none;color:var(--gold)"></div>
+        </div>
+        <div class="row"><button class="btn green" id="tv-reveal" onclick="tvReveal()">👀 Reveal answer</button><button class="btn" onclick="tvNext()">Next ▶</button></div>
+        <div class="score" id="tv-score"></div>
+      </div>
+    </div>
+  </section>
+
   <script>
     const $ = s => document.querySelector(s);
     const rand = a => a[Math.floor(Math.random()*a.length)];
-    function go(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); $('#'+id).classList.add('on'); stopTimer(); if(id==='charades')initCharades(); if(id==='wheel')loadWheel(); if(id==='antakshari')renderScore('#ak-score'); }
+    function go(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); $('#'+id).classList.add('on'); stopTimer(); if(id==='charades')initCharades(); if(id==='wheel')loadWheel(); if(id==='antakshari')renderScore('#ak-score'); if(id==='emoji'){ if(emIdx<0)emNext(); renderScore('#em-score'); } if(id==='guessit'){ if(giIdx<0)giNext(); renderScore('#gi-score'); } if(id==='trivia'){ if(tvIdx<0)tvNext(); renderScore('#tv-score'); } }
 
     /* ---- sound + confetti ---- */
     let ac;
@@ -260,6 +310,65 @@
     let akLast='';
     function nextLetter(){ let l; do{ l=rand(LETTERS); }while(l===akLast); akLast=l; $('#ak-letter').textContent=l; $('#ak-timer').style.display='none'; stopTimer(); beep(880,.12); }
     function akTimer(){ runTimer(30,$('#ak-timer'),()=>{ $('#ak-letter').textContent='⏰'; }); }
+
+    /* ---- EMOJI GUESS ---- */
+    const EMOJI=[
+      {e:'🦁👑',a:'The Lion King'},{e:'🕷️🧑',a:'Spider-Man'},{e:'❄️👸',a:'Frozen'},{e:'🚢🧊',a:'Titanic'},
+      {e:'🧙‍♂️⚡',a:'Harry Potter'},{e:'🦖🏞️',a:'Jurassic Park'},{e:'🃏🤡',a:'Joker'},{e:'👽📞🏠',a:'E.T.'},
+      {e:'🍫🏭',a:'Charlie & the Chocolate Factory'},{e:'🐠🔍',a:'Finding Nemo'},{e:'🦇🌃',a:'Batman'},{e:'💍🌋',a:'Lord of the Rings'},
+      {e:'🤖🚗',a:'Transformers'},{e:'🦸‍♂️🛡️',a:'The Avengers'},{e:'😴💭',a:'Inception'},{e:'🏏🇮🇳',a:'Lagaan'},
+      {e:'💪🤼‍♀️',a:'Dangal'},{e:'3️⃣🤓',a:'3 Idiots'},{e:'🚂🌶️',a:'Chennai Express'},{e:'🎤🏙️',a:'Gully Boy'},
+      {e:'🥋🏃',a:'Kabaddi'},{e:'🌧️🎶',a:'Singing in the Rain'},{e:'🐱🎥',a:'Cat Video'},{e:'⚽🏆',a:'World Cup'},{e:'🎂🎈',a:'Birthday Party'}
+    ];
+    let emOrder=[],emIdx=-1,emCur=null;
+    function emShuffle(){ emOrder=EMOJI.map((_,i)=>i).sort(()=>Math.random()-.5); emIdx=-1; }
+    function emNext(){ if(emIdx>=emOrder.length-1)emShuffle(); emIdx++; emCur=EMOJI[emOrder[emIdx]]; $('#em-clue').textContent=emCur.e; const a=$('#em-answer'); a.style.display='none'; a.textContent=''; $('#em-reveal').style.display=''; beep(760,.08); }
+    function emReveal(){ $('#em-answer').textContent=emCur.a; $('#em-answer').style.display=''; $('#em-reveal').style.display='none'; beep(990,.12); confetti(); }
+
+    /* ---- GUESS IT ---- */
+    const GUESSIT=[
+      {t:'Movie',c:'A boy is left home alone at Christmas and fights two burglars.',a:'Home Alone'},
+      {t:'Movie',c:'Toys secretly come alive when humans leave the room.',a:'Toy Story'},
+      {t:'Movie',c:'A giant shark terrorises a summer beach town.',a:'Jaws'},
+      {t:'Movie',c:'A team enters people’s dreams to plant an idea.',a:'Inception'},
+      {t:'Bollywood',c:'Four friends, an engineering college, and “All izz well”.',a:'3 Idiots'},
+      {t:'Bollywood',c:'A wrestler father trains his daughters to win gold.',a:'Dangal'},
+      {t:'Bollywood',c:'Villagers challenge British rulers to a cricket match.',a:'Lagaan'},
+      {t:'Celebrity',c:'Bollywood “King Khan”, famous for the arms-spread pose.',a:'Shah Rukh Khan'},
+      {t:'Celebrity',c:'Nepali cinema’s “Mahanayak” and action hero.',a:'Rajesh Hamal'},
+      {t:'Sports',c:'Argentine footballer who lifted the 2022 World Cup.',a:'Lionel Messi'},
+      {t:'Sports',c:'Portuguese star known for the “Siuuu” celebration.',a:'Cristiano Ronaldo'},
+      {t:'Nepal',c:'The highest mountain on Earth, on Nepal’s border.',a:'Mount Everest'},
+      {t:'Science',c:'The red planet, fourth from the Sun.',a:'Mars'},
+      {t:'Science',c:'Often called the “powerhouse of the cell”.',a:'Mitochondria'},
+      {t:'Tech',c:'App with disappearing photos and a ghost logo.',a:'Snapchat'},
+      {t:'Tech',c:'Short-video app famous for the “For You” page.',a:'TikTok'},
+      {t:'Food',c:'Steamed dumplings loved all over Nepal.',a:'Momo'},
+      {t:'GK',c:'The number of colours in a rainbow.',a:'Seven'}
+    ];
+    let giOrder=[],giIdx=-1,giCur=null;
+    function giShuffle(){ giOrder=GUESSIT.map((_,i)=>i).sort(()=>Math.random()-.5); giIdx=-1; }
+    function giNext(){ if(giIdx>=giOrder.length-1)giShuffle(); giIdx++; giCur=GUESSIT[giOrder[giIdx]]; $('#gi-tag').textContent='🔍 '+giCur.t; $('#gi-clue').textContent=giCur.c; const a=$('#gi-answer'); a.style.display='none'; a.textContent=''; $('#gi-reveal').style.display=''; beep(760,.08); }
+    function giReveal(){ $('#gi-answer').textContent=giCur.a; $('#gi-answer').style.display=''; $('#gi-reveal').style.display='none'; beep(990,.12); confetti(); }
+
+    /* ---- TRIVIA ---- */
+    const TRIVIA=[
+      {q:'Capital city of Nepal?',a:'Kathmandu'},{q:'How many players from one team are on a football pitch?',a:'11'},
+      {q:'Which gas do plants take in for photosynthesis?',a:'Carbon dioxide'},{q:'Who wrote “Romeo and Juliet”?',a:'William Shakespeare'},
+      {q:'Largest planet in the solar system?',a:'Jupiter'},{q:'Nepal’s festival of lights?',a:'Tihar'},
+      {q:'Chemical formula of water?',a:'H₂O'},{q:'How many continents are there?',a:'Seven'},
+      {q:'The Great Wall is in which country?',a:'China'},{q:'Who painted the Mona Lisa?',a:'Leonardo da Vinci'},
+      {q:'Smallest prime number?',a:'2'},{q:'Currency of Nepal?',a:'Nepalese Rupee'},
+      {q:'How many sides does a hexagon have?',a:'6'},{q:'Fastest land animal?',a:'Cheetah'},
+      {q:'National flower of Nepal?',a:'Rhododendron (Lali Gurans)'},{q:'What does “www” stand for?',a:'World Wide Web'},
+      {q:'Largest ocean on Earth?',a:'Pacific Ocean'},{q:'Who unified modern Nepal?',a:'Prithvi Narayan Shah'},
+      {q:'How many bones are in the adult human body?',a:'206'},{q:'What does CPU stand for?',a:'Central Processing Unit'},
+      {q:'Freezing point of water in Celsius?',a:'0°C'},{q:'Tallest animal in the world?',a:'Giraffe'}
+    ];
+    let tvOrder=[],tvIdx=-1,tvCur=null;
+    function tvShuffle(){ tvOrder=TRIVIA.map((_,i)=>i).sort(()=>Math.random()-.5); tvIdx=-1; }
+    function tvNext(){ if(tvIdx>=tvOrder.length-1)tvShuffle(); tvIdx++; tvCur=TRIVIA[tvOrder[tvIdx]]; $('#tv-clue').textContent=tvCur.q; const a=$('#tv-answer'); a.style.display='none'; a.textContent=''; $('#tv-reveal').style.display=''; beep(760,.08); }
+    function tvReveal(){ $('#tv-answer').textContent=tvCur.a; $('#tv-answer').style.display=''; $('#tv-reveal').style.display='none'; beep(990,.12); confetti(); }
   </script>
 </body>
 </html>
